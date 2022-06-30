@@ -2,57 +2,56 @@ import axios from "axios";
 import {useEffect, useRef, useState} from "react";
 import React from "react";
 
-// const registerPlantController = (setData, plantControllerName) => {
-//     axios.post("http://0.0.0.0:9011/challenge/reactor/desk", {headers: {
-//       'Access-Control-Allow-Origin': '*',
-//       'Content-Type': 'application/json',
-//     }})
-//     .then(r =>
-//         setData(r.data.message)
-//     );
-// }
-// const eraseCall = (setData) => {
-//     setData("")
-// }
 
 
-export default class Reception extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {value: ''};
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+export default function Reception() {
+    const [getText, setText] = useState("")
+    const [getName, setName] = useState("");
+    const [getKey, setKey] = useState("");
 
-    handleChange(event) {
-        this.setState({value: event.target.value});
-    }
-
-    handleSubmit(event) {
-        //todo napierdalaj w resty
+    const registerAtDesk = (event) => {
         event.preventDefault();
+        setText("")
+        setKey("")
+        if(getName === ""){
+           setText("Write your name in the form down there, Comrade...")
+        }
+        else {
+            axios.post(
+                "http://0.0.0.0:9011/challenge/reactor/desk",
+                {"name": getName},
+                {
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                        'Content-Type': `application/json`
+                    },
+                })
+                .then(response => {
+                     setText(`Get your key from the tray, Commander ${getName}`)
+                        setKey(response.data.key)
+                    }
+                ).catch(error =>
+                    setText(error.response.data.message)
+            )
+        }
     }
-
-    render() {
-       return (
+      return (
             <main style={{padding: "1rem 0"}}>
                 <div>
                     Evening, Comrade!
                     <br/>
                     Let me fetch the keys, while you write your name in the workbook
                 </div>
-                <form>
+                <form onSubmit={registerAtDesk}>
                     <label>Registration at the desk</label>
-                    <input type="text" name="Commander name"/>
-                    <input type="submit" value="Register"/>
+                    <input type="text" value={getName}
+                           onChange={e => setName(e.target.value)}
+                           name="Commander name"/>
+                    <button type="submit" name="Register">Write in registrar book</button>
                 </form>
+                <div id={"message"}>{getText}</div>
+                <div id={"tray"}>{getKey}</div>
             </main>
         );
-    }
 }
-// export default function Reception() {
-// return (
-//     NameForm()
-// )
-// }
