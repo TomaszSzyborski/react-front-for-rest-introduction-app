@@ -19,10 +19,13 @@ export default function Information() {
     const [callCounter, setCallCounter] = useState(0)
     const [flagsAmount, setFlagsAmount] = useState(initialFlags)
 
-    const getReactorInfo = () => {
+    const resetText = async () => setText("")
+
+    const getReactorInfo = async () => {
         setSlams(0)
-        setText("")
-        const primaryResponse = () => axios.get("http://0.0.0.0:9011/challenge/reactor/information", {
+        await resetText()
+        const primaryResponse = () =>
+            axios.get("http://0.0.0.0:9011/challenge/reactor/information", {
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Content-Type': 'application/json',
@@ -30,12 +33,9 @@ export default function Information() {
                 }
             })
                 .then(response => {
-                    console.log(response.data)
-                    console.log(response.data.flagsToFind)
-                        setFlagsAmount(prevState => prevState + response.data.flagsToFind)
-                        setText(response.data.message + `\n There are ${flagsAmount} to find`)
-                    }
-                )
+                    setText(response.data.message +
+                        `\n There are ${response.data.flagsToFind + flagsAmount} to find`)
+                })
         ;
 
         const phoneResponses = [primaryResponse]
@@ -46,7 +46,7 @@ export default function Information() {
             )
             setCallCounter(0)
         } else {
-            phoneResponses[callCounter]()
+            await phoneResponses[callCounter]()
             setCallCounter(prevState => prevState + 1)
         }
 
