@@ -1,74 +1,90 @@
 import axios from "axios";
-import corridor from "../assets/images/corridor.jpg"
 import {useState} from "react";
 
 import React, {useEffect} from 'react'
-// import Typewriter from 'typewriter-effect';
-import {useTypewriter} from 'react-simple-typewriter'
+import Typewriter from 'react-ts-typewriter';
 
-const getReactorInfo = (setData) => {
-    axios.get("http://0.0.0.0:9011/challenge/reactor/information", {
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json',
-            'for-frontend': "only"
-        }
-    })
-        .then(response => {
-            //TODO count flags on frontend only
-                // console.log(response.data.message)
-                setData(response.data.message)
-            }
-        )
-    ;
-}
-const eraseCall = (setData, setSlams, getSlams) => {
-    setData("")
-    setSlams(getSlams + 1)
-    if (getSlams > 5) {
-        alert("You've broken the phone... General Secretary won't be proud.\n" +
-            "You earned something however...\n" +
-            "${emotional_reaction_get_it?_reaction...}")
-    }
-}
+const debug = true;
 
-const handler = () => {
+
+const consoleFlagHandler = () => {
     console.table([{flag: "${curious_console_observer}"}])
 };
 
+const initialFlags = 5
 
 export default function Information() {
-    const [getText, setText] = useState("")
-    const [getSlams, setSlams] = useState(0)
-    // const {message} = useTypewriter({
-    //         words: [getText],
-    //         loop:1,
-    //         typeSpeed: 70,
-    //     deleteSpeed:0, delaySpeed:100
-    // })
-        return (
-            <main style={{padding: "1rem 0"}}>
-                <div>
-                    {/*<img alt="corridor" src={corridor} className="bg"/>*/}
-                    <div>Good day Comrade, call the General Secretary to receive mission debrief.</div>
-                    <button onClick={() => eraseCall(setText, setSlams, getSlams)}>Slam the phone</button>
-                    <button onClick={() => getReactorInfo(setText)}>Call</button>
-                    <div>{getText}</div>
-                </div>
-                {/*<Typewriter*/}
-                {/*    options={{*/}
-                {/*        strings: [getText],*/}
-                {/*        autoStart: true,*/}
-                {/*        loop: false,*/}
-                {/*        delay: 50*/}
-                {/*    }}*/}
-                {/*/>*/}
-                {/*<div>*/}
-                {/*{message}<span className="cursor">...</span>*/}
-                {/*</div>*/}
+    const [text, setText] = useState("")
+    const [slams, setSlams] = useState(0)
+    const [callCounter, setCallCounter] = useState(0)
+    const [flagsAmount, setFlagsAmount] = useState(initialFlags)
 
-                <img alt={""} onError={handler} src={""}></img>
+    const getReactorInfo = () => {
+        setSlams(0)
+        setText("")
+        const primaryResponse = () => axios.get("http://0.0.0.0:9011/challenge/reactor/information", {
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'application/json',
+                    'for-frontend': "only"
+                }
+            })
+                .then(response => {
+                    console.log(response.data)
+                    console.log(response.data.flagsToFind)
+                        setFlagsAmount(prevState => prevState + response.data.flagsToFind)
+                        setText(response.data.message + `\n There are ${flagsAmount} to find`)
+                    }
+                )
+        ;
 
-            </main>
-        );
+        const phoneResponses = [primaryResponse]
+        if (callCounter > phoneResponses.length - 1) {
+            setText(
+                "You want me to get you through this AGAIN?!\nFine...\n" +
+                "${angry_general_secretary}"
+            )
+            setCallCounter(0)
+        } else {
+            phoneResponses[callCounter]()
+            setCallCounter(prevState => prevState + 1)
+        }
+
     }
+
+
+    const eraseCall = () => {
+        setText("")
+        setSlams(prevSlams => prevSlams + 1)
+        console.log(slams)
+        if (slams > 5) {
+            alert("You've broken the phone... General Secretary won't be proud.\n" +
+                "You earned something however...\n" +
+                "${emotional_reaction_get_it?_reaction...}")
+        }
+    }
+
+    return (
+        <main style={{padding: "1rem 0"}}>
+            <div>
+                {/*<img alt="corridor" src={corridor} className="bg"/>*/}
+                <div>Good day Comrade, call the General Secretary to receive mission debrief.</div>
+                <button onClick={eraseCall}>Slam the phone</button>
+                <button onClick={getReactorInfo}>Call</button>
+            </div>
+
+            {text ?
+                <Typewriter
+                    text={text}
+                    loop={false}
+                    cursor={false}
+                />
+                : null
+            }
+            <span className={"cursor"}>...</span>
+
+            <img alt={""} onError={consoleFlagHandler} src={""}></img>
+
+        </main>
+    );
+}
