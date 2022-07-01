@@ -15,7 +15,7 @@ export default function Reception() {
         setText("")
         setKey("")
         if(getName === ""){
-           setText("Write your name in the form down there, Comrade...")
+           setText("Write your name in the Registrar Book down there, Comrade...")
         }
         else {
             axios.post(
