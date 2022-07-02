@@ -39,7 +39,8 @@ export default function ResetProgress() {
             backgroundColor = 'darkkhaki'
         }
         return (
-            <div ref={drop} style={{backgroundColor}} className={"handle-box has-retro-text"}>
+            <div ref={drop} style={{backgroundColor, opacity: "50%", fontSize: "2rem"}}
+                 className={"handle-box has-retro-text is-flex has-text-centered"}>
                 {isActive ? 'Release to drop' : 'Move handle here to reset the timeline'}
             </div>
         )
