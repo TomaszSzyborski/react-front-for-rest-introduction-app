@@ -1,6 +1,10 @@
 import axios from "axios";
 import {useState} from "react";
 import maleBabble from '../assets/sounds/maleBabble.mp3'
+import femaleBabble from '../assets/sounds/femaleBabble.mp3'
+import phoneRing from '../assets/sounds/phoneRing.mp3'
+import phonePickUp from '../assets/sounds/phonePickUp.mp3'
+import phoneSignalLost from '../assets/sounds/phoneSignalLost.mp3'
 import React, {useEffect} from 'react'
 import Typewriter from 'react-ts-typewriter';
 
@@ -19,11 +23,32 @@ export default function Information() {
     const [callCounter, setCallCounter] = useState(0)
     const [flagsAmount] = useState(initialFlags)
     const [visibility, setVisibility] = useState("vanished")
-    const [talking, setTalking] = useState(null)
+    const [talking, setTalking] = useState(new Audio())
+    const [disabled, setDisabled] = useState(false)
+    const defaultPhoneCallButtonClasses = "button is-large is-primary"
+    const [phoneCallClasses, setPhoneCallClasses] = useState(defaultPhoneCallButtonClasses)
+
+    const ringing = new Audio(phoneRing)
+    const pickingUp = new Audio(phonePickUp)
+    const signalLost = new Audio(phoneSignalLost)
+
+    useEffect(() => {
+        if (!text) {
+            setDisabled(false)
+        }
+    }, [text])
 
     const resetText = async () => setText("")
 
-    const getReactorInfo = async () => {
+    const mute = (audio = talking) => {
+        if (audio) {
+            audio.pause();
+            audio.currentTime = 0;
+        }
+    }
+
+    const talkToGeneralSecretary = async () => {
+        setPhoneCallClasses(prevState => prevState + " is-loading")
         setSlams(0)
         await resetText()
         const primaryResponse = () =>
@@ -40,8 +65,14 @@ export default function Information() {
                 })
         ;
 
+        //TODO create pre phone ring and pickup,
+        // and loop lost signal after slamming the phone if the call was made
+
         const phoneResponses = [
-            {message: await primaryResponse(), audio: new Audio(maleBabble)}
+            // {
+            //     message: await primaryResponse(),
+            //     audio: new Audio(maleBabble)
+            // },
             // "Proceed with the reactor test procedure!",
             // "Well... Switch to auxiliary cooling system to get things running...",
             // "Don't fail me Comrade!!!",
@@ -49,11 +80,14 @@ export default function Information() {
             // "Oh, and you better complete it before 1st of May, the Labour Day Parade is waiting for you.",
             // "If you fail me, don't even dream of Order of Lenin - a man, who's name gives nobility of OUR power plant!",
             // "... I dare you... I double dare you! Call me again and you'll see yourself in Ural mountains personally digging Uranium with your bare hands!",
-            // "General Secretary's Personal Assistant - Masha, speaking... I have something for you Comrade.... ${angry_general_secretary}"
+            {
+                message: "General Secretary's Personal Assistant - Masha, speaking... I have something for you Comrade.... ${angry_general_secretary}",
+                audio: new Audio(femaleBabble)
+            }
         ]
         if (callCounter > phoneResponses.length - 1) {
             setText(
-                "You want me to get you through this AGAIN?!</br>Fine...</br>"
+                "You want me to get you through this AGAIN?! Fine..."
             )
             localStorage.setItem("desperate-sigh", "${you're_deaf_or_just_dumb?}")
             setCallCounter(0)
@@ -65,7 +99,11 @@ export default function Information() {
     }
 
 
-    const eraseCall = () => {
+    const slamThePhone = () => {
+        setPhoneCallClasses(defaultPhoneCallButtonClasses)
+        mute()
+        setVisibility("vanished")
+        setCallCounter(prevCalls => prevCalls - 1 < 0 ? 0 : prevCalls - 1)
         setText("")
         setSlams(prevSlams => prevSlams + 1)
         if (slams > 5) {
@@ -75,35 +113,55 @@ export default function Information() {
         }
     }
 
+
     return (
-        <main style={{padding: "1rem 0"}}>
+        // <main style={{padding: "1rem 0"}}>
+        <main>
             <div>
                 <div>Good day Comrade, call the General Secretary to receive mission debrief.</div>
-                <button onClick={eraseCall}>Slam the phone</button>
-                <button onClick={getReactorInfo}>Call</button>
+                <button
+                    id={"phoneCallButton"}
+                    className={phoneCallClasses}
+                    onClick={talkToGeneralSecretary}
+                    disabled={disabled}
+                >Call
+                </button>
+
+                <button
+                    id={"slamPhoneButton"}
+                    className={"button is-large is-danger"}
+                    onClick={slamThePhone}
+                >Slam the phone
+                </button>
             </div>
 
-            {text ?
-                <Typewriter
-                    text={text}
-                    loop={false}
-                    cursor={false}
-                    onStart={()=> {
-                        talking.currentTime = 0;
-                        setVisibility("cursor")
-                        // talking.loop = true;
-                        talking.play();
-                    }}
-                    onFinished={()=> {
-                        talking.currentTime = 0;
-                        setVisibility("vanished")
-                        talking.loop = false
-                    }}
-                />
-                : null
-            }
-            <span className={visibility}>...</span>
-
+            <span id={"cathodeDisplay"}></span>
+            <div id={"callBox"}>
+                {/*<span id={"cursor"} className={visibility}>...</span>*/}
+                <div id={"text"}>
+                    {text ?
+                        <Typewriter
+                            text={text}
+                            loop={false}
+                            cursor={true}
+                            speed={75}
+                            onStart={() => {
+                                setDisabled(true)
+                                setVisibility("cursor")
+                                talking.loop = true;
+                                talking.play();
+                            }}
+                            onFinished={() => {
+                                setVisibility("vanished")
+                                setDisabled(false)
+                                mute()
+                                setPhoneCallClasses(defaultPhoneCallButtonClasses)
+                            }
+                            }
+                        /> : null
+                    }
+                </div>
+            </div>
             <img alt={""} onError={consoleFlagHandler} src={""}></img>
 
         </main>

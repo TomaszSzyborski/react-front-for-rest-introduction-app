@@ -4,16 +4,21 @@
     text-align: center;
 }
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+@font-face {
+    font-family: 'RetroFont';
+    src: url("./assets/fonts/clacon2.woff2")
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
-}
+/*.App-logo {*/
+/*    height: 40vmin;*/
+/*    pointer-events: none;*/
+/*}*/
+
+/*@media (prefers-reduced-motion: no-preference) {*/
+/*    .App-logo {*/
+/*        animation: App-logo-spin infinite 20s linear;*/
+/*    }*/
+/*}*/
 
 .App-header {
     background-color: #282c34;
@@ -80,4 +85,82 @@
     100% {
         color: #000;
     }
+}
+
+button {
+    width: 30vw;
+}
+
+#phoneCallButton {
+    position: relative;
+    display: block;
+    top: 20vh;
+    left: 10vh;
+}
+
+#slamPhoneButton {
+    position: relative;
+    display: block;
+    top: 20vh;
+    left: 10vh;
+}
+
+#callBox {
+    /*font-family: RetroFont source-code-pro, Menlo, Monaco, Consolas, 'Courier New';*/
+    font-family: RetroFont;
+    font-size: 2rem;
+    display: flex;
+    flex-direction: column-reverse;
+    /*overflow-y: scroll;*/
+    scroll-snap-type: y mandatory;
+    /*background: linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5));*/
+    position: relative;
+    top: 8vh;
+    left: 52vw;
+    right: 80vw;
+    height: 9vh;
+    width: 30vw;
+    color: #fee;
+    overflow-y: auto;
+    /*text-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em #ff4444, 0 0 0.5em #ff4444, 0 0 0.1em #ff4444, 0 10px 3px #000;*/
+    text-shadow: 0 -2px 7px, 0 -2px 2px, -5px -5px 1em #ff4444, 0 -2px 0.5em #ff4444, 0 0 0.1em #ff4444, 10px 10px 3px #faa;
+
+}
+
+#cathodeDisplay{
+    width: 50vw;
+    height: 55vh;
+    /*background-image: url("./assets/images/cathodeDisplay.png");*/
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    background-color: black;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) , url("./assets/images/cathodeDisplay.png");
+    top: 20vh;
+    right: 5vw;
+    /*padding-left: 20vw;*/
+    /*margin-left: -20vw;*/
+}
+
+#callBox #text {
+    height: auto;
+}
+
+.buttonDivider {
+    width: 1vw;
+    height: 20vh;
+}
+
+.industrialButton {
+  margin: 0 auto;
+    text-wrap: normal;
+    background-image: url("./assets/images/industrialButton.png");
+    background-size:150px;
+    width: 150px;
+    height: 150px;
+    font-family: RetroFont;
+    text-align: center;
+    color: #fee;
+    text-shadow: 0 5px 5px, 0 0 2px, 0 0 1em #000000, 0 0 0.1em #000000, 0 0 0.1em #ff4444, 0 10px 3px #000;
 }
