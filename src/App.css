@@ -185,6 +185,12 @@ button {
     color: #fee;
 }
 
+.has-big-retro-dark-text {
+    font-family: RetroFont;
+    font-size: 7vh;
+    color: rebeccapurple;
+}
+
 #information-gathering-instruction {
     align-content: center;
     height: 30vh;

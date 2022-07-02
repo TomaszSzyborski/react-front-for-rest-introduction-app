@@ -14,7 +14,7 @@ const consoleFlagHandler = () => {
     console.table([{flag: "${curious_console_observer}"}])
 };
 
-const initialFlags = 6
+const initialFlags = 7
 
 const ringing = new Audio(phoneRing)
 const pickingUp = new Audio(phonePickUp)
