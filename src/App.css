@@ -127,7 +127,7 @@ button {
 
 }
 
-#cathodeDisplay{
+#cathodeDisplay {
     width: 50vw;
     height: 55vh;
     /*background-image: url("./assets/images/cathodeDisplay.png");*/
@@ -136,7 +136,7 @@ button {
     background-size: cover;
     position: absolute;
     background-color: black;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) , url("./assets/images/cathodeDisplay.png");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)), url("./assets/images/cathodeDisplay.png");
     top: 20vh;
     right: 5vw;
     /*padding-left: 20vw;*/
@@ -153,14 +153,27 @@ button {
 }
 
 .industrialButton {
-  margin: 0 auto;
+    margin: 0 auto;
     text-wrap: normal;
     background-image: url("./assets/images/industrialButton.png");
-    background-size:150px;
+    background-size: 150px;
     width: 150px;
     height: 150px;
     font-family: RetroFont;
     text-align: center;
     color: #fee;
     text-shadow: 0 5px 5px, 0 0 2px, 0 0 1em #000000, 0 0 0.1em #000000, 0 0 0.1em #ff4444, 0 10px 3px #000;
+}
+
+.retro-text {
+    font-family: RetroFont;
+    color: #fee;
+    text-align: auto;
+    font-size: 3rem;
+    text-wrap: normal;
+    text-overflow: ellipsis;
+ direction:rtl;
+  text-align: left;
+  unicode-bidi: plaintext;
+  text-overflow: ellipsis;
 }

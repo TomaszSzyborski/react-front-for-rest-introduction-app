@@ -46,8 +46,16 @@ export default function Information() {
             audio.currentTime = 0;
         }
     }
+    const playAudioAndWait = async (audio) => {
+        await new Promise(res => {
+            audio.play()
+            audio.onended = res
+        })
+    }
 
     const talkToGeneralSecretary = async () => {
+        await playAudioAndWait(ringing)
+        await playAudioAndWait(pickingUp)
         setPhoneCallClasses(prevState => prevState + " is-loading")
         setSlams(0)
         await resetText()
@@ -117,50 +125,55 @@ export default function Information() {
     return (
         // <main style={{padding: "1rem 0"}}>
         <main>
-            <div>
-                <div>Good day Comrade, call the General Secretary to receive mission debrief.</div>
-                <button
-                    id={"phoneCallButton"}
-                    className={phoneCallClasses}
-                    onClick={talkToGeneralSecretary}
-                    disabled={disabled}
-                >Call
-                </button>
+                <div >
+                    <div className={"retro-text"}>
+                        Good day Comrade, call the General Secretary to receive mission
+                        debrief.
+                    </div>
+                    <button
+                        id={"phoneCallButton"}
+                        className={phoneCallClasses}
+                        onClick={talkToGeneralSecretary}
+                        disabled={disabled}
+                    >Call
+                    </button>
 
-                <button
-                    id={"slamPhoneButton"}
-                    className={"button is-large is-danger"}
-                    onClick={slamThePhone}
-                >Slam the phone
-                </button>
-            </div>
-
-            <span id={"cathodeDisplay"}></span>
-            <div id={"callBox"}>
-                {/*<span id={"cursor"} className={visibility}>...</span>*/}
-                <div id={"text"}>
-                    {text ?
-                        <Typewriter
-                            text={text}
-                            loop={false}
-                            cursor={true}
-                            speed={75}
-                            onStart={() => {
-                                setDisabled(true)
-                                setVisibility("cursor")
-                                talking.loop = true;
-                                talking.play();
-                            }}
-                            onFinished={() => {
-                                setVisibility("vanished")
-                                setDisabled(false)
-                                mute()
-                                setPhoneCallClasses(defaultPhoneCallButtonClasses)
-                            }
-                            }
-                        /> : null
-                    }
+                    <button
+                        id={"slamPhoneButton"}
+                        className={"button is-large is-danger"}
+                        onClick={slamThePhone}
+                    >Slam the phone
+                    </button>
                 </div>
+
+                <div >
+                    <span id={"cathodeDisplay"}></span>
+                    <div id={"callBox"}>
+                        {/*<span id={"cursor"} className={visibility}>...</span>*/}
+                        <div id={"text"}>
+                            {text ?
+                                <Typewriter
+                                    text={text}
+                                    loop={false}
+                                    cursor={true}
+                                    speed={75}
+                                    onStart={() => {
+                                        setDisabled(true)
+                                        setVisibility("cursor")
+                                        talking.loop = true;
+                                        talking.play();
+                                    }}
+                                    onFinished={() => {
+                                        setVisibility("vanished")
+                                        setDisabled(false)
+                                        mute()
+                                        setPhoneCallClasses(defaultPhoneCallButtonClasses)
+                                    }
+                                    }
+                                /> : null
+                            }
+                        </div>
+                    </div>
             </div>
             <img alt={""} onError={consoleFlagHandler} src={""}></img>
 
