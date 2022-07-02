@@ -54,11 +54,12 @@ export default function Information() {
     }
 
     const talkToGeneralSecretary = async () => {
+        await resetText()
         await playAudioAndWait(ringing)
         await playAudioAndWait(pickingUp)
         setPhoneCallClasses(prevState => prevState + " is-loading")
         setSlams(0)
-        await resetText()
+
         const primaryResponse = () =>
             axios.get("http://0.0.0.0:9011/challenge/reactor/information", {
                 headers: {
@@ -125,7 +126,8 @@ export default function Information() {
     return (
         // <main style={{padding: "1rem 0"}}>
         <main>
-                <div >
+            <div className={"columns"}>
+                <div className={"column is-one-third"}>
                     <div className={"retro-text"}>
                         Good day Comrade, call the General Secretary to receive mission
                         debrief.
@@ -146,34 +148,32 @@ export default function Information() {
                     </button>
                 </div>
 
-                <div >
+                <div className={"column is-two-thirds"}>
                     <span id={"cathodeDisplay"}></span>
-                    <div id={"callBox"}>
-                        {/*<span id={"cursor"} className={visibility}>...</span>*/}
-                        <div id={"text"}>
-                            {text ?
-                                <Typewriter
-                                    text={text}
-                                    loop={false}
-                                    cursor={true}
-                                    speed={75}
-                                    onStart={() => {
-                                        setDisabled(true)
-                                        setVisibility("cursor")
-                                        talking.loop = true;
-                                        talking.play();
-                                    }}
-                                    onFinished={() => {
-                                        setVisibility("vanished")
-                                        setDisabled(false)
-                                        mute()
-                                        setPhoneCallClasses(defaultPhoneCallButtonClasses)
-                                    }
-                                    }
-                                /> : null
-                            }
-                        </div>
+                    <div className={"cathodeText"}>
+                        {text ?
+                            <Typewriter
+                                text={text}
+                                loop={false}
+                                cursor={true}
+                                speed={75}
+                                onStart={() => {
+                                    setDisabled(true)
+                                    setVisibility("cursor")
+                                    talking.loop = true;
+                                    talking.play();
+                                }}
+                                onFinished={() => {
+                                    setVisibility("vanished")
+                                    setDisabled(false)
+                                    mute()
+                                    setPhoneCallClasses(defaultPhoneCallButtonClasses)
+                                }
+                                }
+                            /> : null
+                        }
                     </div>
+                </div>
             </div>
             <img alt={""} onError={consoleFlagHandler} src={""}></img>
 
