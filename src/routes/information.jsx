@@ -5,11 +5,10 @@ import femaleBabble from '../assets/sounds/femaleBabble.mp3'
 import phoneRing from '../assets/sounds/phoneRing.mp3'
 import phonePickUp from '../assets/sounds/phonePickUp.mp3'
 import phoneSignalLost from '../assets/sounds/phoneSignalLost.mp3'
+import phoneHangUp from '../assets/sounds/phoneHangUp.mp3'
+import phoneDestruction from '../assets/sounds/phoneDestruction.mp3'
 import React, {useEffect} from 'react'
 import Typewriter from 'react-ts-typewriter';
-
-const debug = true;
-
 
 const consoleFlagHandler = () => {
     console.table([{flag: "${curious_console_observer}"}])
@@ -17,27 +16,29 @@ const consoleFlagHandler = () => {
 
 const initialFlags = 6
 
+const ringing = new Audio(phoneRing)
+const pickingUp = new Audio(phonePickUp)
+const signalLost = new Audio(phoneSignalLost)
+
 export default function Information() {
     const [text, setText] = useState("")
     const [slams, setSlams] = useState(0)
     const [callCounter, setCallCounter] = useState(0)
     const [flagsAmount] = useState(initialFlags)
-    const [visibility, setVisibility] = useState("vanished")
     const [talking, setTalking] = useState(new Audio())
-    const [disabled, setDisabled] = useState(false)
     const defaultPhoneCallButtonClasses = "button is-large is-primary"
     const [phoneCallClasses, setPhoneCallClasses] = useState(defaultPhoneCallButtonClasses)
-
-    const ringing = new Audio(phoneRing)
-    const pickingUp = new Audio(phonePickUp)
-    const signalLost = new Audio(phoneSignalLost)
+    const [phoneDestroyed, setPhoneDestroyed] = useState(false)
+    const [slamButtonDisabled, setSlamButtonDisabled] = useState(false)
+    const [callButtonDisabled, setCallButtonDisabled] = useState(false)
 
     useEffect(() => {
-        if (!text) {
-            setDisabled(false)
+        if (phoneDestroyed || localStorage.isPhoneDestroyed) {
+            setCallButtonDisabled(true)
+            setSlamButtonDisabled(true)
+            localStorage.isPhoneDestroyed = true
         }
-    }, [text])
-
+    }, [phoneDestroyed])
     const resetText = async () => setText("")
 
     const mute = (audio = talking) => {
@@ -54,11 +55,14 @@ export default function Information() {
     }
 
     const talkToGeneralSecretary = async () => {
+        await setSlamButtonDisabled(true)
+        await setPhoneCallClasses(prevState => prevState + " is-loading")
+        await setSlams(0)
+
         await resetText()
         await playAudioAndWait(ringing)
         await playAudioAndWait(pickingUp)
-        setPhoneCallClasses(prevState => prevState + " is-loading")
-        setSlams(0)
+        await setSlamButtonDisabled(false)
 
         const primaryResponse = () =>
             axios.get("http://0.0.0.0:9011/challenge/reactor/information", {
@@ -75,7 +79,7 @@ export default function Information() {
         ;
 
         //TODO create pre phone ring and pickup,
-        // and loop lost signal after slamming the phone if the call was made
+        // and loop lost signal after ming the phone if the call was made
 
         const phoneResponses = [
             // {
@@ -108,48 +112,58 @@ export default function Information() {
     }
 
 
-    const slamThePhone = () => {
+    const slamThePhone = async () => {
         setPhoneCallClasses(defaultPhoneCallButtonClasses)
         mute()
-        setVisibility("vanished")
+        mute(signalLost)
         setCallCounter(prevCalls => prevCalls - 1 < 0 ? 0 : prevCalls - 1)
         setText("")
         setSlams(prevSlams => prevSlams + 1)
         if (slams > 5) {
+            setPhoneDestroyed(true)
             alert("You've broken the phone... General Secretary won't be proud.\n" +
                 "You earned something however...\n" +
                 "${emotional_reaction_get_it?_reaction...}")
+            await playAudioAndWait(new Audio(phoneDestruction))
+        } else {
+            await playAudioAndWait(new Audio(phoneHangUp))
         }
     }
 
 
     return (
-        // <main style={{padding: "1rem 0"}}>
         <main>
-            <div className={"columns"}>
-                <div className={"column is-one-third"}>
-                    <div className={"retro-text"}>
-                        Good day Comrade, call the General Secretary to receive mission
-                        debrief.
+            <div className={"columns is-vcentered"}>
+                <div className={"column is-one-third"}
+                style={{position: "absolute"}}>
+                    <div style={{position: "relative"}}>
+                        <div id={"information-gathering-instruction"}
+                             className={"has-retro-text"}
+                        style={{position: "absolute"}}>
+                            Good day Comrade, call the General Secretary to receive mission debrief.
+                        </div>
                     </div>
-                    <button
-                        id={"phoneCallButton"}
-                        className={phoneCallClasses}
-                        onClick={talkToGeneralSecretary}
-                        disabled={disabled}
-                    >Call
-                    </button>
+                    <div style={{position: "relative", top:"20vh"}}>
+                        <button
+                            id={"phoneCallButton"}
+                            className={phoneCallClasses}
+                            onClick={talkToGeneralSecretary}
+                            disabled={callButtonDisabled}
+                        >Call
+                        </button>
 
-                    <button
-                        id={"slamPhoneButton"}
-                        className={"button is-large is-danger"}
-                        onClick={slamThePhone}
-                    >Slam the phone
-                    </button>
+                        <button
+                            id={"slamPhoneButton"}
+                            className={"button is-large is-danger"}
+                            onClick={slamThePhone}
+                            disabled={slamButtonDisabled}
+                        >Slam the phone
+                        </button>
+                    </div>
                 </div>
 
                 <div className={"column is-two-thirds"}>
-                    <span id={"cathodeDisplay"}></span>
+                    <span id={"cathodeDisplay"}>
                     <div className={"cathodeText"}>
                         {text ?
                             <Typewriter
@@ -158,21 +172,20 @@ export default function Information() {
                                 cursor={true}
                                 speed={75}
                                 onStart={() => {
-                                    setDisabled(true)
-                                    setVisibility("cursor")
                                     talking.loop = true;
                                     talking.play();
                                 }}
-                                onFinished={() => {
-                                    setVisibility("vanished")
-                                    setDisabled(false)
-                                    mute()
-                                    setPhoneCallClasses(defaultPhoneCallButtonClasses)
+                                onFinished={async () => {
+                                    await mute()
+                                    await setPhoneCallClasses(defaultPhoneCallButtonClasses)
+                                    await playAudioAndWait(signalLost)
                                 }
                                 }
                             /> : null
                         }
                     </div>
+
+                    </span>
                 </div>
             </div>
             <img alt={""} onError={consoleFlagHandler} src={""}></img>

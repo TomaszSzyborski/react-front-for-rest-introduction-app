@@ -7,7 +7,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Information from "./routes/information";
 import Reception from "./routes/reception";
 import ControlRoom from "./routes/controlroom";
-import Resetprogress from "./routes/resetprogress";
+import ResetProgress from "./routes/resetprogress";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root")
@@ -20,7 +20,7 @@ root.render(
         <Route path="/information" element={<Information />} />
         <Route path="/reception" element={<Reception />} />
         <Route path="/controlroom" element={<ControlRoom />} />
-        <Route path="/resetprogress" element={<Resetprogress />} />
+        <Route path="/resetprogress" element={<ResetProgress />} />
       </Route>
     </Routes>
   </BrowserRouter>

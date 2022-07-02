@@ -116,7 +116,7 @@ button {
     /*background: linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5));*/
     position: relative;
     top: 22.5vh;
-    left: 20vw;
+    left: 10vw;
     height: 9vh;
     width: 25vw;
     color: #fee;
@@ -144,7 +144,7 @@ button {
     height: 20vh;
 }
 
-.industrialButton {
+.industrialButton {;
     margin: 0 auto;
     text-wrap: normal;
     background-image: url("./assets/images/industrialButton.png");
@@ -157,15 +157,86 @@ button {
     text-shadow: 0 5px 5px, 0 0 2px, 0 0 1em #000000, 0 0 0.1em #000000, 0 0 0.1em #ff4444, 0 10px 3px #000;
 }
 
+.resetProgressButton {
+    margin: 0 auto;
+    text-wrap: normal;
+    background-size: 150px;
+    width: 50%;
+    height: 50vh;
+    font-family: RetroFont;
+    text-align: center;
+    color: #fee;
+}
+
 .retro-text {
     font-family: RetroFont;
     color: #fee;
-    text-align: auto;
+    text-align: center;
     font-size: 3rem;
     text-wrap: normal;
     text-overflow: ellipsis;
- direction:rtl;
-  text-align: left;
-  unicode-bidi: plaintext;
-  text-overflow: ellipsis;
+    direction: rtl;
+    unicode-bidi: plaintext;
+}
+
+.has-retro-text {
+    font-family: RetroFont;
+    font-size: 5vh;
+    color: #fee;
+}
+
+#information-gathering-instruction {
+    align-content: center;
+    height: 30vh;
+    max-height: 30vh;
+    margin-top: 5vh;
+    margin-left: 10rem;
+    text-align: center;
+    position: center;
+    text-wrap: normal;
+    text-overflow: ellipsis;
+    overflow-y: scroll;
+    /*vertical-align: baseline;*/
+    /*vertical-align: center;*/
+}
+
+.handle {
+    margin-left: 25vw;
+    height: 10rem;
+    width: 40rem;
+    size: 2rem;
+    background-image: url("./assets/images/hazardStripes.jpeg");
+    background-size: 105%;
+    background-position: center center;
+    border-radius: 100px;
+}
+
+.handle-box {
+    margin-left: 25vw;
+    height: 10rem;
+    width: 40rem;
+    size: 2rem;
+    background-size: 105%;
+    background-position: center center;
+    border-radius: 100px;
+    border: 1px dashed gray;
+    background-color: white;
+    padding: 0.5rem 1rem;
+    margin-right: 1.5rem;
+    margin-bottom: 1.5rem;
+    cursor: move;
+    float: left;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.spacer {
+    position: relative;
+    height: 40vh
+}
+
+.vertical-line {
+    border-left: 6px solid white;
+    height: 40vh;
+    position: absolute;
 }
