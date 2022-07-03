@@ -1,55 +1,72 @@
 import './App.css';
-import {Link} from "react-router-dom";
-
-import {Outlet} from "react-router-dom";
+import {BrowserRouter, Link, Redirect, Route, Outlet, StaticRouter} from "react-router-dom";
 
 import radioActiveIcon from './assets/images/radioactiveBasic.png'
-import {useEffect, useState} from "react";
+import Home from "./routes/home";
+import Information from "./routes/information";
+import ControlRoom from "./routes/controlroom";
+import ResetProgress from "./routes/resetprogress";
+import Reception from "./routes/reception";
+
+export const toggleActive = (element) => {
+    element.classList.toggle('is-active')
+}
+
+export const toggleTransparentBackround = (element) => {
+    element.style.toggle({background: "transparent"})
+}
 
 function App() {
-    const toggleActive = (element) => {
-        element.classList.toggle('is-active')
-    }
+
+
     return (
-        <div>
-            <nav className="navbar is-transparent top-bar">
+        <div id={"main-application"}>
+            <nav className="navbar is-dark top-bar engraved is-boxed">
                 <div className="navbar-brand">
-                    <a className="navbar-item">
-                        <img src={radioActiveIcon}
-                             style={{width: "112", height: "112"}}/>
-                    </a>
+                    <div className="navbar-item"
+                         onClick={(element) => {
+                             toggleTransparentBackround(element)
+                         }}
+                    >
+                        <Link className="navbar-item"
+                              onClick={toggleActive}
+                              to="/home">
+                            <img src={radioActiveIcon}
+                                 className={"radiation-hazard"}
+                                 alt={"${just_chernobyl_things}"}
+                            />
+                        </Link>
+                    </div>
                 </div>
 
-
-                <div className="navbar-menu">
+                <div className="navbar-menu has-text-centered">
                     <div className="navbar-start">
-                        <a className="navbar-item" href="https://bulma.io/">
-                            Home
-                        </a>
+
                         <div className={`navbar-item has-dropdown is-hoverable`}>
-                            <a className="navbar-link">
+                            <a className="navbar-link navigation-option-button">
                                 Navigate
                             </a>
-                            <div className="navbar-dropdown is-boxed">
-                                <Link className="navbar-item"
+                            <div className="navbar-dropdown ivory-background engraved">
+
+                                <Link className="navbar-item navigation-option-button"
                                       onClick={toggleActive}
                                       to="/information">
                                     Information
                                 </Link>
-                                <Link className="navbar-item"
+                                <Link className="navbar-item navigation-option-button"
                                       onClick={toggleActive}
                                       to="/reception">
                                     Reception
                                 </Link>
-                                <Link className="navbar-item"
+                                <Link className="navbar-item navigation-option-button"
                                       onClick={toggleActive}
                                       to="/controlroom">
                                     Control Room
                                 </Link>
-                                <Link className="navbar-item"
+                                <Link className="navbar-item navigation-option-button"
                                       onClick={toggleActive}
                                       to="/resetprogress">
-                                    [REDACTED] Machine
+                                    [REDACTED]
                                 </Link>
                             </div>
                         </div>

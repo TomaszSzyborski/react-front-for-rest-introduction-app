@@ -21,16 +21,19 @@ const pickingUp = new Audio(phonePickUp)
 const signalLost = new Audio(phoneSignalLost)
 
 export default function Information() {
+
+    const defaultPhoneCallButtonClasses = "button is-large is-primary"
+
     const [text, setText] = useState("")
     const [slams, setSlams] = useState(0)
     const [callCounter, setCallCounter] = useState(0)
     const [flagsAmount] = useState(initialFlags)
     const [talking, setTalking] = useState(new Audio())
-    const defaultPhoneCallButtonClasses = "button is-large is-primary"
     const [phoneCallClasses, setPhoneCallClasses] = useState(defaultPhoneCallButtonClasses)
     const [phoneDestroyed, setPhoneDestroyed] = useState(false)
     const [slamButtonDisabled, setSlamButtonDisabled] = useState(false)
     const [callButtonDisabled, setCallButtonDisabled] = useState(false)
+
 
     useEffect(() => {
         if (phoneDestroyed || localStorage.isPhoneDestroyed) {
