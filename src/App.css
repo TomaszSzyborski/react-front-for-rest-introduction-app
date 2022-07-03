@@ -338,8 +338,8 @@ button {
 /*}*/
 
 /*TODO fix reactor rendering image*/
-/*.radiation-hazard{*/
-/*  object-fit: cover;*/
-/*    width: 10vh;*/
-/*    height: 10vh;*/
-/*}*/
+.radiation-hazard {
+    object-fit: cover;
+    height: auto;
+    width: 100%;
+}

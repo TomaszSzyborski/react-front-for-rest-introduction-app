@@ -12,7 +12,7 @@ export const toggleActive = (element) => {
     element.classList.toggle('is-active')
 }
 
-export const toggleTransparentBackround = (element) => {
+export const toggleTransparentBackground = (element) => {
     element.style.toggle({background: "transparent"})
 }
 
@@ -25,7 +25,7 @@ function App() {
                 <div className="navbar-brand">
                     <div className="navbar-item"
                          onClick={(element) => {
-                             toggleTransparentBackround(element)
+                             toggleTransparentBackground(element)
                          }}
                     >
                         <Link className="navbar-item"
@@ -33,7 +33,6 @@ function App() {
                               to="/home">
                             <img src={radioActiveIcon}
                                  className={"radiation-hazard"}
-                                 alt={"${just_chernobyl_things}"}
                             />
                         </Link>
                     </div>
