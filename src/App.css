@@ -230,6 +230,7 @@ button {
     padding: 0.5rem 1rem;
     margin-right: 1.5rem;
     margin-bottom: 1.5rem;
+    /*margin-bottom: 10vh;*/
     cursor: move;
     float: left;
     text-align: center;
@@ -245,4 +246,23 @@ button {
     border-left: 6px solid white;
     height: 40vh;
     position: absolute;
+    transform-box: border-box;
+    /*box-shadow: black;*/
+    /*box-shadow: rgba(0, 0, 0, 0.3) -30px 0px 38px, rgba(0, 0, 0, 0.22) -16px 0px 12px;*/
+    /*box-shadow: rgba(1, 1, 1, 0.3) -30px 0px 38px, rgba(0, 0, 0, 0.22) -16px 0px 12px;*/
+}
+
+.has-text-vertically-centered {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.top-bar {
+    background-image: url("./assets/images/rustyPanel.png");
+    background-position: -50vh;
+    background-size: 50%;
+    background-repeat: repeat;
+
 }

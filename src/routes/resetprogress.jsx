@@ -40,7 +40,7 @@ export default function ResetProgress() {
         }
         return (
             <div ref={drop} style={{backgroundColor, opacity: "50%", fontSize: "2rem"}}
-                 className={"handle-box has-retro-text is-flex has-text-centered"}>
+                 className={"handle-box has-retro-text has-text-centered has-text-vertically-centered"}>
                 {isActive ? 'Release to drop' : 'Move handle here to reset the timeline'}
             </div>
         )
@@ -123,21 +123,10 @@ export default function ResetProgress() {
     return (
 
         <main style={{padding: "1rem 0"}}>
-            <div className={`modal ${modalActive}`}>
-                <div className="modal-background"></div>
-                <div className="modal-content">
-                    <p className="modal-card-body has-text-centered has-big-retro-dark-text is-size-1">
-                        {message}
-                    </p>
-                </div>
-                <button className="modal-close is-large" aria-label="close" onClick={() => {
-                    setModalActive("")
-                }}></button>
-            </div>
-
             <form className={"field has-addons"} style={{
-                margin: "auto",
+                margin: "0 auto",
                 width: "50%",
+                padding: "1rem"
             }}>
                 <div className={"control"} style={{width: "30vw"}}>
                     <input className="input" type="text" placeholder="Put your key here, Comrade..."
@@ -164,6 +153,18 @@ export default function ResetProgress() {
                     </button>
                 </div>
 
+            </div>
+
+            <div className={`modal ${modalActive}`}>
+                <div className="modal-background"></div>
+                <div className="modal-content">
+                    <p className="modal-card-body has-text-centered has-big-retro-dark-text is-size-1">
+                        {message}
+                    </p>
+                </div>
+                <button className="modal-close is-large" aria-label="close" onClick={() => {
+                    setModalActive("")
+                }}></button>
             </div>
         </main>
     )
