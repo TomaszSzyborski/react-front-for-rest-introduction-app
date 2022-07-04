@@ -421,6 +421,17 @@ button {
     height: 10vh
 }
 
+.spacer-one-twelfth-height {
+    position: relative;
+    height: 8.33vh
+}
+
+
+.spacer-one-twentieth-height {
+    position: relative;
+    height: 5vh
+}
+
 .is-vcentered {
   display: flex;
   flex-wrap: wrap;
