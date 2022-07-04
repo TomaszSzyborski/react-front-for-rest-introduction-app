@@ -1,6 +1,7 @@
 import axios from "axios";
 import {useEffect, useRef, useState} from "react";
 import Select from 'react-select'
+import AsyncSelect from "react-select/async";
 
 const welcomeText = "Busy night, Comrade, let's proceed with the test. Open the Control room, please..."
 
@@ -17,7 +18,7 @@ export default function ControlRoom() {
     const [mainText, setMainText] = useState(welcomeText)
     const [key, setKey] = useState("")
     const [text, setText] = useState("")
-
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
     const changeCommanderView = () => {
         if (key === "") {
             setText("Have you dropped the key somewhere?!")
@@ -31,11 +32,13 @@ export default function ControlRoom() {
                     },
                 })
                 .then(response => {
-                        setKey(response.data.message)
+                        setText(response.data.message)
                     }
-                ).catch(error =>
-                    setText(error.response.data.message)
-            )
+                )
+                .catch(error => {
+                        setText(error.response.data.message)
+                    }
+                )
         }
     }
 
@@ -43,7 +46,13 @@ export default function ControlRoom() {
     return (
         <main style={{padding: "1rem 0"}}>
             <div>
-                {mainText}
+                <div>
+                    {mainText}
+                </div>
+                <div>
+                    {text}
+                </div>
+
             </div>
             <div>
                 Remember to keep they key with you, wherever you're going.
@@ -51,9 +60,19 @@ export default function ControlRoom() {
                        value={key}
                        onChange={e => setKey(e.target.value)}></input>
             </div>
-            <Select
-                onChange={changeCommanderView}
-                options={optionsInTheRoom}
+            <AsyncSelect
+                menuIsOpen={isMenuOpen}
+                blurInputOnSelect={true}
+                onChange={() => {
+                    setIsMenuOpen(false)
+                }}
+                onFocus={() => setIsMenuOpen(true)}
+                onMenuClose={() => {
+                    changeCommanderView()
+                }}
+                onSelectResetsInput={false}
+                cacheOptions
+                defaultOptions={optionsInTheRoom}
                 isSearchable={true}
                 noOptionsMessage={() => flag}
                 placeholder={"Select control view"}

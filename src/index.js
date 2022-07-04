@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
-import Information from "./routes/information";
+import Office from "./routes/office";
 import Reception from "./routes/reception";
 import ControlRoom from "./routes/controlroom";
 import ResetProgress from "./routes/resetprogress";
@@ -19,7 +19,7 @@ root.render(
         <App/>
         <Routes>
             <Route path="*" element={<Navigate to="/home" replace />}/>
-            <Route exact path="/information" element={<Information/>}/>
+            <Route exact path="/office" element={<Office/>}/>
             <Route exact path="/reception" element={<Reception/>}/>
             <Route exact path="/controlroom" element={<ControlRoom/>}/>
             <Route exact path="/resetprogress" element={<ResetProgress/>}/>

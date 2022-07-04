@@ -20,7 +20,7 @@ const ringing = new Audio(phoneRing)
 const pickingUp = new Audio(phonePickUp)
 const signalLost = new Audio(phoneSignalLost)
 
-export default function Information() {
+export default function Office() {
 
     const defaultPhoneCallButtonClasses = "button is-large is-primary"
 
@@ -85,13 +85,22 @@ export default function Information() {
         // and loop lost signal after ming the phone if the call was made
 
         const phoneResponses = [
-            // {
-            //     message: await primaryResponse(),
-            //     audio: new Audio(maleBabble)
-            // },
-            // "Proceed with the reactor test procedure!",
-            // "Well... Switch to auxiliary cooling system to get things running...",
-            // "Don't fail me Comrade!!!",
+            {
+                message: await primaryResponse(),
+                audio: new Audio(maleBabble)
+            },
+            {
+                message: "Proceed with the reactor test procedure!",
+                audio: new Audio(maleBabble)
+            },
+            {
+                message: "Well... Switch to auxiliary cooling system to get things running...",
+                audio: new Audio(maleBabble)
+            },
+            {
+                message: "Don't fail me Comrade!!!",
+                audio: new Audio(maleBabble)
+            },
             // "Listen here... It's the end of the month! All factories are pushing their limits, so - no postponing.",
             // "Oh, and you better complete it before 1st of May, the Labour Day Parade is waiting for you.",
             // "If you fail me, don't even dream of Order of Lenin - a man, who's name gives nobility of OUR power plant!",
@@ -135,18 +144,19 @@ export default function Information() {
 
 
     return (
-        <main>
-            <div className={"columns is-vcentered"}>
-                <div className={"column is-one-third"}
-                style={{position: "absolute"}}>
-                    <div style={{position: "relative"}}>
-                        <div id={"information-gathering-instruction"}
-                             className={"has-retro-text"}
-                        style={{position: "absolute"}}>
-                            Good day Comrade, call the General Secretary to receive mission debrief.
-                        </div>
+        <main className={"office-background"}>
+            <div className={"columns is-multiline is-vcentered has-text-centered"}>
+                <div className={"column is-two-fifths"}>
+                    {/*<div>*/}
+                        {/*<div className={"spacer-one-tenth-height"}></div>*/}
+                        {/*<div id={"information-gathering-instruction"}*/}
+                        {/*     className={"has-retro-text has-text-vertically-centered"}>*/}
+                        {/*    Good day Comrade, call the General Secretary to receive mission debrief.*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
+                    <div className={"spacer-quarter-height"}>
                     </div>
-                    <div style={{position: "relative", top:"20vh"}}>
+                    <div className={"column is-one-fifth phone is-align-items-end"}>
                         <button
                             id={"phoneCallButton"}
                             className={phoneCallClasses}
@@ -154,7 +164,6 @@ export default function Information() {
                             disabled={callButtonDisabled}
                         >Call
                         </button>
-
                         <button
                             id={"slamPhoneButton"}
                             className={"button is-large is-danger"}
