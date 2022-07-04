@@ -337,9 +337,19 @@ button {
 /*    animation: animatedBackground 20s linear infinite alternate;*/
 /*}*/
 
-/*TODO fix reactor rendering image*/
 .radiation-hazard {
-    object-fit: cover;
+    /*object-fit: cover;*/
+    /*object-fit: fill;*/
+    /*height: 200px!important;*/
+    /*width: 100%;*/
+    background: url(./assets/images/radioactiveBasic.png) no-repeat center center;
+    background-size: contain;
+    width: 5vw;
     height: auto;
-    width: 100%;
+    /*width: 152px*/
+}
+
+
+.fill-container{
+    height: 100%;
 }

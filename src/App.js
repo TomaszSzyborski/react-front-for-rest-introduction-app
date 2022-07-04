@@ -23,18 +23,11 @@ function App() {
         <div id={"main-application"}>
             <nav className="navbar is-dark top-bar engraved is-boxed">
                 <div className="navbar-brand">
-                    <div className="navbar-item"
+                    <div className="navbar-item is-flex"
                          onClick={(element) => {
                              toggleTransparentBackground(element)
                          }}
-                    >
-                        <Link className="navbar-item"
-                              onClick={toggleActive}
-                              to="/home">
-                            <img src={radioActiveIcon}
-                                 className={"radiation-hazard"}
-                            />
-                        </Link>
+                    ><a href={"/"} className={"radiation-hazard fill-container"}></a>
                     </div>
                 </div>
 
