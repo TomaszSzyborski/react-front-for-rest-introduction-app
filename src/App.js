@@ -9,7 +9,6 @@ import ResetProgress from "./routes/resetprogress";
 import Reception from "./routes/reception";
 import uuid from 'react-uuid'
 
-
 export const toggleActive = (element) => {
     element.classList.toggle('is-active')
 }
@@ -24,6 +23,7 @@ const navigationOptions = [
     {link: "/reception", name: "Reception"},
     {link: "/controlroom", name: "Control Room"},
     {link: "/resetprogress", name: "[REDACTED]"},
+    {link: "/test", name: "[test]"},
 ]
 
 function App() {
@@ -52,10 +52,12 @@ function App() {
                                 )}
                             </div>
                         </div>
-                          <div className={"navbar-item navigation-option-button"} id={"where-am-i"}>
+                        <div className={"navbar-item navigation-option-button"} id={"where-am-i"}>
                             {navigationOptions.find((it) =>
                                 it.link === window.location.pathname)?.name || "Prypiat"}
                         </div>
+                    </div>
+                    <div className={"navbar-end"}>
                     </div>
                 </div>
             </nav>

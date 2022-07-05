@@ -1,6 +1,7 @@
 import axios from "axios";
 import {useEffect, useRef, useState} from "react";
 import React from "react";
+import {bulmaQuickview} from 'bulma-extensions';
 
 const greeting = "Evening, Comrade!\n" +
     "Let me fetch the keys, while you write your name in the workbook"
@@ -11,20 +12,20 @@ const alreadyAtWork = "Akimov, Aleksandr Fyodorovich\n" +
     "Toptunov, Leonid Fedorovych\n"
 
 export default function Reception() {
-    const [getText, setText] = useState(greeting)
-    const [getName, setName] = useState("");
-    const [getKey, setKey] = useState("");
+    const [text, setText] = useState(greeting)
+    const [name, setName] = useState("");
+    const [key, setKey] = useState("");
 
     const registerAtDesk = (event) => {
         event.preventDefault();
         setText("")
         setKey("")
-        if (!getName) {
+        if (!name) {
             setText("Write your name in the Registrar Book down there, Comrade...")
         } else {
             axios.post(
                 "http://0.0.0.0:9011/challenge/reactor/desk",
-                {"name": getName},
+                {"name": name},
                 {
                     headers: {
                         'Access-Control-Allow-Origin': '*',
@@ -32,7 +33,7 @@ export default function Reception() {
                     },
                 })
                 .then(response => {
-                        setText(`Get your key from the tray, Commander ${getName}`)
+                        setText(`Get your key from the tray, Commander ${name}...`)
                         setKey(response.data.key)
                     }
                 ).catch(error =>
@@ -47,16 +48,17 @@ export default function Reception() {
                 <div className={"column is-two-thirds"}>
                     <div className={"columns"}>
                         <div className={"column"}></div>
-
                         <div className={"column is-two-thirds"}>
-                            <div id={"message"} className={"has-text-centered"}>{getText}</div>
+                            <div id={"message"} className={"has-text-centered is-size-2 container"}>
+                                {text}
+                            </div>
                             <div className={"spacer-one-twentieth-height"}></div>
                             <form onSubmit={registerAtDesk}>
                                 <div className="field">
                                    <textarea
                                        className={"textarea is-fullwidth is-large"}
                                        placeholder={alreadyAtWork}
-                                       value={getName}
+                                       value={name}
                                        onChange={e => setName(e.target.value)}
                                    />
                                 </div>
@@ -67,15 +69,32 @@ export default function Reception() {
                                             type="submit"
                                             name="Register">Write in registrar book
                                     </button>
-                                    <div className={"column"}></div>
+                                    <div className={"column"}>
+                                    </div>
+                                </div>
+                                <div id={"tray"} className={"has-text-centered is-size-4"}>
+                                    {key ?
+                                        <div>
+                                            <span>Pick it up</span>
+                                            <br/>
+                                            <span
+                                                className={"has-background-info is-size-2"}>
+                                                {key}
+                                            </span>
+                                            <br/>
+                                            <span>Keep it safe, and always wih you.</span>
+                                        </div>
+                                        : null}
                                 </div>
                             </form>
-                            <div id={"tray"}>{getKey}</div>
                         </div>
-                        <div className={"column"}></div>
+                        <div className={"column"}>
+                        </div>
                     </div>
                 </div>
-                <div className={"column"}></div>
+                <div className={"column"}>
+
+                </div>
             </div>
         </main>
     )

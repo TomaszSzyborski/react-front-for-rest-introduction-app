@@ -9,6 +9,7 @@
     "axios": "^0.27.2",
     "bulma": "^0.9.4",
     "bulma-extensions": "^6.2.7",
+    "bulma-switch": "^2.0.4",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
@@ -22,6 +23,7 @@
     "react-ts-typewriter": "^0.1.8-b",
     "react-typing-effect": "^2.0.5",
     "react-uuid": "^1.0.2",
+    "start": "^5.1.0",
     "typewriter": "^7.4.1",
     "web-vitals": "^2.1.4"
   },
