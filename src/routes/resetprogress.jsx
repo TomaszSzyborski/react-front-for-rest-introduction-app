@@ -19,7 +19,7 @@ export default function ResetProgress() {
     const [key, setKey] = useState("")
     const [handleState, setHandleState] = useState(false)
     const [message, setMessage] = useState("")
-    const [modalActive, setModalActive] = useState("")
+    const [modalActive, setModalActive] = useState(false)
     const activeModalClasses = "is-active is-clipped"
 
     const HandlePlacement = () => {
@@ -108,7 +108,7 @@ export default function ResetProgress() {
             axios.get(`http://localhost:9011/challenge/reactor/check_key/${key}`)
                 .then(response => {
                     setHandleState(true)
-                    setMessage(response.data.message)
+                    setMessage(`${response.data.message} ${response.data.flag}` )
                 }).catch(response => {
                 setHandleState(false)
                 setMessage(response.response.data.message)
@@ -163,7 +163,7 @@ export default function ResetProgress() {
                     </p>
                 </div>
                 <button className="modal-close is-large" aria-label="close" onClick={() => {
-                    setModalActive("")
+                    setModalActive()
                 }}></button>
             </div>
         </main>

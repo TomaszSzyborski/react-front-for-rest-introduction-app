@@ -16,70 +16,59 @@ export default function Test() {
     },)
     return (
         <main>
-            <div className="field">
-                <input id="switchColorDefault" type="checkbox" name="switchColorDefault" className="switch"
-                       onChange={(e) => e.target.classList.toggle("checked")}
-                ></input>
-                <label htmlFor="switchColorDefault">Switch default</label>
-            </div>
-            <div className>
+            {/*<div className="field is-dark">*/}
+            {/*    <input id="switchColorDefault" type="checkbox" name="switchColorDefault" className="switch"*/}
+            {/*           onChange={(e) => e.target.classList.toggle("checked")}*/}
+            {/*    ></input>*/}
+            {/*    <label htmlFor="switchColorDefault">Switch default</label>*/}
+            {/*</div>*/}
+            {/*<div className>*/}
 
 
-                <form>
-                    <input className="switch is-danger" id="s" type="checkbox" name="s"
+            {/*    <form>*/}
+            {/*        <input className="switch is-danger" id="s" type="checkbox" name="s"*/}
 
-                           onChange={(e) => e.target.classList.toggle("checked")}/>
-                    <label htmlFor={"s"}> Switch danger</label>
+            {/*               onChange={(e) => e.target.classList.toggle("checked")}/>*/}
+            {/*        <label htmlFor={"s"}> Switch danger</label>*/}
 
-                </form>
-            </div>
+            {/*    </form>*/}
+            {/*</div>*/}
             <div>
-                <div id="quickviewDefault" className={"quickview "}>
-                    <header className="quickview-header">
-                        <p className="title">Quickview title</p>
-                        <span className="delete" data-dismiss="quickview"></span>
-                    </header>
+                {/*<div id="quickviewDefault" className={"quickview"}>*/}
+                {/*    <header className="quickview-header">*/}
+                {/*        <p className="title">Quickview title</p>*/}
+                {/*        <span id={"closeQV"} className="delete" data-dismiss="quickview"></span>*/}
+                {/*    </header>*/}
 
-                    <div className="quickview-body">
-                        <div className="quickview-block">
-                            ...
-                        </div>
-                    </div>
+                {/*    <div className="quickview-body">*/}
+                {/*        <div className="quickview-block">*/}
+                {/*            ...*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
 
-                    <footer className="quickview-footer">
+                {/*    <footer className="quickview-footer">*/}
 
-                    </footer>
-                </div>
+                {/*    </footer>*/}
+                {/*</div>*/}
 
-                <button className="button is-primary"
-                        data-show="quickview"
-                        data-target="quickviewDefault"
-                        // onClick={(element) => {
-                        //     const cl = window.document.body.getElementsByClassName("quickview")[0]
-                        //         .classList
-                        //     console.log(cl)
-                        //     if(cl.contains("is-active")){
-                        //         cl.remove("is-active")
-                        //     // } else {
-                        //     //     cl.add("is-active")
-                        //     }
-                        // }
-                        // }
-                    >
-                    Show
-                    quickview
-                </button>
+                {/*<button className={"button is-primary"}*/}
+                {/*        data-target="quickviewDefault"*/}
+                {/*        data-show="quickview"*/}
+                {/*>*/}
+                {/*    Show*/}
+                {/*    quickview*/}
+                {/*</button>*/}
             </div>
-            <div className="bd-snippet-preview is-light has-background-info ">
-                <div className="field">
+            {/*<div className="bd-snippet-preview is-light has-background-info ">*/}
+            {/*    <div className="field">*/}
 
-                    <input id="switchRoundedOutlinedDanger" type="checkbox"
-                           className="switch is-rounded is-danger"
-                        // checked={false}
-                    />
-                    <label htmlFor="switchRoundedOutlinedDanger"></label>
-                </div>
-            </div>
+            {/*        <input id="switchRoundedOutlinedDanger" type="checkbox"*/}
+            {/*               className="switch is-rounded is-danger"*/}
+            {/*            // checked={false}*/}
+            {/*        />*/}
+            {/*        <label htmlFor="switchRoundedOutlinedDanger"></label>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </main>
     );
 }

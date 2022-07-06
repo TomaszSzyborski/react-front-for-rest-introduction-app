@@ -1,33 +1,49 @@
 import axios from "axios";
-import {useEffect, useRef, useState} from "react";
+import {Component, createElement, useEffect, useRef, useState} from "react";
 import Select from 'react-select'
 import AsyncSelect from "react-select/async";
+import Az5 from "../controlRoomViews/az5";
+import Analysis from "../controlRoomViews/analysis";
+import Rods from "../controlRoomViews/rods";
+import Core from "../controlRoomViews/core";
 
 const welcomeText = "Busy night, Comrade, let's proceed with the test."
+const noseyChapsArentYaFlag = '${nosey_chaps_arent_ya!}'
 
-const optionsInTheRoom = [
-    {value: 'rods', label: 'Reactor Rods Control Panel'},
-    {value: 'analysis', label: 'Reactor Core Analysis'},
-    {value: 'az5', label: 'AZ-5 Button'},
-    {value: 'core', label: 'Corridor to Turbine Hall'},
-]
 
-const flag = '${nosey_chaps_arent_ya!}'
+export const createOption = (text, ComponentClass, props = null) => {
+    const item = ComponentClass(props)
+    return {label: text, value: item}
+}
 
 export default function ControlRoom() {
+
     const [mainText] = useState(welcomeText)
     const [key, setKey] = useState("")
     const [text, setText] = useState("")
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [internalsVisibility, setInternalsVisibility] = useState(false)
+    const [view, setView] = useState("");
+
+    const optionsInTheRoom =
+        [
+            {value: Rods, label: "Reactor Rods Control Panel"},
+            {value: Analysis, label: 'Reactor Core Analysis'},
+            {value: Az5, label: 'AZ-5 Button'},
+            {value: Core, label: 'Corridor to Reactor Hall'}
+        ]
+            .map((it) =>
+                createOption(it.label, it.value, {key: {key}})
+            )
+
 
     useEffect(() => {
-        const matched = text?.trim().match(/Hello (.*)\. What would you like to see?/g)
+            const matched = text?.match(/Hello, Comrade (.*)\. What would you like to see?/g)
             setInternalsVisibility(!!matched)
         },
         [text])
 
-    const changeCommanderView = () => {
+    const askForData = () => {
         if (key === "") {
             setText("Have you dropped the key somewhere?!")
         } else {
@@ -68,7 +84,7 @@ export default function ControlRoom() {
                                        onChange={e => setKey(e.target.value.trim())}></input>
                                 <button className={"button is-info"}
                                         onClick={async () => {
-                                            await changeCommanderView()
+                                            await askForData()
                                         }}>
                                     Unlock the room
                                 </button>
@@ -91,27 +107,33 @@ export default function ControlRoom() {
 
                             <AsyncSelect
                                 menuIsOpen={isMenuOpen}
-                                blurInputOnSelect={true}
-                                onChange={() => {
-                                    setIsMenuOpen(false)
-                                }}
+                                blurInputOnSelect
                                 onFocus={() => setIsMenuOpen(true)}
                                 onMenuClose={() => {
-                                    changeCommanderView()
+                                    askForData()
                                 }}
                                 onSelectResetsInput={false}
-                                cacheOptions
+                                onChange={
+                                    (option) => {
+                                        setIsMenuOpen(false)
+                                        setView(option.value)
+                                    }
+                                }
                                 defaultOptions={optionsInTheRoom}
-                                isSearchable={true}
-                                noOptionsMessage={() => flag}
+                                isSearchable
+                                noOptionsMessage={() => noseyChapsArentYaFlag}
                                 placeholder={"Select control view"}
                             />
                         </div>
                         <div className={"column"}></div>
-                        <div id={"view"}></div>
                     </div>
                 }
             </div>
+            <div className="container" id={"view"}>
+                {internalsVisibility && view}
+                <button className={"button is-fullwidth"}></button>
+            </div>
+
         </main>
     );
 }

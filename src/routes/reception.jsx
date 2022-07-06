@@ -2,6 +2,8 @@ import axios from "axios";
 import {useEffect, useRef, useState} from "react";
 import React from "react";
 import {bulmaQuickview} from 'bulma-extensions';
+import {faker} from '@faker-js/faker';
+import {keyLocalStorageItemName} from "../utils/constants";
 
 const greeting = "Evening, Comrade!\n" +
     "Let me fetch the keys, while you write your name in the workbook"
@@ -11,14 +13,27 @@ const alreadyAtWork = "Akimov, Aleksandr Fyodorovich\n" +
     "Sitnikov, Anatoly Andreyevich\n" +
     "Toptunov, Leonid Fedorovych\n"
 
+const fakeNames = () => {
+    faker.setLocale('uk');
+    let people;
+    people = Array(12).fill("")
+        .map(() => {
+                return `${faker.name.findName()}`
+            }
+        ).join("\n")
+    return people
+}
+
 export default function Reception() {
     const [text, setText] = useState(greeting)
     const [name, setName] = useState("");
     const [key, setKey] = useState("");
-
+    const [multitudeOfFakeSovietNames] = useState(fakeNames())
+    useEffect(()=>{
+        key && localStorage.setItem(keyLocalStorageItemName, key)
+    },[key])
     const registerAtDesk = (event) => {
         event.preventDefault();
-        setText("")
         setKey("")
         if (!name) {
             setText("Write your name in the Registrar Book down there, Comrade...")
@@ -52,21 +67,38 @@ export default function Reception() {
                             <div id={"message"} className={"has-text-centered is-size-2 container"}>
                                 {text}
                             </div>
-                            <div className={"spacer-one-twentieth-height"}></div>
-                            <form onSubmit={registerAtDesk}>
-                                <div className="field">
-                                   <textarea
-                                       className={"textarea is-fullwidth is-large"}
-                                       placeholder={alreadyAtWork}
-                                       value={name}
-                                       onChange={e => setName(e.target.value)}
-                                   />
+                            <div>
+                                <div className="columns"
+                                     id={"registrar"}>
+                                    <div className={"column"}></div>
+                                    <div className={"column is-three-fifths"}>
+                                        <div className={"spacer-one-twentieth-height"}></div>
+                                        <div className={"columns registrar-pages"}>
+                                            <div className={"column is-size-6 is-dark"}>
+                                                <div>Day Shift</div>
+                                                <textarea className={"textarea signature-area is-fullwidth readonly"}
+                                                          defaultValue={multitudeOfFakeSovietNames}>
+                                                </textarea>
+                                            </div>
+
+                                            <div className={"column is-size-6"}>
+                                                <div>Night Shift</div>
+                                                <textarea
+                                                    className={"textarea signature-area is-fullwidth"}
+                                                    placeholder={alreadyAtWork}
+                                                    value={name}
+                                                    onChange={e => setName(e.target.value)}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={"column"}></div>
                                 </div>
                                 <div className={"spacer-one-twentieth-height"}></div>
                                 <div className={"columns"}>
                                     <div className={"column"}></div>
                                     <button className={"button column is-two-thirds is-primary is-large"}
-                                            type="submit"
+                                            onClick={registerAtDesk}
                                             name="Register">Write in registrar book
                                     </button>
                                     <div className={"column"}>
@@ -86,7 +118,7 @@ export default function Reception() {
                                         </div>
                                         : null}
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div className={"column"}>
                         </div>

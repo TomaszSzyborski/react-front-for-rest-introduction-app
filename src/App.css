@@ -3,6 +3,7 @@
 @import "bulma-extensions/bulma-quickview/dist/css/bulma-quickview.min.css";
 @import "bulma-extensions/bulma-slider/dist/css/bulma-slider.min.css";
 @import "bulma-switch/dist/css/bulma-switch.min.css";
+@import "bulma-spacing/css/bulma-spacing.min.css";
 
 .App {
     text-align: center;
@@ -103,7 +104,7 @@ button {
 #phoneCallButton {
     position: relative;
     /*display: flex;*/
-    width:15vw;
+    width: 15vw;
 
     /*top: 20vh;*/
     /*left: 10vh;*/
@@ -112,7 +113,7 @@ button {
 #slamPhoneButton {
     position: relative;
     /*display: flex;*/
-        width:15vw;
+    width: 15vw;
 
     /*top: 20vh;*/
     /*left: 10vh;*/
@@ -259,18 +260,18 @@ button {
     /*box-shadow: rgba(1, 1, 1, 0.3) -30px 0px 38px, rgba(0, 0, 0, 0.22) -16px 0px 12px;*/
 }
 
-.has-text-vertically-centered {
+.has-text-vertically-centered{
     display: flex;
     justify-content: center;
     align-content: center;
     flex-direction: column;
+    vertical-align: middle !important;
+    align-items: center;
+    text-wrap: normal;
+    word-wrap: anywhere;
 }
 
 .top-bar {
-    /*background-image: url("./assets/images/rustyPanel.png");*/
-    /*background-position: -50vh;*/
-    /*background-size: 50%;*/
-    /*background-repeat: repeat;*/
     background-color: transparent !important;
 }
 
@@ -389,7 +390,8 @@ button {
     /*transform: scaleX(-1);*/
     /*display:inline-block*/
 }
-.phone{
+
+.phone {
     position: relative;
     display: flex;
     margin-top: 10vh;
@@ -437,8 +439,50 @@ button {
 }
 
 .is-vcentered {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center; /* commenting this out, the multiple lines will have gaps */
-  align-items: center; /* commenting this out, the one-line will not align */
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center; /* commenting this out, the multiple lines will have gaps */
+    align-items: center; /* commenting this out, the one-line will not align */
+}
+
+#registrar {
+    background: url("./assets/images/registrar.png") no-repeat center center;
+    /*background-size: cover;*/
+    background-size: contain;
+    position: relative;
+    height: 416px;
+    /*height: 40vh;*/
+}
+
+.registrar-pages {
+    margin-left: 0.2vw;
+    font-weight: lighter;
+    font-family: FactoryFont;
+    color: dimgray;
+    text-align: center;
+    /*width: 100%;*/
+    height: 80%
+}
+
+.signature-area {
+    position: relative;
+    background: transparent;
+    /*width: 10vw;*/
+    /*width: 10vw!important;*/
+    font-size: 0.8rem;
+    resize: none;
+    outline: none;
+    border: none;
+    /*height: auto;*/
+    width: 100%;
+    height: 100%
+}
+
+.quickview{
+    /*background-clip: content-box;*/
+    /*position: relative;*/
+    background: url("./assets/images/quickTray.png") no-repeat center center;
+    background-color: transparent!important;
+    background-size: contain;
+    /*margin-right: -5vw;*/
 }

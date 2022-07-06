@@ -9,12 +9,11 @@ import phoneHangUp from '../assets/sounds/phoneHangUp.mp3'
 import phoneDestruction from '../assets/sounds/phoneDestruction.mp3'
 import React, {useEffect} from 'react'
 import Typewriter from 'react-ts-typewriter';
+import {frontendFlagsAmount} from "../utils/constants";
 
 const consoleFlagHandler = () => {
     console.table([{flag: "${curious_console_observer}"}])
 };
-
-const initialFlags = 7
 
 const ringing = new Audio(phoneRing)
 const pickingUp = new Audio(phonePickUp)
@@ -27,7 +26,6 @@ export default function Office() {
     const [text, setText] = useState("")
     const [slams, setSlams] = useState(0)
     const [callCounter, setCallCounter] = useState(0)
-    const [flagsAmount] = useState(initialFlags)
     const [talking, setTalking] = useState(new Audio())
     const [phoneCallClasses, setPhoneCallClasses] = useState(defaultPhoneCallButtonClasses)
     const [phoneDestroyed, setPhoneDestroyed] = useState(false)
@@ -77,7 +75,7 @@ export default function Office() {
             })
                 .then(response => {
                     return response.data.message +
-                        `\n There are ${response.data.flagsToFind + flagsAmount} flags to find.`
+                        `\n There are ${response.data.flagsToFind + frontendFlagsAmount} flags to find.`
                 })
         ;
 
