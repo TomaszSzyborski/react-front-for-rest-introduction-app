@@ -12,6 +12,19 @@ import bulmaQuickview from "bulma-extensions/bulma-quickview/src/js";
 import {useEffect, useState} from "react";
 import {keyLocalStorageItemName, trayOpeningsLocalStorageItemObject} from "./utils/constants";
 
+
+
+// TODO create crypto-challenge,
+//  create diatlov pass challenge,
+//  create genetic challenge - lots of drag and drops
+
+
+//TODO use MUI https://mui.com/material-ui/react-table/
+
+
+
+
+
 export const toggleActive = (element) => {
     element.classList.toggle('is-active')
 }
