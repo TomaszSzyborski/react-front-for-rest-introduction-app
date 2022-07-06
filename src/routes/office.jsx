@@ -34,10 +34,10 @@ export default function Office() {
 
 
     useEffect(() => {
-        if (phoneDestroyed || localStorage.isPhoneDestroyed) {
+        if (phoneDestroyed || Boolean(localStorage.getItem("is-phone-destroyed"))) {
             setCallButtonDisabled(true)
             setSlamButtonDisabled(true)
-            localStorage.isPhoneDestroyed = true
+            localStorage.setItem("is-phone-destroyed", true.toString())
         }
     }, [phoneDestroyed])
     const resetText = async () => setText("")
@@ -79,9 +79,6 @@ export default function Office() {
                 })
         ;
 
-        //TODO create pre phone ring and pickup,
-        // and loop lost signal after ming the phone if the call was made
-
         const phoneResponses = [
             {
                 message: await primaryResponse(),
@@ -108,11 +105,9 @@ export default function Office() {
                 audio: new Audio(femaleBabble)
             }
         ]
-        if (callCounter > phoneResponses.length - 1) {
-            setText(
-                "You want me to get you through this AGAIN?! Fine..."
-            )
-            localStorage.setItem("desperate-sigh", "${you're_deaf_or_just_dumb?}")
+        if (callCounter > 1){//{phoneResponses.length - 1) {
+            setText("You want me to get you through this AGAIN?! Fine...")
+            sessionStorage.setItem("desperate-sigh", "${you're_deaf_or_just_dumb?}")
             setCallCounter(0)
         } else {
             setText(phoneResponses[callCounter].message)
@@ -145,13 +140,6 @@ export default function Office() {
         <main className={"office-background"}>
             <div className={"columns is-multiline is-vcentered has-text-centered"}>
                 <div className={"column is-two-fifths"}>
-                    {/*<div>*/}
-                        {/*<div className={"spacer-one-tenth-height"}></div>*/}
-                        {/*<div id={"information-gathering-instruction"}*/}
-                        {/*     className={"has-retro-text has-text-vertically-centered"}>*/}
-                        {/*    Good day Comrade, call the General Secretary to receive mission debrief.*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
                     <div className={"spacer-quarter-height"}>
                     </div>
                     <div className={"column is-one-fifth phone is-align-items-end"}>

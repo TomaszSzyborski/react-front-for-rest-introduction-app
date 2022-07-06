@@ -14,6 +14,7 @@ const ItemTypes = {
     HANDLE: 'handle',
 }
 
+//TODO change it to be slider 1-100 think of something else for drag and drop handler
 
 export default function ResetProgress() {
     const [key, setKey] = useState("")
@@ -148,23 +149,27 @@ export default function ResetProgress() {
                 </div>
                 <div className={"column"}>
                     <button className={"button is-warning is-large resetProgressButton"}
-                            onClick={() => localStorage.clear()}>
+                            onClick={() => {
+                                localStorage.clear()
+                                sessionStorage.clear()
+                                setMessage("Time Variance Branching merged and reset to 18:17:24 25-04-1986")
+                                setModalActive(activeModalClasses)
+                            }}>
                         Reset<br/>Progress<br/>for<br/>Information<br/>Gathering
                     </button>
                 </div>
 
             </div>
 
-            <div className={`modal ${modalActive}`}>
+            <div className={`modal ${modalActive}`}
+                onClick={(event)=> event.currentTarget.classList.toggle("is-active")}>
                 <div className="modal-background"></div>
                 <div className="modal-content">
                     <p className="modal-card-body has-text-centered has-big-retro-dark-text is-size-1">
                         {message}
                     </p>
                 </div>
-                <button className="modal-close is-large" aria-label="close" onClick={() => {
-                    setModalActive()
-                }}></button>
+                <button className="modal-close is-large" aria-label="close"></button>
             </div>
         </main>
     )
