@@ -105,7 +105,7 @@ export default function Office() {
                 audio: new Audio(femaleBabble)
             }
         ]
-        if (callCounter > 1){//{phoneResponses.length - 1) {
+        if (callCounter > phoneResponses.length - 1) {
             setText("You want me to get you through this AGAIN?! Fine...")
             sessionStorage.setItem("desperate-sigh", "${you're_deaf_or_just_dumb?}")
             setCallCounter(0)
@@ -138,29 +138,28 @@ export default function Office() {
 
     return (
         <main className={"office-background"}>
-            <div className={"columns is-multiline is-vcentered has-text-centered"}>
-                <div className={"column is-two-fifths"}>
-                    <div className={"spacer-quarter-height"}>
-                    </div>
-                    <div className={"column is-one-fifth phone is-align-items-end"}>
-                        <button
-                            id={"phoneCallButton"}
-                            className={phoneCallClasses}
-                            onClick={talkToGeneralSecretary}
-                            disabled={callButtonDisabled}
-                        >Call
-                        </button>
-                        <button
-                            id={"slamPhoneButton"}
-                            className={"button is-large is-danger"}
-                            onClick={slamThePhone}
-                            disabled={slamButtonDisabled}
-                        >Slam the phone
-                        </button>
-                    </div>
-                </div>
+            <div className={"columns is-fullheight"}>
+                <div className={"column"}></div>
+                <div className={"phone column"}>
 
-                <div className={"column is-two-thirds"}>
+                    <button
+                        id={"phoneCallButton"}
+                        className={`${phoneCallClasses} `}
+                        onClick={talkToGeneralSecretary}
+                        disabled={callButtonDisabled}
+                    >Call
+                    </button>
+                    <button
+                        id={"slamPhoneButton"}
+                        className={"button is-large is-danger"}
+                        onClick={slamThePhone}
+                        disabled={slamButtonDisabled}
+                    >Slam the phone
+                    </button>
+                </div>
+                <div className={"column"}></div>
+
+                <div className={"column is-half"}>
                     <span id={"cathodeDisplay"}>
                     <div className={"cathodeText"}>
                         {text ?

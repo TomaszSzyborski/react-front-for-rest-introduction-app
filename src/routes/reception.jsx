@@ -1,5 +1,5 @@
 import axios from "axios";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import React from "react";
 import {bulmaQuickview} from 'bulma-extensions';
 import {faker} from '@faker-js/faker';
@@ -29,8 +29,8 @@ export default function Reception() {
     const [name, setName] = useState("");
     const [key, setKey] = useState("");
     const [multitudeOfFakeSovietNames] = useState(fakeNames())
-    useEffect(()=>{
-        key && localStorage.setItem(keyLocalStorageItemName, key)
+    useMemo(()=>{
+        localStorage.setItem(keyLocalStorageItemName, key)
     },[key])
     const registerAtDesk = (event) => {
         event.preventDefault();

@@ -104,7 +104,6 @@ export default function ControlRoom() {
                          id={"control-room-internals"}>
                         <div className={"column"}></div>
                         <div className={"column"}>
-
                             <AsyncSelect
                                 menuIsOpen={isMenuOpen}
                                 blurInputOnSelect

@@ -12,14 +12,14 @@ import Home from "./routes/home";
 import Test from "./routes/test";
 
 const root = ReactDOM.createRoot(
-    document.getElementById("root")
-);
+        document.getElementById("root")
+    );
 
 root.render(
     <BrowserRouter forceRefresh={true}>
         <App/>
         <Routes>
-            <Route path="*" element={<Navigate to="/home" replace />}/>
+            <Route path="*" element={<Navigate to="/home" replace/>}/>
             <Route exact path="/office" element={<Office/>}/>
             <Route exact path="/test" element={<Test/>}/> TODO wyjebać
             <Route exact path="/reception" element={<Reception/>}/>

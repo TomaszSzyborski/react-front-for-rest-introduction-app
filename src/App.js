@@ -9,16 +9,8 @@ import ResetProgress from "./routes/resetprogress";
 import Reception from "./routes/reception";
 import uuid from 'react-uuid'
 import bulmaQuickview from "bulma-extensions/bulma-quickview/src/js";
-import {useEffect, useState} from "react";
-import {keyLocalStorageItemName, trayOpeningsLocalStorageItemObject} from "./utils/constants";
-
-export const toggleActive = (element) => {
-    element.classList.toggle('is-active')
-}
-
-export const toggleTransparentBackground = (element) => {
-    element.style.toggle({background: "transparent"})
-}
+import {useEffect, useMemo, useState} from "react";
+import {keyLocalStorageItemName, toggleActive, trayOpeningsLocalStorageItemObject} from "./utils/constants";
 
 
 const navigationOptions = [
@@ -33,28 +25,40 @@ function App() {
     useEffect(() => {
         bulmaQuickview.attach()
     },)
-    const [numberOfTrayOpenings, setNumberOfTrayOpenings] = useState(Number(localStorage.getItem(trayOpeningsLocalStorageItemObject.key)) || 0)
+    const [numberOfTrayOpenings, setNumberOfTrayOpenings] = useState(
+        Number(localStorage.getItem(trayOpeningsLocalStorageItemObject.key)) || 0
+    )
     const [trayText, setTrayText] = useState(0)
+    const [whereAmI, setWhereAmI] = useState(null);
+
+    useMemo(() => {
+        setWhereAmI(navigationOptions.find((it) =>
+            it.link === window.location.pathname)?.name || "Prypiat")
+    }, [whereAmI]);
 
     useEffect(() => {
+        //TODO fix number of tray openings in state
         if (Number(localStorage.getItem(trayOpeningsLocalStorageItemObject.key)) || numberOfTrayOpenings !== 0) {
-            localStorage.setItem(trayOpeningsLocalStorageItemObject.key, `${numberOfTrayOpenings}`)
+            localStorage.setItem(trayOpeningsLocalStorageItemObject.key, numberOfTrayOpenings.toString())
         }
-
 
         const data = {
-            1: "You've found my secret stash... ${random scrap discovery}",
-            17: ""
+            1: "You've found my secret stash... ${random_scrap_discovery}\n",
+            17: "You're really pertinacious, you know that? ${stubborn_as_a_donkey}\n"
+        }
+
+        let keyMessage = ""
+        if(localStorage.getItem(keyLocalStorageItemName)){
+            keyMessage = `Here's your key:\n ${localStorage.getItem(keyLocalStorageItemName)}`
         }
         const messageInStash = (data[numberOfTrayOpenings] || "")
-            + (localStorage.getItem(keyLocalStorageItemName) || "")
-            + (numberOfTrayOpenings)
-        setTrayText(numberOfTrayOpenings)
-        // setTrayText(messageInStash)
+            + (keyMessage || "")
+
+        setTrayText(messageInStash)
     }, [numberOfTrayOpenings])
 
     return (
-        <div id={"main-application"}>
+        <div id={"top-bar-component"}>
             <nav className="navbar is-dark top-bar engraved is-boxed">
                 <div className="navbar-brand">
                     <div className="navbar-item is-flex">
@@ -79,8 +83,7 @@ function App() {
                             </div>
                         </div>
                         <div className={"navbar-item navigation-option-button"} id={"where-am-i"}>
-                            {navigationOptions.find((it) =>
-                                it.link === window.location.pathname)?.name || "Prypiat"}
+                            {whereAmI}
                         </div>
                     </div>
                     <div className={"navbar-end navbar-item"}>
@@ -102,13 +105,9 @@ function App() {
                                          data-dismiss="quickview">
                                     </div>
                                 </div>
-                                {/*<div className={"column is-fullheight has-text-vertically-centered has-text-centered"}>*/}
                                 <div className={"column has-retro-text has-text-vertically-centered"}>
                                     <div>
                                         {trayText}
-                                    </div>
-                                    <div>
-                                        {localStorage.getItem(keyLocalStorageItemName)}
                                     </div>
                                 </div>
 
