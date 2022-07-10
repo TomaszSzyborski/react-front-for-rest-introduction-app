@@ -14,8 +14,6 @@ const ItemTypes = {
     HANDLE: 'handle',
 }
 
-//TODO change it to be slider 1-100 think of something else for drag and drop handler
-
 export default function ResetProgressOLD() {
     const [key, setKey] = useState("")
     const [handleState, setHandleState] = useState(false)

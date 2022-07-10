@@ -1,5 +1,5 @@
 export const keyLocalStorageItemName = "key-from-reception"
-export const frontendFlagsAmount = 9
+export const frontendFlagsAmount = 10
 export const trayOpeningsLocalStorageItemObject = {key: "tray-openings", value: 0}
 
 export const toggleActive = (element) => {

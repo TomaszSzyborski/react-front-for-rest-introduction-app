@@ -1,14 +1,20 @@
 import axios from "axios";
-import {useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import Select from 'react-select'
 import AsyncSelect from "react-select/async";
+import {useKey, useModal} from "../utils/contexts";
+// import {ModalContext} from "../utils/contexts";
+// import {HandleContext, KeyContext, ModalContext} from "../utils/contexts";
 
 
-export default function Az5(props) {
-    const [text, setText] = useState("")
+export default function Az5() {
+    const {key} = useKey()
+    const {message, setMessage} = useModal()
+
     const pressAZ5 = () => {
+        let msg = ""
         axios.put(
-            `http://localhost:9011/challenge/reactor/${props.key}/control_room/az_5`,
+            `http://localhost:9011/challenge/reactor/${key}/control_room/az_5`,
             {pressed: true},
             {
                 headers: {
@@ -18,22 +24,19 @@ export default function Az5(props) {
 
             })
             .then(response => {
-                    debugger
-                    setText(`${response.data.message} ${response.data.flag}`)
+                    msg = (`${response.data.message} ${response.data.flag}`)
                 }
             )
             .catch(error => {
-                    setText(error.response.data.message)
+                    msg = (error.response.data.message)
                 }
             )
+        setMessage(msg)
     }
     return (
         <div>
             <div className={"button"}
                  onClick={pressAZ5}>AZ-5
-            </div>
-            <div>
-                {text}
             </div>
         </div>
     )

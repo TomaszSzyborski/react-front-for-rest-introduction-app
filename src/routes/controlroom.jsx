@@ -1,11 +1,11 @@
 import axios from "axios";
-import {Component, createElement, useEffect, useRef, useState} from "react";
-import Select from 'react-select'
+import {Component, createElement, useContext, useEffect, useRef, useState} from "react";
 import AsyncSelect from "react-select/async";
 import Az5 from "../controlRoomViews/az5";
 import Analysis from "../controlRoomViews/analysis";
 import Rods from "../controlRoomViews/rods";
 import Core from "../controlRoomViews/core";
+import {KeyContextProvider, ModalContextProvider, useKey} from "../utils/contexts";
 
 const welcomeText = "Busy night, Comrade, let's proceed with the test."
 const noseyChapsArentYaFlag = '${nosey_chaps_arent_ya!}'
@@ -19,7 +19,8 @@ export const createOption = (text, ComponentClass, props = null) => {
 export default function ControlRoom() {
 
     const [mainText] = useState(welcomeText)
-    const [key, setKey] = useState("")
+    // const {key, setKey} = useKey()
+    const [key, setKey] = useState("");
     const [text, setText] = useState("")
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [internalsVisibility, setInternalsVisibility] = useState(false)
@@ -128,10 +129,14 @@ export default function ControlRoom() {
                     </div>
                 }
             </div>
-            <div className="container" id={"view"}>
-                {internalsVisibility && view}
-                <button className={"button is-fullwidth"}></button>
-            </div>
+            <KeyContextProvider>
+                <ModalContextProvider>
+                    <div className="container" id={"view"}>
+                        {internalsVisibility && view}
+                        <button className={"button is-fullwidth"}></button>
+                    </div>
+                </ModalContextProvider>
+            </KeyContextProvider>
 
         </main>
     );

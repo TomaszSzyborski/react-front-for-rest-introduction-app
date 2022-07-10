@@ -506,52 +506,39 @@ button {
     width: 100%;
 }
 
-.slider[orient=vertical]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    display: flex;
-    /*cursor: pointer;*/
-    position: relative;
-    /*height: 10vh!important;*/
-    /*width: 50vw!important;*/
-    /*// Trick to make it overflow on the sides*/
-    /*background-image: url('http://www.w3schools.com/html/smiley.png');*/
-    /*transform: scale(10) scaleX(-1);*/
-    z-index: 2;
-    /*height: 10rem;*/
-    /*width: 10rem;*/
-    /*border-radius: 0 !important;*/
-    /*margin-top:auto;*/
-    /*width: 400px!important;*/
-    /*height: 50px;*/
-    /*width: 50px;*/
-    /*border-radius: 3px;*/
-    /*background-color: transparent;*/
-    cursor: pointer;
-    /*padding-top: 5vh;*/
-    /*padding-left: 25vw;*/
-    /*margin-top: -5vh!important;*/
-    /*margin-left: 50vw!important;*/
-    box-shadow: -10px 0 10px #000000, 0px 0px 5px #0d0d0d;
-    border-radius: 5px;
-    /*background-image: url('./assets/images/hazardStripes.jpeg');*/
-    /*    margin-left:-.25rem*/
-    /*margin: 0 !important;*/
-    margin-left:-50px;
-        height:5rem!important;
-    width:1rem!important;;
 
-
+.new-line {
+    white-space: pre-line;
 }
 
-.slider::-webkit-slider-runnable-track {
-    box-shadow: -10px 0 10px #000000, 0px 0px 5px #0d0d0d;
-    border-radius: 20px;
-    background: rgb(37, 9, 15) !important;
-    background: linear-gradient(270deg, darkslategray 0%, black 100%) !important;
-    -webkit-appearance: none;
-    appearance: none;
-    width: 3vw;
-    cursor: pointer;
-    background: gray;
+#handle-overlay {
+    /*position: fixed!important; !* Sit on top of the page content *!*/
+    /*display: inline-block; !* Hidden by default *!;*/
+    width: 50vw; /* Full width (cover the whole page) */
+    height: 60vh; /* Full height (cover the whole page) */
+    position: absolute;
+    display: block;
+    top: 20vh;
+    left: 25vw;
+    right: 25vw;
+    bottom: 20vh;
+    z-index: 5; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+    /*box-shadow: -10px 0 10px #000000, 0px 0px 5px #0d0d0d;*/
+    /* From https://css.glass */
+    background: rgba(16, 187, 206, 0.21);
+    border-radius: 16px;
+    box-shadow: 0 40px 30px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4.5px);
+    -webkit-backdrop-filter: blur(4.5px);
+    border: 3px solid rgba(16, 187, 206, 1);
+}
+
+#handle-overlay > .modal-background {
+    background-color: rgba(232, 255, 255, 0.4) !important; /* Black background with opacity */
+}
+
+.rc-slider-disabled > :not(.rc-slider-handle) {
+    /*height: 0!important;*/
+    display: none;
 }

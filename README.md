@@ -2,6 +2,18 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+Libs used:
+
+https://react-bulma.dev/en
+
+https://react-bulma.dev/en
+https://bulma.io/
+
+https://wikiki.github.io/components/quickview/
+
+
+
 ## Available Scripts
 
 In the project directory, you can run:

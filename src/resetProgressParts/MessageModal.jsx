@@ -1,15 +1,29 @@
-import {useContext} from "react";
-import {ModalContext} from "../routes/resetprogress";
+import {useContext, useEffect} from "react";
+import {useModal} from "../utils/contexts";
 
 export default function MessageModal() {
-    const {modalActive, message} = useContext(ModalContext);
+    const {message, isOpen, setIsOpen, setMessage} = useModal();
+
+    useEffect(()=>{
+        if(message){
+            setIsOpen(true)
+        }
+    }, [message])
 
     return (
-        <div className={`modal ${modalActive}`}
-             onClick={(event) => event.currentTarget.classList.toggle("is-active")}>
+        <div className={`modal ${isOpen ? "is-active" : ""} is-clipped`}
+             onClick={() => {
+                 setIsOpen(false)
+                 setMessage("")
+             }}>
             <div className="modal-background"></div>
-            <div className="modal-content">
-                <p className="modal-card-body has-text-centered has-big-retro-dark-text is-size-1">
+            <div className="modal-content"
+                 style={{
+                     display: "flex",
+                     width: "50vw"
+                 }}
+            >
+                <p className="modal-card-body has-text-centered has-big-retro-dark-text is-size-1 new-line">
                     {message}
                 </p>
             </div>
