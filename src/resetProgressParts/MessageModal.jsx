@@ -1,5 +1,5 @@
-import {useContext, useEffect} from "react";
-import {useModal} from "../utils/contexts";
+import {useEffect} from "react";
+import {useModal} from "../utils/contexts/modalContext";
 
 export default function MessageModal() {
     const {message, isOpen, setIsOpen, setMessage} = useModal();

@@ -1,15 +1,11 @@
 import axios from "axios";
-import {useContext, useEffect, useRef, useState} from "react";
-import Select from 'react-select'
-import AsyncSelect from "react-select/async";
-import {useKey, useModal} from "../utils/contexts";
-// import {ModalContext} from "../utils/contexts";
-// import {HandleContext, KeyContext, ModalContext} from "../utils/contexts";
+import {useKey} from "../../utils/contexts/keyContext";
+import {useModal} from "../../utils/contexts/modalContext";
 
 
 export default function Az5() {
     const {key} = useKey()
-    const {message, setMessage} = useModal()
+    const {setMessage} = useModal()
 
     const pressAZ5 = () => {
         let msg = ""
@@ -35,8 +31,16 @@ export default function Az5() {
     }
     return (
         <div>
-            <div className={"button"}
-                 onClick={pressAZ5}>AZ-5
+            <div className={"columns "}>
+                <div className={"column"}></div>
+                <div className={"column has-text-centered is-maxed-within"}>
+                        <div className={"button center is-1by1 is-large az-5"}
+                             style={{ height:"50%", width:"50%"}}
+                             onClick={pressAZ5}>
+                            AZ-5
+                        </div>
+                </div>
+                <div className={"column"}></div>
             </div>
         </div>
     )

@@ -542,3 +542,10 @@ button {
     /*height: 0!important;*/
     display: none;
 }
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    margin: 25%;
+}

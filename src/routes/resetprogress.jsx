@@ -1,21 +1,11 @@
-import axios from "axios";
-import {useEffect, useRef, useState, createContext, createElement, useContext} from "react";
-
-import {DndProvider} from 'react-dnd'
-import {HTML5Backend} from 'react-dnd-html5-backend'
-import Switch from "react-switch";
-import powerDownSound from '../assets/sounds/powerDown.mp3'
-import alertSound from '../assets/sounds/mgsAlert.mp3'
-import wrongSound from '../assets/sounds/wrong.mp3'
 import ReactorResetHandle from "../resetProgressParts/ReactorResetHandle";
 import ReactorResetUnlockHandle from "../resetProgressParts/ReactorResetUnlockHandle";
 import MessageModal from "../resetProgressParts/MessageModal";
 import ComradeStorageCleaner from "../resetProgressParts/ComradeStorageCleaner";
-import {
-    HandleContextProvider,
-    KeyContextProvider,
-    ModalContextProvider
-} from "../utils/contexts";
+import {KeyContextProvider} from "../utils/contexts/keyContext";
+import {ModalContextProvider} from "../utils/contexts/modalContext";
+import {HandleContextProvider} from "../utils/contexts/reactorReset/resetReactorHandleContext";
+
 
 
 export default function ResetProgress() {

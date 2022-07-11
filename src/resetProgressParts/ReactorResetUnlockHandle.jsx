@@ -1,18 +1,16 @@
-import {useHandle, useKey, useModal} from "../utils/contexts";
 import axios from "axios";
+import {useKey} from "../utils/contexts/keyContext";
+import {useModal} from "../utils/contexts/modalContext";
+import {useHandle} from "../utils/contexts/reactorReset/resetReactorHandleContext";
 
 
 export default function ReactorResetUnlockHandle() {
     const {key, setKey} = useKey()
     const {setHandleDisabled} = useHandle()
-    const {isOpen,message, setMessage} = useModal();
+    const {setMessage} = useModal();
 
     const unlockHandle = async () => {
-        console.log(`dupa ${key}`)
-        console.log(`chuj ${isOpen}`)
         let handleMessage = "";
-        console.log(`chuj ${isOpen}`)
-        console.log(message)
 
         if (key) {
             await axios.get(`http://localhost:9011/challenge/reactor/check_key/${key}`)

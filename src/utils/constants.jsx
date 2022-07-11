@@ -9,3 +9,8 @@ export const toggleActive = (element) => {
 export const toggleTransparentBackground = (element) => {
     element.style.toggle({background: "transparent"})
 }
+
+export const createOption = (text, ComponentClass, props = null) => {
+    const item = ComponentClass(props)
+    return {label: text, value: item}
+}

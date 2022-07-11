@@ -1,8 +1,10 @@
 import Slider from "rc-slider";
 import hazardStripes from "../assets/images/hazardStripes.jpeg";
 import {useContext, useEffect, useState} from "react";
-import {HandleContext, KeyContext, ModalContext, useHandle, useKey, useKeyUpdate, useModal} from "../utils/contexts";
 import axios from "axios";
+import {useKey} from "../utils/contexts/keyContext";
+import {useModal} from "../utils/contexts/modalContext";
+import {useHandle} from "../utils/contexts/reactorReset/resetReactorHandleContext";
 
 const baseStyle = {
     paddingLeft: "350%",
@@ -40,7 +42,7 @@ const handleStyle = {
 }
 
 function Overlay() {
-    const {handleDisabled} = useContext(HandleContext);
+    const {handleDisabled} = useHandle();
     return (
         <div
             className={`modal is-active is-clipped`}
@@ -60,14 +62,10 @@ function Overlay() {
 }
 
 export default function ReactorResetHandle() {
-    // const [key, setKey] = useState("");
     const {key} = useKey()
-    // const setKey = useKeyUpdate()
-    // const {setMessage, setIsOpen} = useContext(ModalContext);
     const {setMessage, setIsOpen} = useModal();
     const [sliderMessage, setSliderMessage] = useState("");
     const [sliderValue, setSliderValue] = useState(0);
-    // const {handleDisabled} = useContext(HandleContext);
     const {handleDisabled} = useHandle();
 
 
@@ -87,7 +85,6 @@ export default function ReactorResetHandle() {
     }
 
     useEffect(() => {
-
         let currentSwitchLevel = `\nCurrent level is: ${sliderValue}`
         let messageToSet = ""
         if (sliderValue < 50) {
