@@ -1,12 +1,17 @@
 import axios from "axios";
 import {useState} from "react";
+import {useKey} from "../../utils/contexts/keyContext";
+import {useModal} from "../../utils/contexts/modalContext";
 
 
-export default function Analysis(props) {
-    const [text, setText] = useState("")
-    const pressAZ5 = () => {
+export default function Analysis() {
+    const {key} = useKey()
+    const {setMessage} = useModal()
+
+    const pressAnalysis = () => {
+        let msg = ""
         axios.put(
-            `http://localhost:9011/challenge/reactor/${props.key}/control_room/az_5`,
+            `http://localhost:9011/challenge/reactor/${key}/control_room/az_5`,
             {pressed: true},
             {
                 headers: {
@@ -16,22 +21,26 @@ export default function Analysis(props) {
 
             })
             .then(response => {
-                    debugger
-                    setText(`${response.data.message} ${response.data.flag}`)
+                    msg = `${response.data.message} ${response.data.flag}`
                 }
             )
             .catch(error => {
-                    setText(error.response.data.message)
+                    msg = (error.response.data.message)
                 }
             )
+        setMessage(msg)
     }
     return (
         <div>
-            <div className={"button"}
-                 onClick={pressAZ5}>Analysis
-            </div>
-            <div>
-                {text}
+            <div className={"columns "}>
+                <div className={"column"}></div>
+                <div className={"column has-text-centered"}>
+                    <button className={"button is-primary has-retro-text"}
+                            onClick={pressAnalysis}>
+                        Perform Analysis
+                    </button>
+                </div>
+                <div className={"column"}></div>
             </div>
         </div>
     )

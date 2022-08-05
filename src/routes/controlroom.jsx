@@ -10,12 +10,10 @@ export default function ControlRoom() {
     return (
         <main style={{padding: "1rem 0"}}>
             <KeyContextProvider>
-                <ControlRoomMainView/>
-                <ModalContextProvider>
-                    <SubViewContextProvider>
+                <SubViewContextProvider>
+                    <ControlRoomMainView/>
                         <ControlRoomSubView/>
-                    </SubViewContextProvider>
-                </ModalContextProvider>
+                </SubViewContextProvider>
             </KeyContextProvider>
         </main>
     )

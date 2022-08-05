@@ -1,6 +1,6 @@
 import {useSubView} from "../utils/contexts/controlRoom/subViewContext";
 import AsyncSelect from "react-select/async";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Rods from "./subViews/rods";
 import Analysis from "./subViews/analysis";
 import Az5 from "./subViews/az5";
@@ -8,6 +8,7 @@ import Core from "./subViews/core";
 import {createOption} from "../utils/constants";
 import {useKey} from "../utils/contexts/keyContext";
 import axios from "axios";
+import {ModalContextProvider, useModal} from "../utils/contexts/modalContext";
 
 
 const noseyChapsArentYaFlag = '${nosey_chaps_arent_ya!}'
@@ -18,6 +19,12 @@ export default function ControlRoomSubView() {
     const {subView, setSubView, internalVisibility} = useSubView()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [text, setText] = useState("")
+
+    useEffect(() => {
+        if (internalVisibility) {
+            setSubView(null)
+        }
+    }, [internalVisibility])
 
     const askForData = () => {
         if (key === "") {
@@ -32,7 +39,7 @@ export default function ControlRoomSubView() {
                     },
                 })
                 .then(response => {
-                    //TODO think of something when everything is good
+                        //TODO think of something when everything is good
                         // setText(response.data.message)
                     }
                 )
@@ -83,8 +90,10 @@ export default function ControlRoomSubView() {
                 <div className={"column"}></div>
             </div>
             <div>
-                <div className={"has-retro-text has-text-centered is-size-2"}>{text}</div>
-                <div>{subView}</div>
+                <ModalContextProvider>
+                    <div className={"has-retro-text has-text-centered is-size-2"}>{text}</div>
+                    <div>{subView}</div>
+                </ModalContextProvider>
             </div>
         </>
     )

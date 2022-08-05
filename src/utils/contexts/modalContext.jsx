@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useState} from "react";
+import React, {createContext, useContext, useEffect, useState} from "react";
 
 const ModalContext = createContext({
         isOpen: false,
@@ -13,6 +13,14 @@ export const useModal = () => useContext(ModalContext);
 export const ModalContextProvider = ({children}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [message, setMessage] = useState("");
+
+    useEffect(() => {
+        debugger
+        if(message) {
+            debugger
+            setIsOpen(state => !state);
+        }
+    }, [message]);
 
     return (
         <ModalContext.Provider value={{isOpen, setIsOpen, message, setMessage}}>

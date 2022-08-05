@@ -2,30 +2,30 @@ import axios from "axios";
 import {useKey} from "../utils/contexts/keyContext";
 import {useState} from "react";
 import {useSubView} from "../utils/contexts/controlRoom/subViewContext";
-import ControlRoomSubView from "./ControlRoomSubView";
 
 const welcomeText = "Busy night, Comrade, let's proceed with the test."
 
 export default function ControlRoomMainView() {
     const {key, setKey} = useKey()
-    const {setInternalVisibility, InternalVisibility} = useSubView();
+    const {setInternalVisibility} = useSubView();
 
     const [text, setText] = useState("");
 
     const unlockSubViews = async () => {
         let unlockText = "";
+        let visible = false;
         setText("")
-        await setInternalVisibility(false)
         if (key === "") {
             unlockText = "Have you dropped the key somewhere?!"
         } else {
             await axios.get(`http://localhost:9011/challenge/reactor/check_key/${key}`)
                 .then(_ => {
-                    setInternalVisibility(true)
+                    visible = true
                 }).catch(error => {
                     unlockText = error.response.data.message
                 })
         }
+        await setInternalVisibility(visible)
         setText(unlockText)
     }
 
@@ -55,9 +55,6 @@ export default function ControlRoomMainView() {
                     <div className={"has-retro-text is-size-2"}>
                         <div>
                             {text}
-                        </div>
-                        <div>
-                            {InternalVisibility && <ControlRoomSubView/>}
                         </div>
                     </div>
                 </div>
