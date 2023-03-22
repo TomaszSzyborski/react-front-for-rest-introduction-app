@@ -72,10 +72,9 @@ function App() {
                                 Navigate
                             </a>
                             {isShown && (
-                            <div className="navbar-dropdown has-custom-nav-style">
+                            <div className="navbar-dropdown has-custom-nav-style has-text-centered">
                                 {navigationOptions.map(element =>
                                     <Link className="navbar-item navigation-option-button is-size-3"
-                                    style={{"text-align": "center"}}
                                         onMouseEnter={(e) =>e.target.classList.add('is-active')}
                                         onMouseLeave={(e) =>e.target.classList.remove('is-active')}
                                           onClick={(event) =>{
