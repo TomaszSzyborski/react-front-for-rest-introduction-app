@@ -15,7 +15,6 @@ export const ModalContextProvider = ({children}) => {
     const [message, setMessage] = useState("");
 
     useEffect(() => {
-        debugger
         if(message) {
             setIsOpen(state => !state);
         }
