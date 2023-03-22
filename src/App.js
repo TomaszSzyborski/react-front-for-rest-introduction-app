@@ -67,13 +67,13 @@ function App() {
                 </div>
                 <div className="navbar-menu has-text-centered">
                     <div className="navbar-start">
-                        <div className={`navbar-item has-dropdown is-hoverable`}>
+                        <div className='navbar-item has-dropdown is-hoverable'>
                             <a className="navbar-link navigation-option-button">
                                 Navigate
                             </a>
                             <div className="navbar-dropdown has-transparent-background engraved">
                                 {navigationOptions.map(element =>
-                                    <Link className="navbar-item navigation-option-button"
+                                    <Link className="navbar-item is-boxed navigation-option-button"
                                           onClick={toggleActive}
                                           key={uuid()}
                                           to={element.link}>
