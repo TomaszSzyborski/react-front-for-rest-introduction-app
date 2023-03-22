@@ -30,7 +30,7 @@ function App() {
     )
     const [trayText, setTrayText] = useState(0)
     const [whereAmI, setWhereAmI] = useState(null);
-
+    const [isShown, setIsShown] = useState(false);
     useMemo(() => {
         setWhereAmI(navigationOptions.find((it) =>
             it.link === window.location.pathname)?.name || "Prypiat")
@@ -53,36 +53,45 @@ function App() {
         }
         const messageInStash = (data[numberOfTrayOpenings] || "")
             + (keyMessage || "")
-
         setTrayText(messageInStash)
     }, [numberOfTrayOpenings])
 
     return (
         <div id={"top-bar-component"}>
-            <nav className="navbar is-dark top-bar engraved is-boxed">
+            <nav className="navbar is-dark top-bar engraved">
                 <div className="navbar-brand">
                     <div className="navbar-item is-flex">
                         <a href={"/"} className={"radiation-hazard fill-container"}></a>
                     </div>
                 </div>
-                <div className="navbar-menu has-text-centered">
+                <div className="navbar-menu">
                     <div className="navbar-start">
-                        <div className='navbar-item has-dropdown is-hoverable'>
-                            <a className="navbar-link navigation-option-button">
+                        <div className='navbar-item has-dropdown is-hoverable'
+                         onMouseEnter={() => setIsShown(true)}>
+                            <a className="navbar-link navigation-option-button has-custom-nav-style">
                                 Navigate
                             </a>
-                            <div className="navbar-dropdown has-transparent-background engraved">
+                            {isShown && (
+                            <div className="navbar-dropdown has-custom-nav-style">
                                 {navigationOptions.map(element =>
-                                    <Link className="navbar-item is-boxed navigation-option-button"
-                                          onClick={toggleActive}
+                                    <Link className="navbar-item navigation-option-button is-size-3"
+                                    style={{"text-align": "center"}}
+                                        onMouseEnter={(e) =>e.target.classList.add('is-active')}
+                                        onMouseLeave={(e) =>e.target.classList.remove('is-active')}
+                                          onClick={(event) =>{
+                                                setWhereAmI(element.name)
+                                                setIsShown(false)
+                                          }}
                                           key={uuid()}
                                           to={element.link}>
                                         {element.name}
                                     </Link>
                                 )}
                             </div>
+                            )}
                         </div>
-                        <div className={"navbar-item navigation-option-button"} id={"where-am-i"}>
+                        <div className={"navbar-item navigation-option-button has-text-centered has-background-transparent"}
+                            id={"where-am-i"}>
                             {whereAmI}
                         </div>
                     </div>
@@ -97,20 +106,13 @@ function App() {
                         </div>
                     </div>
                     <div>
-                        <div id="quickviewDefault" className={"quickview"}>
+                        <div id="quickviewDefault" className={"quickview"} data-dismiss="quickview">
                             <div className="quickview-body columns">
-                                <div className={"column is-one-quarter has-text-vertically-centered has-text-centered"}>
-                                    <div id={"closeQuickView"}
-                                         className="delete is-large"
-                                         data-dismiss="quickview">
-                                    </div>
-                                </div>
                                 <div className={"column has-retro-text has-text-vertically-centered"}>
                                     <div>
                                         {trayText}
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

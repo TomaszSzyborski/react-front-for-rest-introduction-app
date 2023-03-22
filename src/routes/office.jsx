@@ -96,10 +96,22 @@ export default function Office() {
                 message: "Don't fail me Comrade!!!",
                 audio: new Audio(maleBabble)
             },
-            // "Listen here... It's the end of the month! All factories are pushing their limits, so - no postponing.",
-            // "Oh, and you better complete it before 1st of May, the Labour Day Parade is waiting for you.",
-            // "If you fail me, don't even dream of Order of Lenin - a man, who's name gives nobility of OUR power plant!",
-            // "... I dare you... I double dare you! Call me again and you'll see yourself in Ural mountains personally digging Uranium with your bare hands!",
+            {
+                message: "Listen here... It's the end of the month! All factories are pushing their limits, so - no postponing.",
+                audio: new Audio(maleBabble)
+            },
+            {
+                message: "Oh, and you better complete it before 1st of May, the Labour Day Parade is waiting for you.",
+                audio: new Audio(maleBabble)
+            },
+            {
+                message: "If you fail me, don't even dream of Medal of Lenin - a man, who's name gives nobility of OUR power plant!",
+                audio: new Audio(maleBabble)
+            },
+            {
+                message: "... I dare you... I double dare you! Call me again and you'll see yourself in Ural mountains personally digging Uranium with your bare hands!",
+                audio: new Audio(maleBabble)
+            },
             {
                 message: "General Secretary's Personal Assistant - Masha, speaking... I have something for you Comrade.... ${angry_general_secretary}",
                 audio: new Audio(femaleBabble)
@@ -133,6 +145,7 @@ export default function Office() {
         } else {
             await playAudioAndWait(new Audio(phoneHangUp))
         }
+        mute(phoneHangUp)
     }
 
 
@@ -174,6 +187,7 @@ export default function Office() {
                                 }}
                                 onFinished={async () => {
                                     await mute()
+                                    await mute(phoneHangUp)
                                     await setPhoneCallClasses(defaultPhoneCallButtonClasses)
                                     await playAudioAndWait(signalLost)
                                 }

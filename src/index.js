@@ -12,9 +12,8 @@ import Home from "./routes/home";
 import Test from "./routes/test";
 
 const root = ReactDOM.createRoot(
-        document.getElementById("root")
+        document.getElementById("root"),
     );
-
 root.render(
     <BrowserRouter forceRefresh={true}>
         <App/>
