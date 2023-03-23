@@ -10,7 +10,24 @@ import Reception from "./routes/reception";
 import uuid from 'react-uuid'
 import {useEffect, useMemo, useState} from "react";
 import {keyLocalStorageItemName, toggleActive, trayOpeningsLocalStorageItemObject} from "./utils/constants";
-
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import FormControl from '@mui/material/FormControl';
+import Typography from '@mui/material/Typography';
+import Select from '@mui/material/Select';
+import Menu from '@mui/material/Menu';
+import {Tabs, Tab} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import InputLabel from '@mui/material/InputLabel';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import Divider from '@mui/material/Divider';
+import { useNavigate, useParams } from "react-router-dom";
 
 const navigationOptions = [
     {link: "/office", name: "Office"},
@@ -25,12 +42,22 @@ function App() {
         Number(localStorage.getItem(trayOpeningsLocalStorageItemObject.key)) || 0
     )
     const [trayText, setTrayText] = useState(0)
-    const [whereAmI, setWhereAmI] = useState(null);
+    const [whereAmI, setWhereAmI] = useState("Navigate");
     const [isShown, setIsShown] = useState(false);
     useMemo(() => {
         setWhereAmI(navigationOptions.find((it) =>
             it.link === window.location.pathname)?.name || "Prypiat")
     }, [whereAmI]);
+
+  const [anchorElNav, setAnchorElNav] = useState(null);
+
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
 
     useEffect(() => {
         //TODO fix number of tray openings in state
@@ -52,69 +79,53 @@ function App() {
         setTrayText(messageInStash)
     }, [numberOfTrayOpenings])
 
+  const [selectedOption, setSelectedOption] = useState('');
+
+   let navigate = useNavigate();
+   const handleChange = (event) =>   {
+    navigate(event.target.value)
+   };
     return (
-        <div id={"top-bar-component"}>
-            <nav className="navbar is-dark top-bar engraved">
-                <div className="navbar-brand">
-                    <div className="navbar-item is-flex">
-                        <a href={"/"} className={"radiation-hazard fill-container"}></a>
-                    </div>
-                </div>
-                <div className="navbar-menu">
-                    <div className="navbar-start">
-                        <div className='navbar-item has-dropdown is-hoverable'
-                         onMouseEnter={() => setIsShown(true)}>
-                            <a className="navbar-link navigation-option-button has-custom-nav-style">
-                                Navigate
-                            </a>
-                            {isShown && (
-                            <div className="navbar-dropdown has-custom-nav-style has-text-centered">
-                                {navigationOptions.map(element =>
-                                    <Link className="navbar-item navigation-option-button is-size-3"
-                                        onMouseEnter={(e) =>e.target.classList.add('is-active')}
-                                        onMouseLeave={(e) =>e.target.classList.remove('is-active')}
-                                          onClick={(event) =>{
-                                                setWhereAmI(element.name)
-                                                setIsShown(false)
-                                          }}
-                                          key={uuid()}
-                                          to={element.link}>
-                                        {element.name}
-                                    </Link>
-                                )}
-                            </div>
-                            )}
-                        </div>
-                        <div className={"navbar-item navigation-option-button has-text-centered has-background-transparent"}
-                            id={"where-am-i"}>
-                            {whereAmI}
-                        </div>
-                    </div>
-                    <div className={"navbar-end navbar-item"}>
-                        <div className={"radiation-hazard fill-container"}
-                             data-target="quickviewDefault"
-                             data-show="quickview"
-                             onClick={() => {
-                                 setNumberOfTrayOpenings(prevState => prevState + 1)
-                             }
-                             }>
-                        </div>
-                    </div>
-                    <div>
-                        <div id="quickviewDefault" className={"quickview"} data-dismiss="quickview">
-                            <div className="quickview-body columns">
-                                <div className={"column has-retro-text has-text-vertically-centered"}>
-                                    <div>
-                                        {trayText}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-            <Outlet/>
-        </div>
+        <AppBar id={"top-bar-component"}  position="sticky"
+        className="has-transparent-background"
+         max-width="true">
+            <Toolbar disableGutters={false}
+            className="is-transparent"
+             max-width>
+                <IconButton
+                max-height
+                 href={"/"}
+                 className={"radiation-hazard extra-big-hazard"} size="large"/>
+                 <FormControl
+                            fullWidth
+                            sx={{ m: 1, minWidth: 120 }}
+                            >
+                    <InputLabel id="navigation-label-id" className="retro-text">Navigate</InputLabel>
+                    <Select
+                            sx={{ boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 } }}
+                            labelId="navigation-label-id"
+                            label="Navigate"
+                            className="navigation-option-button retro-text"
+                            onChange={handleChange}
+                    >
+                        {navigationOptions.map((option) => (
+                        <MenuItem
+                            key={uuid()}
+                            value={option.link}
+                            name={option.name}
+                            className="navigation-option-button retro-text">
+                            {option.name}
+                        </MenuItem>
+                        ))}
+                    </Select>
+                    </FormControl>
+                <IconButton
+                 sx={{marginLeft:"auto", display:"flex", justifyContent:"space-between", alignItems:"center"}}
+                 onClick={()=> navigate("/home")}
+                 className={"radiation-hazard extra-big-hazard"}/>
+            </Toolbar>
+
+        </AppBar>
     )
         ;
 }
