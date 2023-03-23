@@ -47,7 +47,7 @@ function App() {
     const [isShown, setIsShown] = useState(false);
     useMemo(() => {
         setWhereAmI(navigationOptions.find((it) =>
-            it.link === window.location.pathname)?.name || "Prypiat")
+            it.link === window.location.pathname)?.link || "/home")
     }, [whereAmI]);
 
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -87,20 +87,13 @@ function App() {
     navigate(event.target.value)
    };
     return (
-        <AppBar id={"top-bar-component"}  position="sticky"
-        className="has-transparent-background"
-         max-width="true">
-            <Toolbar disableGutters={false}
-            className="is-transparent"
-             max-width>
+        <AppBar id={"top-bar-component"}  position="sticky" className="has-transparent-background">
+            <Toolbar disableGutters={false}>
                 <IconButton
                 max-height
                  href={"/"}
                  className={"radiation-hazard extra-big-hazard"} size="large"/>
-                 <FormControl
-                            fullWidth
-                            sx={{ m: 1, minWidth: 120 }}
-                            >
+                 <FormControl>
                     <InputLabel id="navigation-label-id" className="retro-text">Navigate</InputLabel>
                     <Select
                             sx={{ boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 } }}
@@ -108,7 +101,7 @@ function App() {
                             label="Navigate"
                             className="navigation-option-button retro-text"
                             onChange={handleChange}
-                            defaultValue="/home"
+                            defaultValue={whereAmI}
 
                     >
                         {navigationOptions.map((option) => (
