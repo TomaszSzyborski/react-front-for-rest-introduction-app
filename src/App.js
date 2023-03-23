@@ -18,6 +18,7 @@ import FormControl from '@mui/material/FormControl';
 import Typography from '@mui/material/Typography';
 import Select from '@mui/material/Select';
 import Menu from '@mui/material/Menu';
+import ListItem from '@mui/material/ListItem';
 import {Tabs, Tab} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
@@ -34,7 +35,7 @@ import Drawer from '@mui/material/Drawer';
 
 import drawerImage from "./assets/images/quickTray.png";
 import { styled } from '@mui/material/styles';
-const drawerWidth = "20vw";
+const drawerWidth = "25vw";
 
 const RustyDrawer = styled(Drawer)({
   width: drawerWidth,
@@ -49,15 +50,12 @@ const RustyDrawer = styled(Drawer)({
     backgroundRepeat: 'no-repeat',
     height: '100vh',
     display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-        alignContent: "center",
-        flexDirection: "column",
+    boxShadow: 'none',
+        justifyContent: 'center !important',
         verticalAlign: "middle !important",
         alignItems: "center",
         textWrap: "normal",
         wordWrap: "anywhere",
-        display: "inline-block"
   },
 });
 
@@ -96,9 +94,8 @@ function App() {
         if(localStorage.getItem(keyLocalStorageItemName)){
             keyMessage = `Here's your key:\n ${localStorage.getItem(keyLocalStorageItemName)}`
         }
-        debugger
         const messageInStash = ((data[numberOfTrayOpenings] || "")
-            + (keyMessage || ""))
+            + (keyMessage || "")) || "I thought I have had something here..."
         setTrayText(messageInStash)
     }, [numberOfTrayOpenings])
 
@@ -122,24 +119,25 @@ function App() {
                  href={"/"}
                  className={"radiation-hazard extra-big-hazard"} size="large"/>
                  <FormControl
-                          sx={{ boxShadow: 'none' }}>
+                  sx={{ boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 } }}
+                 >
                     <InputLabel id="navigation-label-id" className="retro-text">Navigate</InputLabel>
                     <Select
-                            sx={{ boxShadow: 'none', border: 0, borderRadius:0 }}
+                        sx={{border:0, borderShadow:"none"}}
                             labelId="navigation-label-id"
                             label="Navigate"
                             className="navigation-option-button retro-text"
                             onChange={handleChange}
                             defaultValue={whereAmI}
-
                     >
                         {navigationOptions.map((option) => (
                         <MenuItem
-                            sx={{ boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 } }}
+                        //TODO wyjebać wpizdu szarości na rzecz transparentności joł
                             key={uuid()}
                             value={option.link}
                             name={option.name}
-                            className="navigation-option-button retro-text has-text-vertically-centered">
+                            className="navigation-option-button retro-text has-text-vertically-centered"
+                            >
                             {option.name}
                         </MenuItem>
                         ))}
@@ -151,12 +149,16 @@ function App() {
                  className={"radiation-hazard extra-big-hazard"}/>
             </Toolbar>
                 <RustyDrawer
-                    className="retro-text"
                     anchor='right'
                     open={drawerState}
                     onClick={()=>setDrawerState(false)}
                     >
+                          <Typography
+                          sx={{marginLeft:"5vw", cursor:""}}
+                          className="retro-text"
+                          variant="h2" component="h2">
                             {trayText}
+                          </Typography>
                 </RustyDrawer>
         </AppBar>
     )
