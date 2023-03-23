@@ -4,7 +4,6 @@ import Select from 'react-select'
 import AsyncSelect from "react-select/async";
 import {useKey} from "../../utils/contexts/keyContext";
 import {useModal} from "../../utils/contexts/modalContext";
-import 'bulma/css/bulma.min.css'; // import Bulma CSS
 
 function Switch(props) {
   const [isOn, setIsOn] = useState(props.isOn);

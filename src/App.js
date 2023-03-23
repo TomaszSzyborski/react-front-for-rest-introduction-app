@@ -8,7 +8,6 @@ import ControlRoom from "./routes/controlroom";
 import ResetProgress from "./routes/resetprogress";
 import Reception from "./routes/reception";
 import uuid from 'react-uuid'
-import bulmaQuickview from "bulma-extensions/bulma-quickview/src/js";
 import {useEffect, useMemo, useState} from "react";
 import {keyLocalStorageItemName, toggleActive, trayOpeningsLocalStorageItemObject} from "./utils/constants";
 
@@ -22,9 +21,6 @@ const navigationOptions = [
 ]
 
 function App() {
-    useEffect(() => {
-        bulmaQuickview.attach()
-    },)
     const [numberOfTrayOpenings, setNumberOfTrayOpenings] = useState(
         Number(localStorage.getItem(trayOpeningsLocalStorageItemObject.key)) || 0
     )

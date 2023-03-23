@@ -1,7 +1,6 @@
 import axios from "axios";
 import {useEffect, useMemo, useRef, useState} from "react";
 import React from "react";
-import {bulmaQuickview} from 'bulma-extensions';
 import {faker} from '@faker-js/faker';
 import {keyLocalStorageItemName} from "../utils/constants";
 

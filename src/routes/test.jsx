@@ -2,21 +2,12 @@ import axios from "axios";
 import {useEffect, useRef, useState} from "react";
 import Select from 'react-select'
 import radioActiveIcon from "../assets/images/radioactiveBasic.png";
-import bulmaQuickview from "bulma-extensions/bulma-quickview/src/js";
 import Switch from "react-switch";
-import {show} from "bulma-extensions/bulma-carousel/src/js/utils/css";
-import bulmaSlider from "bulma-slider/src/js";
-import 'rc-slider/assets/index.css';
 import Slider from "rc-slider";
 import hazardStripes from "../assets/images/hazardStripes.jpeg"
 
 
 export default function Test() {
-    useEffect(() => {
-        bulmaQuickview.attach()
-        bulmaSlider.attach()
-    },)
-
     const [updateValue, setUpdateValue] = useState(0);
     return (
         <div className={"is-maxed-within"}>
