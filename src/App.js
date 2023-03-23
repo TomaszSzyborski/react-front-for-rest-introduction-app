@@ -30,6 +30,7 @@ import Divider from '@mui/material/Divider';
 import { useNavigate, useParams } from "react-router-dom";
 
 const navigationOptions = [
+    {link: "/home", name: "Prypiat"},
     {link: "/office", name: "Office"},
     {link: "/reception", name: "Reception"},
     {link: "/controlroom", name: "Control Room"},
@@ -107,6 +108,8 @@ function App() {
                             label="Navigate"
                             className="navigation-option-button retro-text"
                             onChange={handleChange}
+                            defaultValue="/home"
+
                     >
                         {navigationOptions.map((option) => (
                         <MenuItem
