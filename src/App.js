@@ -35,8 +35,8 @@ import Drawer from '@mui/material/Drawer';
 
 import drawerImage from "./assets/images/quickTray.png";
 import { styled } from '@mui/material/styles';
-const drawerWidth = "25vw";
 
+const drawerWidth = "25vw";
 const RustyDrawer = styled(Drawer)({
   width: drawerWidth,
   flexShrink: 0,
@@ -113,7 +113,8 @@ function App() {
    };
     return (
         <AppBar id={"top-bar-component"}  position="sticky" className="has-transparent-background">
-            <Toolbar disableGutters={false}>
+            <Toolbar disableGutters={false}
+            >
                 <IconButton
                 max-height
                  href={"/"}
@@ -123,7 +124,7 @@ function App() {
                  >
                     <InputLabel id="navigation-label-id" className="retro-text">Navigate</InputLabel>
                     <Select
-                        sx={{border:0, borderShadow:"none"}}
+
                             labelId="navigation-label-id"
                             label="Navigate"
                             className="navigation-option-button retro-text"
@@ -132,6 +133,7 @@ function App() {
                     >
                         {navigationOptions.map((option) => (
                         <MenuItem
+
                         //TODO wyjebać wpizdu szarości na rzecz transparentności joł
                             key={uuid()}
                             value={option.link}

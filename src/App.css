@@ -194,6 +194,24 @@ button {
     text-align: center!important;
 }
 
+.MuiPopover-paper {
+    background-color: transparent!important;
+    box-shadow: none!important;
+}
+
+.MuiOutlinedInput-root {
+    border: 0!important;
+    background-clip: none!important
+}
+.MuiFormControl-root {
+    border: 0!important;
+    background-clip: none!important
+}
+
+.MuiSelect-icon {
+    display: none !important;
+}
+
 .navigation-option-button {
     background-image: url("./assets/images/rustyPanelLabelSmall.png");
     background-repeat: no-repeat;
