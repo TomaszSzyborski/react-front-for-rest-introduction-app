@@ -28,14 +28,23 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import { useNavigate, useParams } from "react-router-dom";
+import MuiMenuItem from "@mui/material/MenuItem";
+import { withStyles } from "@mui/material/styles";
+import Drawer from '@mui/material/Drawer';
 
+import drawerImage from "./assets/images/quickTray.png";
+
+const styles = theme => ({
+    drawerPaper: {
+      backgroundImage: `url(${drawerImage})`
+    },
+})
 const navigationOptions = [
-    {link: "/home", name: "Prypiat"},
+    {link: "/home", name: "При́пʼять"},
     {link: "/office", name: "Office"},
     {link: "/reception", name: "Reception"},
     {link: "/controlroom", name: "Control Room"},
     {link: "/resetprogress", name: "[REDACTED]"},
-    {link: "/test", name: "[test]"},
 ]
 
 function App() {
@@ -45,23 +54,13 @@ function App() {
     const [trayText, setTrayText] = useState(0)
     const [whereAmI, setWhereAmI] = useState("Navigate");
     const [isShown, setIsShown] = useState(false);
+
     useMemo(() => {
         setWhereAmI(navigationOptions.find((it) =>
             it.link === window.location.pathname)?.link || "/home")
     }, [whereAmI]);
 
-  const [anchorElNav, setAnchorElNav] = useState(null);
-
-  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
     useEffect(() => {
-        //TODO fix number of tray openings in state
         if (Number(localStorage.getItem(trayOpeningsLocalStorageItemObject.key)) || numberOfTrayOpenings !== 0) {
             localStorage.setItem(trayOpeningsLocalStorageItemObject.key, numberOfTrayOpenings.toString())
         }
@@ -75,15 +74,22 @@ function App() {
         if(localStorage.getItem(keyLocalStorageItemName)){
             keyMessage = `Here's your key:\n ${localStorage.getItem(keyLocalStorageItemName)}`
         }
-        const messageInStash = (data[numberOfTrayOpenings] || "")
-            + (keyMessage || "")
+        debugger
+        const messageInStash = ((data[numberOfTrayOpenings] || "")
+            + (keyMessage || ""))
         setTrayText(messageInStash)
     }, [numberOfTrayOpenings])
 
   const [selectedOption, setSelectedOption] = useState('');
+  const [drawerState, setDrawerState] = useState(false);
+
+  const toggleDrawer = (event) => {
+    setNumberOfTrayOpenings(numberOfTrayOpenings+1)
+    setDrawerState(true);
+  };
 
    let navigate = useNavigate();
-   const handleChange = (event) =>   {
+   const handleChange = (event) => {
     navigate(event.target.value)
    };
     return (
@@ -93,10 +99,11 @@ function App() {
                 max-height
                  href={"/"}
                  className={"radiation-hazard extra-big-hazard"} size="large"/>
-                 <FormControl>
+                 <FormControl
+                          sx={{ boxShadow: 'none' }}>
                     <InputLabel id="navigation-label-id" className="retro-text">Navigate</InputLabel>
                     <Select
-                            sx={{ boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 } }}
+                            sx={{ boxShadow: 'none', border: 0, borderRadius:0 }}
                             labelId="navigation-label-id"
                             label="Navigate"
                             className="navigation-option-button retro-text"
@@ -106,21 +113,29 @@ function App() {
                     >
                         {navigationOptions.map((option) => (
                         <MenuItem
+                            sx={{ boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 } }}
                             key={uuid()}
                             value={option.link}
                             name={option.name}
-                            className="navigation-option-button retro-text">
+                            className="navigation-option-button retro-text has-text-vertically-centered">
                             {option.name}
                         </MenuItem>
                         ))}
                     </Select>
                     </FormControl>
                 <IconButton
-                 sx={{marginLeft:"auto", display:"flex", justifyContent:"space-between", alignItems:"center"}}
-                 onClick={()=> navigate("/home")}
+                 sx={{marginLeft:"auto", cursor:"unset"}}
+                 onClick={toggleDrawer}
                  className={"radiation-hazard extra-big-hazard"}/>
             </Toolbar>
-
+                <Drawer
+                    className="tray retro-text has-text-vertically-centered"
+                    anchor='right'
+                    open={drawerState}
+                    onClick={()=>setDrawerState(false)}
+                    >
+                            {trayText ||"asdasdasd"}
+                </Drawer>
         </AppBar>
     )
         ;

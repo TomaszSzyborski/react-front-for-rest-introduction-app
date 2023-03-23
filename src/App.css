@@ -16,28 +16,6 @@
     --colorShadeE: rgb(39, 81, 72);
 }
 
-.has-custom-nav-style {
-    background-color: transparent!important;
-    text-align: center!important;
-}
-
-.bg {
-    /* The image used */
-    /*background-image: url("./assets/images/corridor.jpg");*/
-
-    /* Full height */
-    height: 100%;
-    /*width: 100%;*/
-
-
-    z-index: -100;
-
-    /* Center and scale the image nicely */
-    /*background-position: center;*/
-    /*background-repeat: no-repeat;*/
-    /*background-size: cover;*/
-}
-
 .vanished {
     display: none;
 }
@@ -70,20 +48,12 @@ button {
 
 #phoneCallButton {
     position: relative;
-    /*display: flex;*/
     width: 15vw;
-
-    /*top: 20vh;*/
-    /*left: 10vh;*/
 }
 
 #slamPhoneButton {
     position: relative;
-    /*display: flex;*/
     width: 15vw;
-
-    /*top: 20vh;*/
-    /*left: 10vh;*/
 }
 
 .cathodeText {
@@ -119,19 +89,6 @@ button {
 .buttonDivider {
     width: 1vw;
     height: 20vh;
-}
-
-.industrialButton {;
-    margin: 0 auto;
-    text-wrap: normal;
-    background-image: url("./assets/images/industrialButton.png");
-    background-size: 150px;
-    width: 150px;
-    height: 150px;
-    font-family: RetroFont;
-    text-align: center;
-    color: #fee;
-    text-shadow: 0 5px 5px, 0 0 2px, 0 0 1em #000000, 0 0 0.1em #000000, 0 0 0.1em #ff4444, 0 10px 3px #000;
 }
 
 .resetProgressButton {
@@ -223,20 +180,35 @@ button {
     align-items: center;
     text-wrap: normal;
     word-wrap: anywhere;
+    display: inline-block;
+    line-height: normal;
 }
 
 .top-bar {
     background-color: transparent !important;
 }
 
+.menu-item {
+    background-color: transparent!important;
+    border: none!important;
+    text-align: center!important;
+}
+
 .navigation-option-button {
     background-image: url("./assets/images/rustyPanelLabelSmall.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
+          background-position: center center;
+    width:20vw;
+    height:10vh;
+    justify-content: space-evenly !important;
+    /*
     height: 10rem;
-    width: 40rem;
+
+
     text-align: center !important;
     display: grid;
+    */
 }
 
 .ivory-background {
@@ -472,10 +444,10 @@ button {
     height: 100%
 }
 
-.quickview {
+.tray {
     /*background-clip: content-box;*/
     /*position: relative;*/
-    background: url("./assets/images/quickTray.png") no-repeat center center;
+    background: url("./assets/images/quickTray.png") no-repeat right center;
     background-color: transparent !important;
     background-size: contain;
     /*margin-right: -5vw;*/
