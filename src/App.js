@@ -33,12 +33,34 @@ import { withStyles } from "@mui/material/styles";
 import Drawer from '@mui/material/Drawer';
 
 import drawerImage from "./assets/images/quickTray.png";
+import { styled } from '@mui/material/styles';
+const drawerWidth = "20vw";
 
-const styles = theme => ({
-    drawerPaper: {
-      backgroundImage: `url(${drawerImage})`
-    },
-})
+const RustyDrawer = styled(Drawer)({
+  width: drawerWidth,
+  flexShrink: 0,
+  '& .MuiDrawer-paper': {
+    width: drawerWidth,
+    height: "100vh",
+    backgroundImage: `url(${drawerImage})`,
+    color: "white",
+    backgroundColor: 'transparent',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+        alignContent: "center",
+        flexDirection: "column",
+        verticalAlign: "middle !important",
+        alignItems: "center",
+        textWrap: "normal",
+        wordWrap: "anywhere",
+        display: "inline-block"
+  },
+});
+
 const navigationOptions = [
     {link: "/home", name: "При́пʼять"},
     {link: "/office", name: "Office"},
@@ -128,14 +150,14 @@ function App() {
                  onClick={toggleDrawer}
                  className={"radiation-hazard extra-big-hazard"}/>
             </Toolbar>
-                <Drawer
-                    className="tray retro-text has-text-vertically-centered"
+                <RustyDrawer
+                    className="retro-text"
                     anchor='right'
                     open={drawerState}
                     onClick={()=>setDrawerState(false)}
                     >
-                            {trayText ||"asdasdasd"}
-                </Drawer>
+                            {trayText}
+                </RustyDrawer>
         </AppBar>
     )
         ;
