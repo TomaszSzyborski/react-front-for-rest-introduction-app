@@ -3,7 +3,6 @@ import {useEffect, useMemo, useRef, useState} from "react";
 import React from "react";
 import {faker} from '@faker-js/faker';
 import {keyLocalStorageItemName} from "../utils/constants";
-
 const greeting = "Evening, Comrade!\n" +
     "Let me fetch the keys, while you write your name in the workbook"
 
@@ -22,6 +21,16 @@ const fakeNames = () => {
         ).join("\n")
     return people
 }
+
+function muteMe(elem) {
+    elem.muted = true;
+    elem.pause();
+}
+
+function mutePage() {
+    document.querySelectorAll("audio").forEach( elem => muteMe(elem) );
+}
+
 
 export default function Reception() {
     const [text, setText] = useState(greeting)
@@ -56,7 +65,9 @@ export default function Reception() {
         }
     }
     return (
-        <main style={{padding: "1rem 0"}}>
+        <main
+        onLoaded={mutePage}
+        style={{padding: "1rem 0"}}>
             <div className={"columns has-retro-text"}>
                 <div className={"column"}></div>
                 <div className={"column is-two-thirds"}>

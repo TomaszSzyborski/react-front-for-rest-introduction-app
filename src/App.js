@@ -72,7 +72,7 @@ function App() {
         Number(localStorage.getItem(trayOpeningsLocalStorageItemObject.key)) || 0
     )
     const [trayText, setTrayText] = useState(0)
-    const [whereAmI, setWhereAmI] = useState("Navigate");
+    const [whereAmI, setWhereAmI] = useState("/home");
     const [isShown, setIsShown] = useState(false);
 
     useMemo(() => {
@@ -124,17 +124,15 @@ function App() {
                  >
                     <InputLabel id="navigation-label-id" className="retro-text">Navigate</InputLabel>
                     <Select
-
                             labelId="navigation-label-id"
                             label="Navigate"
                             className="navigation-option-button retro-text"
                             onChange={handleChange}
                             defaultValue={whereAmI}
                     >
-                        {navigationOptions.map((option) => (
+                        {navigationOptions
+                            .map((option) => (
                         <MenuItem
-
-                        //TODO wyjebać wpizdu szarości na rzecz transparentności joł
                             key={uuid()}
                             value={option.link}
                             name={option.name}

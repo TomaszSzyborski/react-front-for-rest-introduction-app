@@ -1,5 +1,5 @@
 import axios from "axios";
-import {useState} from "react";
+import {useState, useRef, render} from "react";
 import maleBabble from '../assets/sounds/maleBabble.mp3'
 import femaleBabble from '../assets/sounds/femaleBabble.mp3'
 import phoneRing from '../assets/sounds/phoneRing.mp3'
@@ -10,28 +10,48 @@ import phoneDestruction from '../assets/sounds/phoneDestruction.mp3'
 import React, {useEffect} from 'react'
 import Typewriter from 'react-ts-typewriter';
 import {frontendFlagsAmount} from "../utils/constants";
+import { Button, Grid, CircularProgress } from '@mui/material'
+import { styled } from '@mui/material/styles';
 
 const consoleFlagHandler = () => {
     console.table([{flag: "${curious_console_observer}"}])
 };
+
+const PhoneButton = styled(Button)({
+    height: "3em!important",
+    width: '100%',
+    fontSize: '2.5rem',
+    '&:hover': {
+        opacity:0.8
+    },
+      '&:disabled': {
+        opacity: 0.8,
+        backgroundColor: "gray"
+      },
+});
+
+function useUnmount(callback) {
+  useEffect(() => {
+    return () => {
+      callback();
+    };
+  }, [callback]);
+}
 
 const ringing = new Audio(phoneRing)
 const pickingUp = new Audio(phonePickUp)
 const signalLost = new Audio(phoneSignalLost)
 
 export default function Office() {
-
-    const defaultPhoneCallButtonClasses = "button is-large is-primary"
-
+    const [playedSignalLost, setPlayedSignalLost] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [text, setText] = useState("")
     const [slams, setSlams] = useState(0)
     const [callCounter, setCallCounter] = useState(0)
     const [talking, setTalking] = useState(new Audio())
-    const [phoneCallClasses, setPhoneCallClasses] = useState(defaultPhoneCallButtonClasses)
     const [phoneDestroyed, setPhoneDestroyed] = useState(false)
     const [slamButtonDisabled, setSlamButtonDisabled] = useState(false)
     const [callButtonDisabled, setCallButtonDisabled] = useState(false)
-
 
     useEffect(() => {
         if (phoneDestroyed || Boolean(localStorage.getItem("is-phone-destroyed"))) {
@@ -54,10 +74,11 @@ export default function Office() {
             audio.onended = res
         })
     }
-
+      useUnmount(() => {
+        mute()
+      });
     const talkToGeneralSecretary = async () => {
         await setSlamButtonDisabled(true)
-        await setPhoneCallClasses(prevState => prevState + " is-loading")
         await setSlams(0)
 
         await resetText()
@@ -130,7 +151,8 @@ export default function Office() {
 
 
     const slamThePhone = async () => {
-        setPhoneCallClasses(defaultPhoneCallButtonClasses)
+        setCallButtonDisabled(false)
+        setIsLoading(false)
         mute()
         mute(signalLost)
         setCallCounter(prevCalls => prevCalls - 1 < 0 ? 0 : prevCalls - 1)
@@ -151,28 +173,59 @@ export default function Office() {
 
     return (
         <main className={"office-background"}>
-            <div className={"columns is-fullheight"}>
-                <div className={"column"}></div>
-                <div className={"phone column"}>
-
-                    <button
+            <Grid container spacing={2} maxHeight>
+                <Grid xs={1}></Grid>
+                <Grid item xs={4}
+                    sx={{height:'100vh',
+                         display: 'flex',
+                         flexDirection: 'column',
+                         justifyContent: 'center',
+                         alignItems: 'center'}}>
+                    <PhoneButton
+                        variant="contained"
+                        className="retro-text"
+                        color="success"
                         id={"phoneCallButton"}
-                        className={`${phoneCallClasses} `}
-                        onClick={talkToGeneralSecretary}
+                        onClick={()=>{
+                            setCallButtonDisabled(true)
+                            setIsLoading(true)
+                            talkToGeneralSecretary()
+                            }}
                         disabled={callButtonDisabled}
-                    >Call
-                    </button>
-                    <button
+                    >
+                      {isLoading && (<CircularProgress size={90}/>)}
+                      {!isLoading && "Call"}
+
+                    </PhoneButton>
+                    <PhoneButton
+                        className="retro-text"
+                        variant="contained"
+                        color="error"
+                        size="large"
                         id={"slamPhoneButton"}
-                        className={"button is-large is-danger"}
                         onClick={slamThePhone}
                         disabled={slamButtonDisabled}
                     >Slam the phone
-                    </button>
-                </div>
-                <div className={"column"}></div>
+                    </PhoneButton>
+                      {phoneDestroyed && (
+                        <PhoneButton
+                            variant="contained"
+                            color="error"
+                            size="large"
+                            className="retro-text"
+                            onClick={(e)=> {
+                                setPhoneDestroyed(false)
+                                localStorage.removeItem("is-phone-destroyed")
+                                window.location.reload(false)
+                            }}
+                        >
+                            Bring me another phone!
+                        </PhoneButton>
+                        )}
+                </Grid>
+                <Grid className={"column"}></Grid>
 
-                <div className={"column is-half"}>
+                <Grid xs={6}>
                     <span id={"cathodeDisplay"}>
                     <div className={"cathodeText"}>
                         {text ?
@@ -185,22 +238,18 @@ export default function Office() {
                                     talking.loop = true;
                                     talking.play();
                                 }}
-                                onFinished={async () => {
+                                onFinished={ async() => {
                                     await mute()
-                                    await mute(phoneHangUp)
-                                    await setPhoneCallClasses(defaultPhoneCallButtonClasses)
-                                    await playAudioAndWait(signalLost)
-                                }
-                                }
+                                    await setIsLoading(false)
+                                    await setCallButtonDisabled(false)
+                                }}
                             /> : null
                         }
                     </div>
-
                     </span>
-                </div>
-            </div>
+                </Grid>
+            </Grid>
             <img alt={""} onError={consoleFlagHandler} src={""}></img>
-
         </main>
     );
 }

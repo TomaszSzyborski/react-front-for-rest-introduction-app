@@ -46,29 +46,20 @@ button {
     width: 30vw;
 }
 
-#phoneCallButton {
-    position: relative;
-    width: 15vw;
-}
-
-#slamPhoneButton {
-    position: relative;
-    width: 15vw;
-}
-
 .cathodeText {
     font-family: RetroFont;
     font-size: 2rem;
-    display: flex;
-    flex-direction: column-reverse;
-    scroll-snap-type: y mandatory;
+    /*display: flex;*/
+    /*flex-direction: column-reverse;*/
+    /*scroll-snap-type: y mandatory;*/
     position: relative;
     top: 22.5vh;
     left: 10vw;
+    overflow: visible;
     height: 9vh;
     width: 25vw;
     color: #fee;
-    overflow-y: auto;
+    /*overflow-y: auto;*/
     text-shadow: 0 -2px 7px, 0 -2px 2px, -5px -5px 1em #ff4444, 0 -2px 0.5em #ff4444, 0 0 0.1em #ff4444, 10px 10px 3px #faa;
 }
 
@@ -211,6 +202,7 @@ button {
 .MuiSelect-icon {
     display: none !important;
 }
+
 
 .navigation-option-button {
     background-image: url("./assets/images/rustyPanelLabelSmall.png");
@@ -366,12 +358,6 @@ button {
     /*-webkit-transform: scaleX(-1);*/
     /*transform: scaleX(-1);*/
     /*display:inline-block*/
-}
-
-.phone {
-    position: relative;
-    display: inline-flex;
-    margin-top: 66.6vh;
 }
 
 .spacer {
