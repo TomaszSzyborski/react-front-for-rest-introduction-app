@@ -106,7 +106,7 @@ button {
     font-family: RetroFont!important;
     color: #fee!important;
     text-align: center !important;
-    font-size: 3rem!important;
+    font-size: 2em!important;
     text-wrap: normal;
     text-overflow: ellipsis;
     direction: rtl;
@@ -217,8 +217,8 @@ button {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center center;
-    width:20vw;
-    height:10vh;
+    width:30rem;
+    height:7.5rem;
     justify-content: space-evenly !important;
 }
 
