@@ -100,7 +100,7 @@ button {
     font-size: 2em!important;
     text-wrap: normal;
     text-overflow: ellipsis;
-    direction: rtl;
+    /*direction: rtl;*/
     unicode-bidi: plaintext;
 }
 

@@ -91,7 +91,7 @@ export default function ControlRoomSubView() {
             </div>
             <div>
                 <ModalContextProvider>
-                    <div className={"has-retro-text has-text-centered is-size-2"}>{text}</div>
+                    <div className={"retro-text"}>{text}</div>
                     <div>{subView}</div>
                 </ModalContextProvider>
             </div>

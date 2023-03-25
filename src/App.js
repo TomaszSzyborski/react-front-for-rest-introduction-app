@@ -19,15 +19,12 @@ import Typography from '@mui/material/Typography';
 import Select from '@mui/material/Select';
 import Menu from '@mui/material/Menu';
 import ListItem from '@mui/material/ListItem';
-import {Tabs, Tab} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import {Tabs, Tab, Grid} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import InputLabel from '@mui/material/InputLabel';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import Divider from '@mui/material/Divider';
 import { useNavigate, useParams } from "react-router-dom";
 import MuiMenuItem from "@mui/material/MenuItem";
 import { withStyles } from "@mui/material/styles";
@@ -51,11 +48,11 @@ const RustyDrawer = styled(Drawer)({
     height: '100vh',
     display: 'flex',
     boxShadow: 'none',
-        justifyContent: 'center !important',
-        verticalAlign: "middle !important",
-        alignItems: "center",
-        textWrap: "normal",
-        wordWrap: "anywhere",
+    justifyContent: 'center !important',
+    verticalAlign: "middle !important",
+    alignItems: "center",
+    textWrap: "normal",
+    wordWrap: "anywhere",
   },
 });
 
@@ -92,7 +89,7 @@ function App() {
 
         let keyMessage = ""
         if(localStorage.getItem(keyLocalStorageItemName)){
-            keyMessage = `Here's your key:\n ${localStorage.getItem(keyLocalStorageItemName)}`
+            keyMessage = `\nHere's your key:\n\n ${localStorage.getItem(keyLocalStorageItemName)}`
         }
         const messageInStash = ((data[numberOfTrayOpenings] || "")
             + (keyMessage || "")) || "I thought I have had something here..."
@@ -151,14 +148,24 @@ function App() {
                 <RustyDrawer
                     anchor='right'
                     open={drawerState}
-                    onClick={()=>setDrawerState(false)}
                     >
+                       <CloseIcon
+                         sx={{
+                            position: 'absolute',
+                            left: "6%",
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            width:"5rem",
+                            height:"5rem",
+                         }}
+                        onClick={()=>setDrawerState(false)}/>
                           <Typography
                           sx={{marginLeft:"5vw", cursor:""}}
                           className="retro-text"
                           variant="h2" component="h2">
                             {trayText}
                           </Typography>
+
                 </RustyDrawer>
         </AppBar>
     )

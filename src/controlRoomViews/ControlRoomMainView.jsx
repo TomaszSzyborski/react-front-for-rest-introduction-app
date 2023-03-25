@@ -2,6 +2,8 @@ import axios from "axios";
 import {useKey} from "../utils/contexts/keyContext";
 import {useState} from "react";
 import {useSubView} from "../utils/contexts/controlRoom/subViewContext";
+import {Button, Grid, Input, Typography} from '@mui/material'
+import { TextareaAutosize } from '@mui/base';
 
 const welcomeText = "Busy night, Comrade, let's proceed with the test."
 
@@ -32,30 +34,31 @@ export default function ControlRoomMainView() {
 
     return (
         <div>
-            <div className={"has-retro-text has-text-centered is-size-3"}>
+            <div className={"retro-text"}>
                 {welcomeText}
                 <div>
                     <span>Remember to keep they key with you, wherever you're going.</span>
-                    <div className={"columns"}>
-                        <div className={"column"}></div>
-                        <div className={"column is-one-third"}>
-                            <input id={"key"} type={"text"}
-                                   className={"input"}
+                    <Grid size="2">
+                        <Grid item>
+                            <Input id={"key"}
+                                   sx={{width: "40%"}}
+                                   className="retro-text"
                                    placeholder={"Place your key here"}
                                    value={key}
-                                   onChange={e => setKey(e.target.value.trim())}></input>
-                            <button className={"button is-info"}
-                                    onClick={unlockSubViews}>
+                                   onChange={e => setKey(e.target.value.trim())}/>
+                        </Grid>
+                        <Grid item>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className="retro-text"
+                                onClick={unlockSubViews}>
                                 Unlock the room
-                            </button>
-                        </div>
-                        <div className={"column"}></div>
-
-                    </div>
-                    <div className={"has-retro-text is-size-2"}>
-                        <div>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    <div className={"retro-text"}>
                             {text}
-                        </div>
                     </div>
                 </div>
             </div>

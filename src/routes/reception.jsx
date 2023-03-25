@@ -3,6 +3,13 @@ import {useEffect, useMemo, useRef, useState} from "react";
 import React from "react";
 import {faker} from '@faker-js/faker';
 import {keyLocalStorageItemName} from "../utils/constants";
+import {Button, Grid, CircularProgress } from '@mui/material'
+import Typography from '@mui/material/Typography';
+import ListItem from '@mui/material/ListItem';
+import Box from '@mui/material/Box';
+import { TextareaAutosize } from '@mui/base';
+
+
 const greeting = "Evening, Comrade!\n" +
     "Let me fetch the keys, while you write your name in the workbook"
 
@@ -20,15 +27,6 @@ const fakeNames = () => {
             }
         ).join("\n")
     return people
-}
-
-function muteMe(elem) {
-    elem.muted = true;
-    elem.pause();
-}
-
-function mutePage() {
-    document.querySelectorAll("audio").forEach( elem => muteMe(elem) );
 }
 
 
@@ -65,79 +63,78 @@ export default function Reception() {
         }
     }
     return (
-        <main
-        onLoaded={mutePage}
-        style={{padding: "1rem 0"}}>
-            <div className={"columns has-retro-text"}>
-                <div className={"column"}></div>
-                <div className={"column is-two-thirds"}>
-                    <div className={"columns"}>
-                        <div className={"column"}></div>
-                        <div className={"column is-two-thirds"}>
-                            <div id={"message"} className={"has-text-centered is-size-2 container"}>
-                                {text}
-                            </div>
-                            <div>
-                                <div className="columns"
-                                     id={"registrar"}>
-                                    <div className={"column"}></div>
-                                    <div className={"column is-three-fifths"}>
-                                        <div className={"spacer-one-twentieth-height"}></div>
-                                        <div className={"columns registrar-pages"}>
-                                            <div className={"column is-size-6 is-dark"}>
-                                                <div>Day Shift</div>
-                                                <textarea className={"textarea signature-area is-fullwidth readonly"}
-                                                          defaultValue={multitudeOfFakeSovietNames}>
-                                                </textarea>
-                                            </div>
-
-                                            <div className={"column is-size-6"}>
-                                                <div>Night Shift</div>
-                                                <textarea
-                                                    className={"textarea signature-area is-fullwidth"}
-                                                    placeholder={alreadyAtWork}
-                                                    value={name}
-                                                    onChange={e => setName(e.target.value)}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={"column"}></div>
-                                </div>
-                                <div className={"spacer-one-twentieth-height"}></div>
-                                <div className={"columns"}>
-                                    <div className={"column"}></div>
-                                    <button className={"button column is-two-thirds is-primary is-large"}
-                                            onClick={registerAtDesk}
-                                            name="Register">Write in registrar book
-                                    </button>
-                                    <div className={"column"}>
-                                    </div>
-                                </div>
-                                <div id={"tray"} className={"has-text-centered is-size-4"}>
-                                    {key ?
-                                        <div>
-                                            <span>Pick it up</span>
-                                            <br/>
-                                            <span
-                                                className={"has-background-info is-size-2"}>
-                                                {key}
-                                            </span>
-                                            <br/>
-                                            <span>Keep it safe, and always wih you.</span>
-                                        </div>
-                                        : null}
-                                </div>
-                            </div>
-                        </div>
-                        <div className={"column"}>
-                        </div>
-                    </div>
-                </div>
-                <div className={"column"}>
-
-                </div>
-            </div>
+        <main>
+            <Grid   height="30rem"
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    id="mainGrid">
+                 <Grid xs={2} id="obsolete-column-left"></Grid>
+                 <Grid xs={8} sx={{height:"100vh"}}>
+                    <Typography id={"message"} className={"retro-text"}>
+                        {text}
+                    </Typography>
+                    <Grid container
+                        id="registrar"
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="center"
+                        spacing="12"
+                        >
+                         <Grid item className={"registrar-pages"}>
+                               <div>Day Shift</div>
+                               <TextareaAutosize className={"textarea signature-area is-fullwidth readonly"}
+                                         defaultValue={multitudeOfFakeSovietNames}>
+                               </TextareaAutosize>
+                         </Grid>
+                         <Grid item className={"registrar-pages"}>
+                            <div>Night Shift</div>
+                                <TextareaAutosize
+                                    className={"textarea signature-area is-fullwidth"}
+                                    placeholder={alreadyAtWork}
+                                    value={name}
+                                    onChange={e => setName(e.target.value)}
+                                />
+                         </Grid>
+                    </Grid>
+                 </Grid>
+                 <Grid xs={2} id="obsolete-column-right"></Grid>
+            </Grid>
+            <Grid container
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+                spacing="24">
+                   <Button
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        className="retro-text"
+                        name="Register"
+                        onClick={registerAtDesk}>
+                            Write in registrar book
+                        </Button>
+                             {key ?
+                               <Grid
+                                item
+                                id={"tray"}
+                                className="retro-text"
+                                direction="row"
+                                spacing="24">
+                                     <Grid item >Pick it up</Grid>
+                                     <br/><br/>
+                                     <Grid item
+                                        sx={{
+                                            fontSize: "4rem",
+                                        }}>
+                                         {key}
+                                     </Grid>
+                                     <br/><br/>
+                                     <Grid item>Keep it safe, and always wih you!</Grid>
+                                </Grid>
+                             : null}
+             </Grid>
         </main>
     )
         ;
