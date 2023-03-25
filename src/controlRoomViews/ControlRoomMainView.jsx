@@ -41,7 +41,7 @@ export default function ControlRoomMainView() {
                     <Grid size="2">
                         <Grid item>
                             <Input id={"key"}
-                                   sx={{width: "40%"}}
+                                   sx={{width: "38vw"}}
                                    className="retro-text"
                                    placeholder={"Place your key here"}
                                    value={key}

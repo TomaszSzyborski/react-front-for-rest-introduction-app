@@ -9,7 +9,7 @@ import {createOption} from "../utils/constants";
 import {useKey} from "../utils/contexts/keyContext";
 import axios from "axios";
 import {ModalContextProvider, useModal} from "../utils/contexts/modalContext";
-
+import {Button, Grid, Input, Typography, Select} from '@mui/material'
 
 const noseyChapsArentYaFlag = '${nosey_chaps_arent_ya!}'
 
@@ -63,10 +63,12 @@ export default function ControlRoomSubView() {
 
     return (internalVisibility &&
         <>
-            <div className={"columns"}
-                 id={"control-room-internals"}>
-                <div className={"column"}></div>
-                <div className={"column"}>
+            <Grid container
+                 direction="row"
+                 justifyContent="center"
+                 alignItems="center"
+                id={"control-room-internals"}>
+                <Grid item xs={4}>
                     <AsyncSelect
                         menuIsOpen={isMenuOpen}
                         blurInputOnSelect
@@ -86,9 +88,8 @@ export default function ControlRoomSubView() {
                         noOptionsMessage={() => noseyChapsArentYaFlag}
                         placeholder={"Select control view"}
                     />
-                </div>
-                <div className={"column"}></div>
-            </div>
+                </Grid>
+            </Grid>
             <div>
                 <ModalContextProvider>
                     <div className={"retro-text"}>{text}</div>
