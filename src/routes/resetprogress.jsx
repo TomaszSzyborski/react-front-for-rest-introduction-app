@@ -1,10 +1,11 @@
 import ReactorResetHandle from "../resetProgressParts/ReactorResetHandle";
 import ReactorResetUnlockHandle from "../resetProgressParts/ReactorResetUnlockHandle";
-import MessageModal from "../resetProgressParts/MessageModal";
+import MessageModal from "../utils/MessageModal";
 import ComradeStorageCleaner from "../resetProgressParts/ComradeStorageCleaner";
 import {KeyContextProvider} from "../utils/contexts/keyContext";
 import {ModalContextProvider} from "../utils/contexts/modalContext";
 import {HandleContextProvider} from "../utils/contexts/reactorReset/resetReactorHandleContext";
+import {Grid} from '@mui/material';
 
 
 
@@ -16,15 +17,14 @@ export default function ResetProgress() {
                 <ModalContextProvider>
                     <HandleContextProvider>
                         <ReactorResetUnlockHandle/>
-                        <div className={"spacer-one-tenth-height"}></div>
-                        <div className={"columns"}>
-                            <div className={"column is-four-fifths"}>
-                                <ReactorResetHandle/>
-                            </div>
-                            <div className={"column"}>
-                                <ComradeStorageCleaner/>
-                            </div>
-                        </div>
+                        <Grid direction="row">
+                                <Grid item>
+                                    <ReactorResetHandle/>
+                                </Grid>
+                                <Grid item>
+                                    <ComradeStorageCleaner/>
+                                </Grid>
+                        </Grid>
                         {<MessageModal/>}
                     </HandleContextProvider>
                 </ModalContextProvider>

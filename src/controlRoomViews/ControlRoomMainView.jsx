@@ -43,7 +43,7 @@ export default function ControlRoomMainView() {
                             <Input id={"key"}
                                    sx={{width: "38vw"}}
                                    className="retro-text"
-                                   placeholder={"Place your key here"}
+                                   placeholder={"Place your key here..."}
                                    value={key}
                                    onChange={e => setKey(e.target.value.trim())}/>
                         </Grid>

@@ -1,18 +1,23 @@
 import axios from "axios";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {useKey} from "../../utils/contexts/keyContext";
 import {useModal} from "../../utils/contexts/modalContext";
+import {Grid, Button, Modal, Box, Typography, Dialog} from '@mui/material';
+import MessageModal from "../../utils/MessageModal";
 
 
 export default function Analysis() {
     const {key} = useKey()
-    const {setMessage} = useModal()
+    const {message, setMessage} = useModal();
 
-    const pressAnalysis = () => {
+   useEffect( () => {
+        performAnalysis()
+    },[])
+
+    const performAnalysis = async () => {
         let msg = ""
-        axios.put(
-            `http://localhost:9011/challenge/reactor/${key}/control_room/az_5`,
-            {pressed: true},
+        await axios.get(
+            `http://localhost:9011/challenge/reactor/${key}/control_room/analysis`,
             {
                 headers: {
                     'Access-Control-Allow-Origin': '*',
@@ -21,27 +26,33 @@ export default function Analysis() {
 
             })
             .then(response => {
+                const flag = response.data.flag
+                const message = response.data.message
+                if (flag) {
                     msg = `${response.data.message} ${response.data.flag}`
+                } else {
+                    msg = `${response.data.message}`
                 }
+              }
             )
             .catch(error => {
                     msg = (error.response.data.message)
                 }
             )
-        setMessage(msg)
+            await setMessage(msg)
     }
     return (
-        <div>
-            <div className={"columns "}>
-                <div className={"column"}></div>
-                <div className={"column has-text-centered"}>
-                    <button className={"button is-primary has-retro-text"}
-                            onClick={pressAnalysis}>
-                        Perform Analysis
-                    </button>
-                </div>
-                <div className={"column"}></div>
-            </div>
-        </div>
+        <Grid container alignItems="center" direction="column">
+{/*             <Grid item> */}
+{/*                 <Button */}
+{/*                     variant="contained" */}
+{/*                     color="primary" */}
+{/*                     className={"retro-text"} */}
+{/*                     onClick={async ()=> await performAnalysis()}> */}
+{/*                     Perform Analysis */}
+{/*                 </Button> */}
+{/*             </Grid> */}
+            <MessageModal/>
+        </Grid>
     )
 }

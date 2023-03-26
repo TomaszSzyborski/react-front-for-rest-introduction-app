@@ -1,13 +1,14 @@
 import axios from "axios";
 import {useKey} from "../../utils/contexts/keyContext";
 import {useModal} from "../../utils/contexts/modalContext";
-import {useRef} from "react";
-
+import MessageModal from "../../utils/MessageModal";
+import {useRef, useState, useEffect} from "react";
+import {Grid, Button, Modal, Box, Typography, Dialog} from '@mui/material';
 
 export default function Az5() {
     const {key} = useKey()
-    const {setMessage} = useModal()
-    const modalRef = useRef();
+    const [seal, setSeal] = useState(true)
+    const {setMessage} = useModal();
 
     const pressAZ5 = async () => {
         let msg = ""
@@ -25,28 +26,33 @@ export default function Az5() {
                 }
             )
             .catch(error => {
-                    msg = (error.response.data.message)
+                    msg = `${error.response.data.message} ${error.response.data.flag}`
                 }
             )
         await setMessage(msg)
     }
     return (
-        <div>
-            <div className={"columns "}>
-                <div className={"column"}></div>
-                <div className={"column has-text-centered is-maxed-within"}>
-                    {/*<button className={" button az-5 has-retro-text"}*/}
-                    {/*        onSubmit={pressAZ5}>*/}
-                    {/*    AZ-5*/}
-                    {/*</button>*/}
-                    <div className={"button is-primary has-retro-text"}
-                         ref={modalRef}
-                            onClick={pressAZ5}>
-                        AZ-5
-                    </div>
-                </div>
-                <div className={"column"}></div>
-            </div>
-        </div>
+    <Grid container direction="column" alignItems="center">
+        <Grid item>
+            <Button
+                 variant={"contained"}
+                 className={"retro-text"}
+                 onClick={()=>setSeal(false)}>
+                Break the AZ-5 safety seal
+            </Button>
+        </Grid>
+        <Grid item>
+            <Button
+                 disabled={seal}
+                 variant={"contained"}
+                 className={"retro-text"}
+                 onClick={async () => {
+                    await pressAZ5()
+                 }}>
+                AZ-5
+            </Button>
+        </Grid>
+        <MessageModal/>
+    </Grid>
     )
 }

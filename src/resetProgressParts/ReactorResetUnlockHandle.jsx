@@ -2,6 +2,7 @@ import axios from "axios";
 import {useKey} from "../utils/contexts/keyContext";
 import {useModal} from "../utils/contexts/modalContext";
 import {useHandle} from "../utils/contexts/reactorReset/resetReactorHandleContext";
+import {Grid, Input, Button} from '@mui/material';
 
 
 export default function ReactorResetUnlockHandle() {
@@ -27,21 +28,24 @@ export default function ReactorResetUnlockHandle() {
     }
 
     return (
-        <form className={"field has-addons"} style={{
-            margin: "0 auto",
-            width: "50%",
-            padding: "1rem"
-        }}>
-            <div className={"control"} style={{width: "100%"}}>
-                <input className="input" type="text" placeholder="Put your key here, Comrade..."
-                       value={key}
-                       onChange={e => setKey(e.target.value)}/>
-            </div>
-            <div className={"control"}>
-                <a className={"button is-info"} onClick={unlockHandle}>
+        <Grid container maxWidth direction="column" alignItems="center" className="retro-text">
+            <Grid item>
+                <Input
+                sx={{width: "auto"}}
+                className="retro-text"
+                type="text"
+                placeholder="Place your key here..."
+                value={key}
+                onChange={e => setKey(e.target.value)}/>
+            </Grid>
+            <Grid item>
+                <Button
+                 className="retro-text"
+                 variant="contained"
+                 onClick={unlockHandle}>
                     Unlock Timeline Lever
-                </a>
-            </div>
-        </form>
+                </Button>
+            </Grid>
+        </Grid>
     );
 }
