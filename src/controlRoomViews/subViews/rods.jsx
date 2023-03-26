@@ -42,32 +42,34 @@ function RodSwitch(props) {
 
 
 export default function Rods(props) {
-    const {key} = useKey()
-//     const [fuelRods, setFuelRods] = useState([]);
-//     const [controlRods, setControlRods] = useState([]);
-
-//     const getRodsData = async () => {
-//         await axios.get(`http://localhost:9011/challenge/reactor/${key}/control_room`)
-//                     .then( response => {
-//                         console.log(response.data)
-//                         console.log(response.data['reactor data']['_ReactorCore__fuel_rods'])
-//                         setFuelRods(response.data['reactor data']['_ReactorCore__fuel_rods'])
-//                         setControlRods(response.data['reactor data']['_ReactorCore__control_rods'])
-//                     }).catch(error => console.error(error))
-//         await console.log(fuelRods)
-//         }
-//     useEffect(() => {
-//     console.log('mounted');
-//        getRodsData()
-//       return () => console.log('unmounting...');
-//     }, [])
-        let fuelRods = ["","asd","",""]
-        let controlRods = ["","asd","",""]
+    const {key} = useKey();
+    const [fuelRods, setFuelRods] = useState([]);
+    const [controlRods, setControlRods] = useState([]);
+//     const fuelRods =["","", "23"]
+//     const controlRods =["","", "23"]
+    const getRodsData = async () => {
+        await axios.get(`http://localhost:9011/challenge/reactor/${key}/control_room`,
+                            {
+                            headers: {
+                                'Access-Control-Allow-Origin': '*',
+                                'Content-Type': `application/json`
+                            }})
+                    .then( response => {
+                        setFuelRods(response.data['reactor data']['_ReactorCore__fuel_rods'])
+                        setControlRods(response.data['reactor data']['_ReactorCore__control_rods'])
+                    }).catch(error => console.error(error))
+        await console.log(fuelRods)
+        }
+         useEffect(() => {
+            console.log('mounted');
+            getRodsData()
+            return () => console.log('unmounting...');
+        }, [])
       return (
         <Grid
         container direction="row" alignItems="center">
             <Grid item xs={2}/>
-            <Grid xs={6} >
+            <Grid item xs={6} >
                 <Grid item>
                 {fuelRods.map((rod, index) => (
                       <RodSwitch id={`FuelRod${index}`} index={index} isOn={rod? true: false} rodType="fuel"/>

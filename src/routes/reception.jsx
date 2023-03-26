@@ -70,8 +70,8 @@ export default function Reception() {
                     justifyContent="center"
                     alignItems="center"
                     id="mainGrid">
-                 <Grid xs={2} id="obsolete-column-left"></Grid>
-                 <Grid xs={8} sx={{height:"100vh"}}>
+                 <Grid item xs={2} id="obsolete-column-left"></Grid>
+                 <Grid item xs={8} sx={{height:"100vh"}}>
                     <Typography id={"message"} className={"retro-text"}>
                         {text}
                     </Typography>
@@ -99,7 +99,7 @@ export default function Reception() {
                          </Grid>
                     </Grid>
                  </Grid>
-                 <Grid xs={2} id="obsolete-column-right"></Grid>
+                 <Grid item xs={2} id="obsolete-column-right"></Grid>
             </Grid>
             <Grid container
                 direction="column"

@@ -113,7 +113,6 @@ function App() {
             <Toolbar disableGutters={false}
             >
                 <IconButton
-                max-height
                  href={"/"}
                  className={"radiation-hazard extra-big-hazard"} size="large"/>
                  <FormControl
@@ -165,7 +164,6 @@ function App() {
                           variant="h2" component="h2">
                             {trayText}
                           </Typography>
-
                 </RustyDrawer>
         </AppBar>
     )

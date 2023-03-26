@@ -1,6 +1,6 @@
 import {useSubView} from "../utils/contexts/controlRoom/subViewContext";
 import AsyncSelect from "react-select/async";
-import {useEffect, useState} from "react";
+import {useEffect, useState, render} from "react";
 import Rods from "./subViews/rods";
 import Analysis from "./subViews/analysis";
 import Az5 from "./subViews/az5";
@@ -19,6 +19,7 @@ export default function ControlRoomSubView() {
     const {subView, setSubView, internalVisibility} = useSubView()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [text, setText] = useState("")
+//     const [szmelc, setSzmelc] = useState(()=>null)
 
     useEffect(() => {
         if (internalVisibility) {
@@ -26,11 +27,27 @@ export default function ControlRoomSubView() {
         }
     }, [internalVisibility])
 
-    const askForData = () => {
+    const [option, setOption] = useState(null)
+    useEffect(() =>{
+        if (option) {
+            const component = {
+                "Reactor Rods Control Panel": <Rods/>,
+                 'Reactor Core Analysis': <Analysis/>,
+                 'AZ-5 Button': <Az5/>,
+                 'Corridor to Reactor Hall': <Core/>,
+            }[option.label]
+            setSubView(
+               component
+            )
+        }
+        return () => {setSubView(null)}
+    },[option])
+
+    const askForData = async () => {
         if (key === "") {
             setText("Have you dropped the key somewhere?!")
         } else {
-            axios.get(
+            await axios.get(
                 `http://localhost:9011/challenge/reactor/${key}/control_room`,
                 {
                     headers: {
@@ -52,14 +69,14 @@ export default function ControlRoomSubView() {
 
     const optionsInTheRoom =
         [
-            {value: Rods, label: "Reactor Rods Control Panel"},
-            {value: Analysis, label: 'Reactor Core Analysis'},
-            {value: Az5, label: 'AZ-5 Button'},
-            {value: Core, label: 'Corridor to Reactor Hall'}
+            {label:'Reactor Rods Control Panel'},
+            {label:'Reactor Core Analysis'},
+            {label:'AZ-5 Button'},
+            {label:'Corridor to Reactor Hall'},
         ]
-            .map((it) =>
-                createOption(it.label, it.value, {key: {key}})
-            )
+//             .map((it) =>
+//                 createOption(it.label, it.value, {key: {key}})
+//             )
 
     return (internalVisibility &&
         <>
@@ -73,14 +90,14 @@ export default function ControlRoomSubView() {
                         menuIsOpen={isMenuOpen}
                         blurInputOnSelect
                         onFocus={() => setIsMenuOpen(true)}
-                        onMenuClose={() => {
-                            askForData()
+                        onMenuClose={async () => {
+                            await askForData()
                         }}
                         onSelectResetsInput={false}
                         onChange={
-                            (option) => {
-                                setIsMenuOpen(false)
-                                setSubView(option.value)
+                            (menuOption) => {
+                                 setIsMenuOpen(false)
+                                 setOption(menuOption)
                             }
                         }
                         defaultOptions={optionsInTheRoom}

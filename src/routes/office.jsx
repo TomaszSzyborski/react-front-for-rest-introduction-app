@@ -174,7 +174,7 @@ export default function Office() {
     return (
         <main className={"office-background"}>
             <Grid container spacing={2} maxHeight>
-                <Grid xs={1}></Grid>
+                <Grid item xs={1}></Grid>
                 <Grid item xs={4}
                     sx={{height:'100vh',
                          display: 'flex',
@@ -223,9 +223,7 @@ export default function Office() {
                         </PhoneButton>
                         )}
                 </Grid>
-                <Grid className={"column"}></Grid>
-
-                <Grid xs={6}>
+                <Grid item xs={6}>
                     <span id={"cathodeDisplay"}>
                     <div className={"cathodeText"}>
                         {text ?
