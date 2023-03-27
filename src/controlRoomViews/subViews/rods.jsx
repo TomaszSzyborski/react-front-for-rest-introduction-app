@@ -44,10 +44,17 @@ function RodSwitch(props) {
       className="retro-text"
       control={
           <Switch
-            sx={{transform: "rotate(90deg)"}}
+            sx={{
+                transform: "rotate(90deg)",
+                    "& .MuiSwitch-switchBase.Mui-checked": {
+                         color: props.rodType == "fuel" ? '#ccff33' : "#ff6633"
+                    },
+                    "& .MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track": {
+                         backgroundColor: props.rodType == "fuel" ? '#ccff33' : "#ff6633"
+                    }
+            }}
             disabled={isDisabled}
             id={`switch-${props.rodType}-${props.index}`}
-            color={props.rodType === 'fuel'? 'primary' : 'warning'}
             checked={isOn}
             onChange={async() => {
                     await handleToggle()

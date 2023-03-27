@@ -8,7 +8,7 @@ import Core from "./subViews/core";
 import {createOption} from "../utils/constants";
 import {useKey} from "../utils/contexts/keyContext";
 import axios from "axios";
-import {ModalContextProvider, useModal} from "../utils/contexts/modalContext";
+import {useModal} from "../utils/contexts/modalContext";
 import {Button, Grid, Input, Typography, Select} from '@mui/material'
 
 const noseyChapsArentYaFlag = '${nosey_chaps_arent_ya!}'
@@ -96,10 +96,8 @@ export default function ControlRoomSubView() {
                 </Grid>
             </Grid>
             <div>
-{/*                 <ModalContextProvider> */}
                     <div className={"retro-text"}>{text}</div>
                     <div>{subView}</div>
-{/*                 </ModalContextProvider> */}
             </div>
         </>
     )

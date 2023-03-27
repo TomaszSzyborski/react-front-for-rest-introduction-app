@@ -41,8 +41,8 @@ export default function ControlRoomMainView() {
                     <Grid size="2">
                         <Grid item>
                             <Input id={"key"}
+                                className="has-retro-text"
                                    sx={{width: "38vw"}}
-                                   className="retro-text"
                                    placeholder={"Place your key here..."}
                                    value={key}
                                    onChange={e => setKey(e.target.value.trim())}/>
@@ -51,7 +51,7 @@ export default function ControlRoomMainView() {
                             <Button
                                 variant="contained"
                                 color="primary"
-                                className="retro-text"
+                                className="has-retro-text"
                                 onClick={unlockSubViews}>
                                 Unlock the room
                             </Button>

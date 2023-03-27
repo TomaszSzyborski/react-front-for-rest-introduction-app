@@ -1,85 +1,62 @@
-import Slider from "rc-slider";
-import hazardStripes from "../assets/images/hazardStripes.jpeg";
+import handleImage from "../assets/images/leatherTexture.png";
+import rustyDoor from "../assets/images/rustyDoor.jpg";
 import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {useKey} from "../utils/contexts/keyContext";
 import {useModal} from "../utils/contexts/modalContext";
 import {useHandle} from "../utils/contexts/reactorReset/resetReactorHandleContext";
+import {Grid, Button, Modal, Box, Typography, Dialog, Slider} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import powerDown from '../assets/sounds/powerDown.mp3'
 
-const baseStyle = {
-    paddingLeft: "350%",
-    marginLeft: "15vw",
-    boxShadow: "20px 0 10px #000000, 0px 0px 5px #0d0d0d",
-    background: "linear-gradient(270deg, darkblue 0%, black 100%)"
+const powerDownSound = new Audio(powerDown)
 
-}
+const Overlay = styled(Paper)({
+  position: 'fixed',
+  flexGrow: "1",
+  height: '100%',
+  width: '100%',
+  backgroundImage: `url(${rustyDoor})`,
+  zIndex: '10000000000000000',
+  backgroundRepeat: "no-repeat",
+  backgroundPosition: "center",
+  backgroundColor: "rgba(255, 255, 255, 0)",
+  backgroundSize: "contain",
+});
 
-const trackStyle = {
-    ...baseStyle,
-    background: "linear-gradient(270deg, darkblue 0%, black 100%)"
-}
-
-const railStyle = {
-    ...baseStyle,
-    background: "linear-gradient(270deg, darkslategray 0%, black 100%)"
-}
-
-const handleStyle = {
-    boxShadow: "20px 10px 20px #000000, 0px 0px 5px #0d0d0d",
-    marginLeft: "-33.33%",
-    marginRight: "-33.33%",
-    height: "15vh",
-    width: "33.3vw",
-    display: "flex",
-    color: "transparent",
-    backgroundColor: "transparent",
-    backgroundImage: `url(${hazardStripes})`,
-    borderColor: "black",
-    opacity: "100%",
-    backgroundSize: "105%",
-    backgroundPosition: "center center",
-    borderRadius: "100px"
-}
-
-function Overlay() {
-    const {handleDisabled} = useHandle();
-    return (
-        <div
-            className={`modal is-active is-clipped`}
-            style={{
-                display: `${handleDisabled ? "block" : "none"}`
-            }}
-            id={"handle-overlay"}
-            onClick={() => {
-                alert(`Comrade Soldiers! Unauthorized personnel is meddling with classified device!\n`
-                    + "Get him now!\n"
-                    + "${[REDACTED]_of_[CLASSIFIED]_experimental_machine}")
-            }}
-        >
-            <div className="modal-background"></div>
-        </div>
-    )
-}
 
 export default function ReactorResetHandle() {
+  function preventHorizontalKeyboardNavigation(event) {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+    }
+  }
     const {key} = useKey()
     const {setMessage, setIsOpen} = useModal();
     const [sliderMessage, setSliderMessage] = useState("");
     const [sliderValue, setSliderValue] = useState(0);
-    const {handleDisabled} = useHandle();
+    const {handleDisabled, setHandleDisabled} = useHandle();
 
+    const playAudioAndWait = async (audio) => {
+        await new Promise(res => {
+            audio.play()
+            audio.onended = res
+        })
+    }
 
     const triggerReactorReset = async () => {
         await axios.get(`http://localhost:9011/challenge/reactor/${key}/reset_progress`)
             .then(response => {
-                    console.log(response.data.message)
-                    setMessage(response.data.message)
+                    playAudioAndWait(powerDownSound)
+                    setMessage(`Time Variance Branching merged and reset to 18:17:24 25-04-1986 ${response.data.message}`)
                 }
             )
             .catch(error =>
                 setMessage(`${error.response.data.message}\n${error.response.data.flag}`)
             ).finally(() => {
-                    setIsOpen(true)
+                    setHandleDisabled(true)
+                    setSliderValue(0)
                 }
             )
     }
@@ -94,45 +71,88 @@ export default function ReactorResetHandle() {
         } else if (sliderValue < 100) {
             messageToSet = `Just... Bit... MOAR!${currentSwitchLevel}`
         } else {
-            messageToSet = `Simulation Reboot Initiated${currentSwitchLevel}`
-            triggerReactorReset()
+            messageToSet = `Simulation Reboot Initiated`
+            setTimeout( async () =>
+                {
+                    await triggerReactorReset()
+                }, 1000)
+
         }
         setSliderMessage(messageToSet)
     }, [sliderValue]);
 
     return (
-        <main>
-            <div className={"columns is-fullheight"}>
-                <div className={"column"}>
-                    <div className={"columns is-fullheight"}>
-                        <div className={"column"}></div>
-                        <div
-                            className={"column has-retro-text is-four-fifths new-line has-text-centered has-text-vertically-centered"}>
-                            {sliderMessage.split(" ").join("\n")}
-                        </div>
-                        <div className={"column"}></div>
-                    </div>
-                </div>
-                <div className={"column"}>
-                    <div className={"is-maxed-within"}>
-                        <Overlay/>
-                        <Slider
-                            disabled={handleDisabled}
-                            trackStyle={trackStyle}
-                            railStyle={railStyle}
-                            vertical={true}
-                            reverse={true}
-                            startPoint={0}
-                            onChange={(number) => setSliderValue(number)}
-                            handleStyle={handleStyle}
-                            step={1}
-                            min={0}
-                            max={100}/>
-                    </div>
-                </div>
-                <div className={"column"}></div>
-            </div>
-        </main>
+        <Grid sx={{
+            flexFlow: "column",
+            display: 'flex',
+            flexDirection: 'column',
+            height: '50vh',
+            alignItems: "center",
+            flexGrow: "1",
+        }}>
+            {handleDisabled && <Overlay id="overlay"  onClick={() => {
+                                                  alert(`Comrade Soldiers! Unauthorized personnel is meddling with classified device!\n`
+                                                      + "Get him now!\n"
+                                                      + "${[REDACTED]_of_[CLASSIFIED]_experimental_machine}")
+                                              }}/>}
+            { !handleDisabled &&
+
+            <Grid container
+                maxWidth
+                maxHeight
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                spacing={{ xs: 2, md: 6, }} columns={{ xs: 4, sm: 8, md: 12 }}
+            >
+
+                    <Grid item />
+                    <Grid item />
+                    <Grid item>
+                            <Box sx={{ height: "20rem" }}>
+                                <Slider
+                                sx={{
+                                        '& input': {
+                                           WebkitAppearance: 'slider-vertical',
+                                        },
+                                        '& .MuiSlider-rail':{
+                                            width: "1rem",
+                                            color: "darkgray",
+                                        },
+                                        '& .MuiSlider-track': {
+                                            width: "1rem",
+                                            color: "lightgrey",
+                                        },
+                                        '& .MuiSlider-thumb': {
+                                          borderRadius: '10px',
+                                          width:"20rem",
+                                          height:"5rem",
+                                          backgroundImage: `url(${handleImage})`,
+                                          backgroundRepeat: "no-repeat",
+                                          backgroundPosition: "center",
+                                          backgroundSize: "cover",
+                                        }
+                                    }}
+                                    disabled={handleDisabled}
+                                    defaultValue={0}
+                                    step={1}
+                                    min={0}
+                                    max={100}
+                                    orientation="vertical"
+                                    onChange={(event, newValue) => setSliderValue(newValue)}
+                                    value={sliderValue}
+                                    onKeyDown={preventHorizontalKeyboardNavigation}
+                                    reverse="true"
+                                 />
+                            </Box>
+                    </Grid>
+                  <Grid item/>
+                  <Grid item className="retro-text" justifyContent>
+                             {sliderMessage}
+                  </Grid>
+            </Grid>
+            }
+        </Grid>
 
     )
         ;

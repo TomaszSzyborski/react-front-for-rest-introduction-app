@@ -3,6 +3,10 @@ import {ModalContextProvider} from "../utils/contexts/modalContext";
 import ControlRoomMainView from "../controlRoomViews/ControlRoomMainView";
 import {SubViewContextProvider} from "../utils/contexts/controlRoom/subViewContext";
 import ControlRoomSubView from "../controlRoomViews/ControlRoomSubView";
+import Az5 from "../controlRoomViews/subViews/az5";
+import Rods from "../controlRoomViews/subViews/rods";
+import Analysis from "../controlRoomViews/subViews/analysis";
+import Core from "../controlRoomViews/subViews/core";
 import MessageModal from "../utils/MessageModal";
 
 
@@ -13,12 +17,8 @@ export default function ControlRoom() {
             <KeyContextProvider>
                 <ModalContextProvider>
                     <SubViewContextProvider>
-                        <ControlRoomMainView>
-                            {<MessageModal/>}
-                        </ControlRoomMainView>
-                        <ControlRoomSubView>
-                            {<MessageModal/>}
-                        </ControlRoomSubView>
+                        <ControlRoomMainView/>
+                        <ControlRoomSubView/>
                     </SubViewContextProvider>
                 </ModalContextProvider>
             </KeyContextProvider>

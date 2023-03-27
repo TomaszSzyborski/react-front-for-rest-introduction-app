@@ -1,6 +1,5 @@
 import ReactorResetHandle from "../resetProgressParts/ReactorResetHandle";
 import ReactorResetUnlockHandle from "../resetProgressParts/ReactorResetUnlockHandle";
-import MessageModal from "../utils/MessageModal";
 import ComradeStorageCleaner from "../resetProgressParts/ComradeStorageCleaner";
 import {KeyContextProvider} from "../utils/contexts/keyContext";
 import {ModalContextProvider} from "../utils/contexts/modalContext";
@@ -16,16 +15,14 @@ export default function ResetProgress() {
             <KeyContextProvider>
                 <ModalContextProvider>
                     <HandleContextProvider>
-                        <ReactorResetUnlockHandle/>
-                        <Grid direction="row">
-                                <Grid item>
-                                    <ReactorResetHandle/>
-                                </Grid>
-                                <Grid item>
-                                    <ComradeStorageCleaner/>
-                                </Grid>
+                    <Grid container direction="column" alignItems="center">
+                        <Grid item>
+                            <ReactorResetUnlockHandle/>
                         </Grid>
-                        {<MessageModal/>}
+                    </Grid>
+                    <Grid container direction="column">
+                        <ReactorResetHandle/>
+                    </Grid>
                     </HandleContextProvider>
                 </ModalContextProvider>
             </KeyContextProvider>

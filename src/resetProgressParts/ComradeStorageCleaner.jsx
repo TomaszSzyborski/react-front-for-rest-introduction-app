@@ -1,25 +1,26 @@
 import {useModal} from "../utils/contexts/modalContext";
 import MessageModal from "../utils/MessageModal";
+import {Button, Grid} from '@mui/material';
 
 
 
 export default function ComradeStorageCleaner() {
     const {setMessage} = useModal();
-
-
-    const buttonLabel = "Reset progress for information gathering".split(" ").join("\n")
+    const buttonLabel = "Erase memories";
 
     return (
     <>
-        <button className={"button is-warning is-large resetProgressButton new-line"}
-                onClick={() => {
-                    localStorage.clear()
-                    sessionStorage.clear()
-                    setMessage("Time Variance Branching\nmerged and reset\nto 18:17:24 25-04-1986")
-                }}>
-            {buttonLabel}
-        </button>
-        <MessageModal/>
+            <Button
+                    variant="contained" color="error"
+                    className="retro-text"
+                    onClick={() => {
+                        localStorage.clear()
+                        sessionStorage.clear()
+                        setMessage("Who am I? What happened? ${flag_trauma_induced_dementia}");
+                    }}>
+                {buttonLabel}
+            </Button>
+            <MessageModal/>
     </>
     );
 }

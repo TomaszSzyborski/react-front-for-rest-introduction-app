@@ -7,9 +7,9 @@ import MessageModal from "../../utils/MessageModal";
 
 export default function Core(props) {
     const {key} = useKey()
-    const {message, setMessage} = useModal();
+    const {setMessage} = useModal();
 
-    useEffect( () => {
+    useEffect(() => {
         checkTheCore()
     },[])
 
@@ -42,6 +42,15 @@ export default function Core(props) {
     }
     return (
         <Grid container alignItems="center" direction="column">
+{/*                     <Grid item> */}
+{/*                         <Button */}
+{/*                             variant="contained" */}
+{/*                             color="primary" */}
+{/*                             className={"retro-text"} */}
+{/*                             onClick={async ()=> await checkTheCore()}> */}
+{/*                             Perform Analysis */}
+{/*                         </Button> */}
+{/*                     </Grid> */}
             <MessageModal/>
         </Grid>
     )
