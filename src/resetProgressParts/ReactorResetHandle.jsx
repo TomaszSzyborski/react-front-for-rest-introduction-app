@@ -9,6 +9,7 @@ import {Grid, Button, Modal, Box, Typography, Dialog, Slider} from '@mui/materia
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import powerDown from '../assets/sounds/powerDown.mp3'
+import {useBlownUp} from "../utils/contexts/blownUpContext";
 
 const powerDownSound = new Audio(powerDown)
 
@@ -37,6 +38,7 @@ export default function ReactorResetHandle() {
     const [sliderMessage, setSliderMessage] = useState("");
     const [sliderValue, setSliderValue] = useState(0);
     const {handleDisabled, setHandleDisabled} = useHandle();
+    const {setBlownUp} = useBlownUp();
 
     const playAudioAndWait = async (audio) => {
         await new Promise(res => {
@@ -49,6 +51,7 @@ export default function ReactorResetHandle() {
         await axios.get(`http://localhost:9011/challenge/reactor/${key}/reset_progress`)
             .then(response => {
                     playAudioAndWait(powerDownSound)
+                    setBlownUp(false)
                     setMessage(`Time Variance Branching merged and reset to 18:17:24 25-04-1986 ${response.data.message}`)
                 }
             )

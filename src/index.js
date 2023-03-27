@@ -9,6 +9,7 @@ import Reception from "./routes/reception";
 import ControlRoom from "./routes/controlroom";
 import ResetProgress from "./routes/resetprogress";
 import Home from "./routes/home";
+import {BlownUpContextProvider} from "./utils/contexts/blownUpContext";
 
 const root = ReactDOM.createRoot(
         document.getElementById("root"),
@@ -16,6 +17,8 @@ const root = ReactDOM.createRoot(
 root.render(
     <BrowserRouter forceRefresh={true}>
         <App/>
+            <BlownUpContextProvider>
+
         <Routes>
             <Route path="*" element={<Navigate to="/home" replace/>}/>
             <Route exact path="/office" element={<Office/>}/>
@@ -24,6 +27,8 @@ root.render(
             <Route exact path="/resetprogress" element={<ResetProgress/>}/>
             <Route exact path="/home" element={<Home/>}/>
         </Routes>
+            </BlownUpContextProvider>
+
     </BrowserRouter>
 );
 reportWebVitals();
