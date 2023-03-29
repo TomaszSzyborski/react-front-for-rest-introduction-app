@@ -42,16 +42,43 @@
     }
 }
 
-button {
-    width: 30vw;
+
+.cathodeText {
+    /*overflow:auto; display:flex; flex-direction:column-reverse!important;*/
+    overflow: auto;
+    position: relative;
+
+    margin-top: 15%;
+    margin-left: 20%;
+    margin-right: 35%;
+    margin-down: 15%;
+    padding-top: 5%;
+    padding-left: 20%;
+    padding-right: 35%;
+    padding-down: 15%;
+    font-family: RetroFont;
+    font-size: 2rem;
+
+    height: 70%;
+    width: 100%;
+    color: #fee;
+    text-shadow: 0 -2px 7px, 0 -2px 2px, -5px -5px 1em #ff4444, 0 -2px 0.5em #ff4444, 0 0 0.1em #ff4444, 10px 10px 3px #faa;
+
+    -webkit-scrollbar{
+        display: none!important;
+    }
+}
+.cathodeText::-webkit-scrollbar{
+    display: none!important;
 }
 
+/*
 .cathodeText {
     font-family: RetroFont;
     font-size: 2rem;
-    /*display: flex;*/
-    /*flex-direction: column-reverse;*/
-    /*scroll-snap-type: y mandatory;*/
+    display: flex;
+    flex-direction: column-reverse;
+    scroll-snap-type: y mandatory;
     position: relative;
     top: 22.5vh;
     left: 10vw;
@@ -59,10 +86,11 @@ button {
     height: 9vh;
     width: 25vw;
     color: #fee;
-    /*overflow-y: auto;*/
+    overflow-y: auto;
     text-shadow: 0 -2px 7px, 0 -2px 2px, -5px -5px 1em #ff4444, 0 -2px 0.5em #ff4444, 0 0 0.1em #ff4444, 10px 10px 3px #faa;
 }
-
+*/
+/*
 #cathodeDisplay {
     width: 50vw;
     height: 55vh;
@@ -75,7 +103,18 @@ button {
     top: 20vh;
     right: 5vw;
 }
+*/
 
+
+#cathodeDisplay {
+    width: 100%;
+    height: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:100% 100%;
+    background-color: transparent;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7)), url("./assets/images/cathodeDisplay.png");
+}
 
 .buttonDivider {
     width: 1vw;
@@ -97,24 +136,13 @@ button {
     font-family: RetroFont!important;
     color: #fee!important;
     text-align: center !important;
-    font-size: 2em!important;
+    font-size: 2rem!important;
     text-wrap: normal;
     text-overflow: ellipsis;
     /*direction: rtl;*/
     unicode-bidi: plaintext;
 }
 
-.has-retro-text {
-    font-family: RetroFont!important;
-    font-size: 5vh!important;
-    color: #fee!important;
-}
-
-.has-big-retro-dark-text {
-    font-family: RetroFont;
-    font-size: 7vh;
-    color: rebeccapurple;
-}
 
 #information-gathering-instruction {
     align-content: center;

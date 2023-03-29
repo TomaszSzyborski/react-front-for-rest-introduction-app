@@ -69,36 +69,38 @@ export default function ControlRoomSubView() {
     return (internalVisibility &&
         <>
             <Grid container
-                 direction="row"
+                 direction="column"
                  justifyContent="center"
                  alignItems="center"
                 id={"control-room-internals"}>
-                <Grid item xs={4}>
-                    <AsyncSelect
-                        menuIsOpen={isMenuOpen}
-                        blurInputOnSelect
-                        onFocus={() => setIsMenuOpen(true)}
-                        onMenuClose={async () => {
-                            await askForData()
-                        }}
-                        onSelectResetsInput={false}
-                        onChange={
-                            (menuOption) => {
-                                 setIsMenuOpen(false)
-                                 setOption(menuOption)
+                <Grid container justifyContent="center">
+                    <Grid sx={{width: "60rem"}}>
+                        <AsyncSelect
+                            menuIsOpen={isMenuOpen}
+                            blurInputOnSelect
+                            onFocus={() => setIsMenuOpen(true)}
+                            onMenuClose={async () => {
+                                await askForData()
+                            }}
+                            onSelectResetsInput={false}
+                            onChange={
+                                (menuOption) => {
+                                     setIsMenuOpen(false)
+                                     setOption(menuOption)
+                                }
                             }
-                        }
-                        defaultOptions={optionsInTheRoom}
-                        isSearchable
-                        noOptionsMessage={() => noseyChapsArentYaFlag}
-                        placeholder={"Select control view"}
-                    />
+                            defaultOptions={optionsInTheRoom}
+                            isSearchable
+                            noOptionsMessage={() => noseyChapsArentYaFlag}
+                            placeholder={"Select control view"}
+                        />
+                    </Grid>
                 </Grid>
+                    <Grid item>
+                        <Grid className={"retro-text"}>{text}</Grid>
+                        <Grid>{subView}</Grid>
+                    </Grid>
             </Grid>
-            <div>
-                    <div className={"retro-text"}>{text}</div>
-                    <div>{subView}</div>
-            </div>
         </>
     )
 }

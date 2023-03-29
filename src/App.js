@@ -147,23 +147,14 @@ function App() {
                 <RustyDrawer
                     anchor='right'
                     open={drawerState}
+                    onBackdropClick={ ()=> setDrawerState(false)}
                     >
-                       <CloseIcon
-                         sx={{
-                            position: 'absolute',
-                            left: "6%",
-                            top: '50%',
-                            transform: 'translateY(-50%)',
-                            width:"5rem",
-                            height:"5rem",
-                         }}
-                        onClick={()=>setDrawerState(false)}/>
-                          <Typography
-                          sx={{marginLeft:"5vw", cursor:""}}
-                          className="retro-text"
-                          variant="h2" component="h2">
-                            {trayText}
-                          </Typography>
+                      <Typography
+                      sx={{marginLeft:"5em"}}
+                      className="retro-text"
+                      variant="h2" component="h2">
+                        {trayText}
+                      </Typography>
                 </RustyDrawer>
         </AppBar>
     )

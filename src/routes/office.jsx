@@ -1,5 +1,5 @@
 import axios from "axios";
-import {useState, useRef, render} from "react";
+import {useState, useRef,forwardRef, render, useLayoutEffect} from "react";
 import maleBabble from '../assets/sounds/maleBabble.mp3'
 import femaleBabble from '../assets/sounds/femaleBabble.mp3'
 import phoneRing from '../assets/sounds/phoneRing.mp3'
@@ -52,6 +52,18 @@ export default function Office() {
     const [phoneDestroyed, setPhoneDestroyed] = useState(false)
     const [slamButtonDisabled, setSlamButtonDisabled] = useState(false)
     const [callButtonDisabled, setCallButtonDisabled] = useState(false)
+
+    //TODO create ScrollingTypewriter component
+  const ref = useRef();
+  useEffect(() => {
+      const interval = setInterval(() => {
+           if (ref.current.childElementCount > 0 && isLoading){
+           console.log("scrolling")
+                    ref.current.scrollBy(0, 100)
+           }
+          }, 500);
+       return () => interval && clearInterval(interval);
+    }, [ref, isLoading])
 
     useEffect(() => {
         if (phoneDestroyed || Boolean(localStorage.getItem("is-phone-destroyed"))) {
@@ -173,78 +185,96 @@ export default function Office() {
 
     return (
         <main className={"office-background"}>
-            <Grid container spacing={2} maxHeight>
-                <Grid item xs={1}></Grid>
-                <Grid item xs={4}
-                    sx={{height:'100vh',
-                         display: 'flex',
-                         flexDirection: 'column',
-                         justifyContent: 'center',
-                         alignItems: 'center'}}>
-                    <PhoneButton
-                        variant="contained"
-                        className="retro-text"
-                        color="success"
-                        id={"phoneCallButton"}
-                        onClick={()=>{
-                            setCallButtonDisabled(true)
-                            setIsLoading(true)
-                            talkToGeneralSecretary()
-                            }}
-                        disabled={callButtonDisabled}
-                    >
-                      {isLoading && (<CircularProgress size={90}/>)}
-                      {!isLoading && "Call"}
+            <Grid container spacing={2}
+                  flexDirection="row"
+                  justifyContent='center'
+                  alignItems='center'
+                  sx={{height: "100%"}}
+                  >
+                <Grid item xs={4}>
+                    <Grid container flexDirection="column" justifyContent='center'>
+                        <Grid item>
+                            <PhoneButton
+                                variant="contained"
+                                className="retro-text"
+                                color="success"
+                                id={"phoneCallButton"}
+                                onClick={()=>{
+                                    setCallButtonDisabled(true)
+                                    setIsLoading(true)
+                                    talkToGeneralSecretary()
+                                    }}
+                                disabled={callButtonDisabled}
+                            >
+                              {isLoading && (<CircularProgress size={90}/>)}
+                              {!isLoading && "Call"}
 
-                    </PhoneButton>
-                    <PhoneButton
-                        className="retro-text"
-                        variant="contained"
-                        color="error"
-                        size="large"
-                        id={"slamPhoneButton"}
-                        onClick={slamThePhone}
-                        disabled={slamButtonDisabled}
-                    >Slam the phone
-                    </PhoneButton>
-                      {phoneDestroyed && (
-                        <PhoneButton
-                            variant="contained"
-                            color="error"
-                            size="large"
-                            className="retro-text"
-                            onClick={(e)=> {
-                                setPhoneDestroyed(false)
-                                localStorage.removeItem("is-phone-destroyed")
-                                window.location.reload(false)
-                            }}
-                        >
-                            Bring me another phone!
-                        </PhoneButton>
-                        )}
-                </Grid>
-                <Grid item xs={6}>
-                    <span id={"cathodeDisplay"}>
-                    <div className={"cathodeText"}>
-                        {text ?
-                            <Typewriter
-                                text={text}
-                                loop={false}
-                                cursor={true}
-                                speed={75}
-                                onStart={() => {
-                                    talking.loop = true;
-                                    talking.play();
-                                }}
-                                onFinished={ async() => {
-                                    await mute()
-                                    await setIsLoading(false)
-                                    await setCallButtonDisabled(false)
-                                }}
-                            /> : null
-                        }
-                    </div>
-                    </span>
+                            </PhoneButton>
+                            </Grid>
+                            <Grid item>
+                            <PhoneButton
+                                className="retro-text"
+                                variant="contained"
+                                color="error"
+                                size="large"
+                                id={"slamPhoneButton"}
+                                onClick={slamThePhone}
+                                disabled={slamButtonDisabled}
+                            >Slam the phone
+                            </PhoneButton>
+                            </Grid>
+                            <Grid item>
+                              {phoneDestroyed && (
+                                <PhoneButton
+                                    variant="contained"
+                                    color="error"
+                                    size="large"
+                                    className="retro-text"
+                                    onClick={(e)=> {
+                                        setPhoneDestroyed(false)
+                                        localStorage.removeItem("is-phone-destroyed")
+                                        window.location.reload(false)
+                                    }}
+                                >
+                                    Bring me another phone!
+                                </PhoneButton>
+                                )}
+                                </Grid>
+                            </Grid>
+                   </Grid>
+                <Grid item xs={6} sx={{height: "100%"}}>
+                    <Grid container
+                        justifyContent='center'
+                        alignItems='center'
+                        sx={{height: "100%"}}>
+                    <Grid item id={"cathodeDisplay"}>
+                        <Grid container
+                            justifyContent='center'
+                            alignItems='center'
+                            sx={{height: "100%"}}>
+                        <Grid item className={"cathodeText"} ref={ref}>
+                            {text ?
+                                <Typewriter
+                                    id="babble"
+                                    text={text}
+                                    loop={false}
+                                    cursor={true}
+                                    speed={75}
+                                    onStart={() => {
+                                        talking.loop = true;
+                                        talking.play();
+                                    }}
+                                    onFinished={ async() => {
+                                        await mute()
+                                        await setIsLoading(false)
+                                        await setCallButtonDisabled(false)
+                                    }}
+                                /> : null
+                            }
+                        </Grid>
+                        </Grid>
+                    </Grid>
+                  </Grid>
                 </Grid>
             </Grid>
             <img alt={""} onError={consoleFlagHandler} src={""}></img>

@@ -31,7 +31,7 @@ function RodSwitch(props) {
         }
     )
       .then(response => {
-        console.log(response)
+        //console.log(response)
        })
       .catch(error => console.error(error));
       await setIsDisabled(false)
@@ -104,9 +104,7 @@ export default function Rods(props) {
 
       return (
         <>
-          <Grid container direction="column" className="retro-text" spacing={2}>
-            <Grid item>{reactorDescription}</Grid>
-            <Grid item>is {reactorState}</Grid>
+          <Grid className="retro-text">
             <Grid>
                     {(reactorPower.padStart(5, '0')).split('').map((number) =>
                     <img src={vacuumTubeList[number]}/>)}

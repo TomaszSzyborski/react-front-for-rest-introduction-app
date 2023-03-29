@@ -59,9 +59,10 @@ export default function Az5() {
         await setMessage(msg)
     }
     return (
-    <Grid container direction="column" alignItems="center">
+    <Grid container direction="column" alignItems="center" justifyContent="center">
         <Grid item>
             <Button
+                 sx={{width:"60rem"}}
                  variant={"contained"}
                  className={"retro-text"}
                  onClick={()=>setSeal(false)}>
@@ -70,6 +71,7 @@ export default function Az5() {
         </Grid>
         <Grid item>
             <Button
+                 sx={{width:"60rem"}}
                  disabled={seal}
                  variant={"contained"}
                  className={"retro-text"}

@@ -33,35 +33,35 @@ export default function ControlRoomMainView() {
 
 
     return (
-        <div>
-            <div className={"retro-text"}>
+        <Grid container direction="column" alignItems="center" justifyContent="center">
+            <Grid item className={"retro-text"}>
                 {welcomeText}
-                <div>
-                    <span>Remember to keep they key with you, wherever you're going.</span>
-                    <Grid size="2">
-                        <Grid item>
-                            <Input id={"key"}
-                                className="has-retro-text"
-                                   sx={{width: "38vw"}}
-                                   placeholder={"Place your key here..."}
-                                   value={key}
-                                   onChange={e => setKey(e.target.value.trim())}/>
-                        </Grid>
-                        <Grid item>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                className="has-retro-text"
-                                onClick={unlockSubViews}>
-                                Unlock the room
-                            </Button>
-                        </Grid>
-                    </Grid>
-                    <div className={"retro-text"}>
-                            {text}
-                    </div>
-                </div>
-            </div>
-        </div>
+            </Grid>
+            <Grid item className={"retro-text"}>
+                Remember to keep they key with you, wherever you're going.
+            </Grid>
+            <Grid item>
+                <Input id={"key"}
+                       className="retro-text"
+                       sx={{width: "60rem"}}
+                       placeholder={"Place your key here..."}
+                       value={key}
+                       onChange={e => setKey(e.target.value.trim())}/>
+            </Grid>
+            <Grid item>
+                <Button
+                       sx={{width: "60rem"}}
+                    variant="contained"
+                    color="primary"
+                    className="retro-text"
+                    onClick={unlockSubViews}>
+                    Unlock the room
+                </Button>
+            </Grid>
+            <Grid className={"retro-text"}>
+                    {text}
+            </Grid>
+        </Grid>
+
     )
 }
