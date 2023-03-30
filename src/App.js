@@ -59,9 +59,9 @@ const RustyDrawer = styled(Drawer)({
 const home = {link: "/home", name: "При́пʼять"}
 const navigationOptions = [
     home,
-    {link: "/office", name: "Office"},
-    {link: "/reception", name: "Reception"},
-    {link: "/controlroom", name: "Control Room"},
+    {link: "/office", name: "Director's Office"},
+    {link: "/reception", name: "Power Plant Reception"},
+    {link: "/controlroom", name: "Reactor Control Room"},
     {link: "/resetprogress", name: "[REDACTED]"},
 ]
 
@@ -117,7 +117,7 @@ function App() {
     navigate(event.target.value)
    };
     return (
-        <AppBar id={"top-bar-component"}  position="sticky" className="has-transparent-background">
+        <AppBar id={"topBar"}  position="sticky" className="has-transparent-background">
             <Toolbar disableGutters={false}
             >
                 <IconButton

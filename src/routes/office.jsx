@@ -173,7 +173,8 @@ export default function Office() {
 
 
     return (
-        <main className={"office-background"}>
+        <main id={"office"}>
+        <div id="office-background"></div>
             <Grid container spacing={2}
                   flexDirection="row"
                   justifyContent='center'

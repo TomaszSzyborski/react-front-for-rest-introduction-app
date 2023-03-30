@@ -33,6 +33,7 @@ export default function ControlRoomMainView() {
 
 
     return (
+    <main>
         <Grid container direction="column" alignItems="center" justifyContent="center">
             <Grid item className={"retro-text"}>
                 {welcomeText}
@@ -62,6 +63,6 @@ export default function ControlRoomMainView() {
                     {text}
             </Grid>
         </Grid>
-
+    </main>
     )
 }

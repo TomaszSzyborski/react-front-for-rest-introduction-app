@@ -6,13 +6,17 @@ import {useBlownUp} from "../utils/contexts/blownUpContext";
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-const HomeFlagContainer = (props) => <Grid container spacing={2} alignItems="flex-end" justifyContent="center" sx={{height: "90%"}}>
+const HomeFlagContainer = (props) => <Grid container spacing={2}
+                                           alignItems="flex-end"
+                                           justifyContent="center"
+                                           sx={{height: "90%"}}>
                                   <Grid item xs={12} maxHeight>
                                     <Typography className="retro-text">
                                        {props.flag}
                                     </Typography>
                                   </Grid>
                                 </Grid>
+
 export default function Home() {
         const {blownUp} = useBlownUp();
         const bridgeOfDeath = "${flag_bridge_of_death}" // flag obtainable when the reactor is blownup and Home button is clicked

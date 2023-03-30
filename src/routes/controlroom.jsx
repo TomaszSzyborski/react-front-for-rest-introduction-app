@@ -14,7 +14,7 @@ import MessageModal from "../utils/MessageModal";
 export default function ControlRoom() {
 
     return (
-        <main style={{padding: "1rem 0"}}>
+        <main>
             <KeyContextProvider>
                 <ModalContextProvider>
                     <SubViewContextProvider>

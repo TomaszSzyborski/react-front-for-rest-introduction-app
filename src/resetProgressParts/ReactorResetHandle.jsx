@@ -1,5 +1,5 @@
 import handleImage from "../assets/images/leatherTexture.png";
-import rustyDoor from "../assets/images/rustyDoor.jpg";
+import rustyDoor from "../assets/images/rustyDoor.png";
 import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {useKey} from "../utils/contexts/keyContext";
@@ -94,7 +94,7 @@ export default function ReactorResetHandle() {
             alignItems: "center",
             flexGrow: "1",
         }}>
-            {handleDisabled && <Overlay id="overlay"  onClick={() => {
+            {handleDisabled && <Overlay id="rustyDoor"  onClick={() => {
                                                   alert(`Comrade Soldiers! Unauthorized personnel is meddling with classified device!\n`
                                                       + "Get him now!\n"
                                                       + "${[REDACTED]_of_[CLASSIFIED]_experimental_machine}")
