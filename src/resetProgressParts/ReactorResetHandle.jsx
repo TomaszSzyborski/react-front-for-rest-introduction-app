@@ -52,6 +52,7 @@ export default function ReactorResetHandle() {
             .then(response => {
                     playAudioAndWait(powerDownSound)
                     setBlownUp(false)
+                    localStorage.removeItem("blownUp")
                     setMessage(`Time Variance Branching merged and reset to 18:17:24 25-04-1986 ${response.data.message}`)
                 }
             )

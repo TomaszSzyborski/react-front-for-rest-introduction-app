@@ -113,13 +113,18 @@ function App() {
             <Toolbar disableGutters={false}
             >
                 <IconButton
-                 href={"/"}
+//                 onClick={() =>{
+//                    navigate("/home")
+//                    setWhereAmI("При́пʼять")
+//                    }
+//                 }
                  className={"radiation-hazard extra-big-hazard"} size="large"/>
                  <FormControl
                   sx={{ boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 } }}
                  >
                     <InputLabel id="navigation-label-id" className="retro-text">Navigate</InputLabel>
                     <Select
+                            id="navigation-select-id"
                             labelId="navigation-label-id"
                             label="Navigate"
                             className="navigation-option-button retro-text"

@@ -2,9 +2,14 @@ import {useEffect} from "react";
 import {useModal} from "../utils/contexts/modalContext";
 import { Switch, FormControlLabel, Grid, Button, Typography, Box, Dialog, DialogContent} from '@mui/material';
 
-export default function MessageModal() {
+export default function MessageModal(props) {
     const {message, setMessage} = useModal();
 
+    const sxToBeSet = {bgcolor:'black'}
+    if(props.backgroundImage) {
+        sxToBeSet.backgroundImage = `url(${props.backgroundImage})`;
+        sxToBeSet.backgroundSize = 'cover';
+    }
     useEffect(() =>{
         return () => {
             setMessage("")
@@ -12,10 +17,16 @@ export default function MessageModal() {
     }, [])
 
     return ( <Dialog
-                  sx={{bgcolor: "black"}}
+                  sx={sxToBeSet}
+                  hideBackdrop={props.backgroundImage? true : false}
                   className={"reactor-modal"}
                   open={Boolean(message)}
-                  onClick={() => setMessage("")}>
+                  onClick={() => {
+                    if (props.onClick){
+                        props.onClick()
+                    }
+                    setMessage("")
+                  }}>
                   <DialogContent
                       sx={{bgcolor: "black"}}
                   >

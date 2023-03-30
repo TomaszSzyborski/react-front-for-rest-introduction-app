@@ -1,7 +1,7 @@
 import axios from "axios";
 import {useEffect, useMemo, useRef, useState} from "react";
 import React from "react";
-import {faker} from '@faker-js/faker';
+import {faker} from '@faker-js/faker/locale/uk';
 import {keyLocalStorageItemName} from "../utils/constants";
 import {Button, Grid, CircularProgress } from '@mui/material'
 import Typography from '@mui/material/Typography';
@@ -19,7 +19,6 @@ const alreadyAtWork = "Akimov, Aleksandr Fyodorovich\n" +
     "Toptunov, Leonid Fedorovych\n"
 
 const fakeNames = () => {
-    faker.setLocale('uk');
     let people;
     people = Array(12).fill("")
         .map(() => {
@@ -119,9 +118,7 @@ export default function Reception() {
                                <Grid
                                 item
                                 id={"tray"}
-                                className="retro-text"
-                                direction="row"
-                                spacing="24">
+                                className="retro-text">
                                      <Grid item >Pick it up</Grid>
                                      <br/><br/>
                                      <Grid item

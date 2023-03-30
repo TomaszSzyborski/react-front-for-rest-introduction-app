@@ -4,13 +4,28 @@ import {useKey} from "../../utils/contexts/keyContext";
 import {useModal} from "../../utils/contexts/modalContext";
 import {Grid, Button, Modal, Box, Typography, Dialog} from '@mui/material';
 import MessageModal from "../../utils/MessageModal";
+import gatewayToHell from "../../assets/images/catastrophy/gatewayToHell2.gif"
+import fieryDeath from "../../assets/sounds/fieryDeath.mp3"
+import {useBlownUp} from "../../utils/contexts/blownUpContext";
+import {playAudio, loopAudio, mute} from "../../utils/audioHandler"
+
+
+const fieryDeathSound = new Audio(fieryDeath)
 
 export default function Core(props) {
     const {key} = useKey()
     const {setMessage} = useModal();
+    const {blownUp} = useBlownUp();
+
 
     useEffect(() => {
+        if(blownUp){
+            playAudio(fieryDeathSound)
+        }
         checkTheCore()
+        return () => {
+            mute(fieryDeathSound)
+        }
     },[])
 
     const checkTheCore = async () => {
@@ -40,18 +55,13 @@ export default function Core(props) {
             )
             await setMessage(msg)
     }
+
     return (
         <Grid container alignItems="center" direction="column">
-{/*                     <Grid item> */}
-{/*                         <Button */}
-{/*                             variant="contained" */}
-{/*                             color="primary" */}
-{/*                             className={"retro-text"} */}
-{/*                             onClick={async ()=> await checkTheCore()}> */}
-{/*                             Perform Analysis */}
-{/*                         </Button> */}
-{/*                     </Grid> */}
-            <MessageModal/>
+            <MessageModal
+                onClick={async () => await mute(fieryDeathSound)}
+                backgroundImage={blownUp? gatewayToHell: null}
+            />
         </Grid>
     )
 }

@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
-
+import {playAudio, loopAudio, mute} from "../audioHandler"
 import geiger from '../../assets/sounds/geiger.mp3'
 import alarm from '../../assets/sounds/alarm.mp3'
 const geigerSound = new Audio(geiger)
@@ -17,28 +17,9 @@ export const useBlownUp = () => useContext(BlownUpContext);
 export const BlownUpContextProvider = ({children}) => {
     const [blownUp, setBlownUp] = useState(false);
 
-   const playAudio = async (audio) => {
-           await new Promise(res => {
-               audio.play()
-               audio.onended = res
-           })
-       }
-
-       const loopAudio = async (audio) => {
-           await new Promise(res => {
-               audio.play()
-               audio.onended = () => audio.play()
-           })
-       }
-
-    const mute = (audio) => {
-        if (audio) {
-            audio.pause();
-            audio.currentTime = 0;
-        }
-    }
     useEffect(() => {
         if (blownUp) {
+            localStorage.setItem('blownUp', 'true');
             playAudio(alarmSound)
             loopAudio(geigerSound)
         }

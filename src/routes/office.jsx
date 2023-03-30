@@ -12,6 +12,7 @@ import Typewriter from 'react-ts-typewriter';
 import {frontendFlagsAmount} from "../utils/constants";
 import { Button, Grid, CircularProgress } from '@mui/material'
 import { styled } from '@mui/material/styles';
+import {playAudio, loopAudio, mute} from "../utils/audioHandler"
 
 const consoleFlagHandler = () => {
     console.table([{flag: "${curious_console_observer}"}])
@@ -74,28 +75,16 @@ export default function Office() {
     }, [phoneDestroyed])
     const resetText = async () => setText("")
 
-    const mute = (audio = talking) => {
-        if (audio) {
-            audio.pause();
-            audio.currentTime = 0;
-        }
-    }
-    const playAudioAndWait = async (audio) => {
-        await new Promise(res => {
-            audio.play()
-            audio.onended = res
-        })
-    }
       useUnmount(() => {
-        mute()
+        mute(talking)
       });
     const talkToGeneralSecretary = async () => {
         await setSlamButtonDisabled(true)
         await setSlams(0)
 
         await resetText()
-        await playAudioAndWait(ringing)
-        await playAudioAndWait(pickingUp)
+        await playAudio(ringing)
+        await playAudio(pickingUp)
         await setSlamButtonDisabled(false)
 
         const primaryResponse = () =>
@@ -175,9 +164,9 @@ export default function Office() {
             alert("You've broken the phone... General Secretary won't be proud.\n" +
                 "You earned something however...\n" +
                 "${emotional_reaction_get_it?_reaction...}")
-            await playAudioAndWait(new Audio(phoneDestruction))
+            await playAudio(new Audio(phoneDestruction))
         } else {
-            await playAudioAndWait(new Audio(phoneHangUp))
+            await playAudio(new Audio(phoneHangUp))
         }
         mute(phoneHangUp)
     }
