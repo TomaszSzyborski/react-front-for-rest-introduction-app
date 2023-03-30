@@ -18,15 +18,14 @@ root.render(
     <BrowserRouter forceRefresh={true}>
         <App/>
             <BlownUpContextProvider>
-
-        <Routes>
-            <Route path="*" element={<Navigate to="/home" replace/>}/>
-            <Route exact path="/office" element={<Office/>}/>
-            <Route exact path="/reception" element={<Reception/>}/>
-            <Route exact path="/controlroom" element={<ControlRoom/>}/>
-            <Route exact path="/resetprogress" element={<ResetProgress/>}/>
-            <Route exact path="/home" element={<Home/>}/>
-        </Routes>
+                <Routes>
+                    <Route path="*" element={<Navigate to="/home" replace/>}/>
+                    <Route exact path="/office" element={<Office/>}/>
+                    <Route exact path="/reception" element={<Reception/>}/>
+                    <Route exact path="/controlroom" element={<ControlRoom/>}/>
+                    <Route exact path="/resetprogress" element={<ResetProgress/>}/>
+                    <Route exact path="/home" element={<Home/>}/>
+                </Routes>
             </BlownUpContextProvider>
 
     </BrowserRouter>

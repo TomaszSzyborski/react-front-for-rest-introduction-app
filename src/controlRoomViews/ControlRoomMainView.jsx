@@ -50,7 +50,7 @@ export default function ControlRoomMainView() {
             </Grid>
             <Grid item>
                 <Button
-                       sx={{width: "60rem"}}
+                    sx={{width: "60rem"}}
                     variant="contained"
                     color="primary"
                     className="retro-text"

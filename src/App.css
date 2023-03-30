@@ -8,6 +8,11 @@
     src: url("./assets/fonts/factory.ttf")
 }
 
+body {
+    background-color: #000000 !important;
+}
+
+
 :root {
     --colorShadeA: rgb(20, 40, 35);
     --colorShadeB: rgb(24, 48, 42);
@@ -71,39 +76,6 @@
 .cathodeText::-webkit-scrollbar{
     display: none!important;
 }
-
-/*
-.cathodeText {
-    font-family: RetroFont;
-    font-size: 2rem;
-    display: flex;
-    flex-direction: column-reverse;
-    scroll-snap-type: y mandatory;
-    position: relative;
-    top: 22.5vh;
-    left: 10vw;
-    overflow: visible;
-    height: 9vh;
-    width: 25vw;
-    color: #fee;
-    overflow-y: auto;
-    text-shadow: 0 -2px 7px, 0 -2px 2px, -5px -5px 1em #ff4444, 0 -2px 0.5em #ff4444, 0 0 0.1em #ff4444, 10px 10px 3px #faa;
-}
-*/
-/*
-#cathodeDisplay {
-    width: 50vw;
-    height: 55vh;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    position: absolute;
-    background-color: black;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.5)), url("./assets/images/cathodeDisplay.png");
-    top: 20vh;
-    right: 5vw;
-}
-*/
 
 
 #cathodeDisplay {

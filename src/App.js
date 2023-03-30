@@ -56,8 +56,9 @@ const RustyDrawer = styled(Drawer)({
   },
 });
 
+const home = {link: "/home", name: "При́пʼять"}
 const navigationOptions = [
-    {link: "/home", name: "При́пʼять"},
+    home,
     {link: "/office", name: "Office"},
     {link: "/reception", name: "Reception"},
     {link: "/controlroom", name: "Control Room"},
@@ -68,13 +69,22 @@ function App() {
     const [numberOfTrayOpenings, setNumberOfTrayOpenings] = useState(
         Number(localStorage.getItem(trayOpeningsLocalStorageItemObject.key)) || 0
     )
-    const [trayText, setTrayText] = useState(0)
-    const [whereAmI, setWhereAmI] = useState("/home");
+    const [trayText, setTrayText] = useState("")
+    const [whereAmI, setWhereAmI] = useState();
     const [isShown, setIsShown] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClickMenuOption = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handleCloseMenu = () => {
+      setAnchorEl(null);
+    };
 
     useMemo(() => {
         setWhereAmI(navigationOptions.find((it) =>
-            it.link === window.location.pathname)?.link || "/home")
+            it.link === window.location.pathname)?.name)
     }, [whereAmI]);
 
     useEffect(() => {
@@ -96,9 +106,7 @@ function App() {
         setTrayText(messageInStash)
     }, [numberOfTrayOpenings])
 
-  const [selectedOption, setSelectedOption] = useState('');
   const [drawerState, setDrawerState] = useState(false);
-
   const toggleDrawer = (event) => {
     setNumberOfTrayOpenings(numberOfTrayOpenings+1)
     setDrawerState(true);
@@ -113,37 +121,49 @@ function App() {
             <Toolbar disableGutters={false}
             >
                 <IconButton
-//                 onClick={() =>{
-//                    navigate("/home")
-//                    setWhereAmI("При́пʼять")
-//                    }
-//                 }
+                 onClick={() =>{
+                    navigate(home.link)
+                    setWhereAmI(home.name)
+                    const homeVisitsCount = Number(localStorage.getItem("homeVisits"))
+                    localStorage.setItem("homeVisits",  homeVisitsCount + 1)
+                    }
+                 }
                  className={"radiation-hazard extra-big-hazard"} size="large"/>
-                 <FormControl
-                  sx={{ boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 } }}
-                 >
-                    <InputLabel id="navigation-label-id" className="retro-text">Navigate</InputLabel>
-                    <Select
-                            id="navigation-select-id"
-                            labelId="navigation-label-id"
-                            label="Navigate"
-                            className="navigation-option-button retro-text"
-                            onChange={handleChange}
-                            defaultValue={whereAmI}
-                    >
+                      <Button className="navigation-option-button retro-text"
+                        onClick={handleClickMenuOption}>
+                        Navigate
+                      </Button>
+                      <Menu
+                        anchorEl={anchorEl}
+                        onClick={() => setAnchorEl(!anchorEl)}
+                        onBackdropClick={handleCloseMenu}
+                        open={Boolean(anchorEl)}
+                        >
                         {navigationOptions
+                            .filter((option) => !["/home", window.location.pathname].includes(option.link))
                             .map((option) => (
                         <MenuItem
                             key={uuid()}
                             value={option.link}
                             name={option.name}
-                            className="navigation-option-button retro-text has-text-vertically-centered"
+                            onClick={() => {
+                                setWhereAmI(option.name)
+                                navigate(option.link)
+                                handleCloseMenu()
+                            }}
+                            className="navigation-option-button retro-text"
                             >
                             {option.name}
                         </MenuItem>
                         ))}
-                    </Select>
-                    </FormControl>
+                    </Menu>
+                    <Box className="navigation-option-button"
+                         alignItems="center"
+                         display="flex">
+                        <Typography className="retro-text">
+                            {whereAmI}
+                        </Typography>
+                     </Box>
                 <IconButton
                  sx={{marginLeft:"auto", cursor:"unset"}}
                  onClick={toggleDrawer}
