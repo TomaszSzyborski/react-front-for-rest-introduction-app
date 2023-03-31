@@ -25,11 +25,11 @@ export default function Home() {
 
         return (
         <main id={"panorama-container"}>
-            {!catastrophy && <div id={"panorama"}>
-                                {Number(localStorage.getItem("homeVisits")) == 1 && <HomeFlagContainer flag={homeSweetHome} />}
+            {!catastrophy && <div id="panorama" className="background">
+                                {Number(localStorage.getItem("returnedHome")) == 1 && <HomeFlagContainer flag={homeSweetHome} />}
                             </div>}
             {catastrophy &&
-                <div id={"catastrophy"}>
+                <div id="catastrophy" className="background">
                     <HomeFlagContainer flag={bridgeOfDeath}/>
                 </div>}
         </main>

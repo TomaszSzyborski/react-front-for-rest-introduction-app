@@ -42,7 +42,7 @@ export default function Reception() {
         event.preventDefault();
         setKey("")
         if (!name) {
-            setText("Write your name in the Registrar Book down there, Comrade...")
+            setText("Write your name in the Registrar Book first, Comrade...")
         } else {
             axios.post(
                 "http://0.0.0.0:9011/challenge/reactor/desk",
@@ -54,7 +54,7 @@ export default function Reception() {
                     },
                 })
                 .then(response => {
-                        setText(`Here's your key, ${name}...`)
+                        setText(`Here's your key, Comrade ${name}...`)
                         setKey(response.data.key)
                     }
                 ).catch(error =>
@@ -64,6 +64,7 @@ export default function Reception() {
     }
     return (
         <main id="reception">
+
             <Grid
                     height="100%"
                     container
@@ -124,7 +125,6 @@ export default function Reception() {
                 </Typography>
                      {key ?
                        <Grid item id={"tray"} className="retro-text">
-                             <Grid item >Pick it up</Grid>
                              <Grid item
                                 sx={{
                                     fontSize: "4rem",
@@ -135,7 +135,7 @@ export default function Reception() {
                         </Grid>
                      : null}
              </Grid>
-        <div id="reception-background"></div>
+        <div id="reception-background" className="background"></div>
         </main>
     )
         ;

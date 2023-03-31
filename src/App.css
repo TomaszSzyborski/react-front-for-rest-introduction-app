@@ -12,17 +12,43 @@ body {
     background-color: #000000 !important;
 }
 
-#reception-background{
+.background {
     z-index:-1;
-    background: url("./assets/images/receptionBackground.png");
-    background-size: cover;
+    background-size: cover!important;
     background-position: center center;
     background-repeat: no-repeat;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+}
+
+#reception-background{
+    background: url("./assets/images/receptionBackground.png");
+
+}
+#panorama {
+  background-image: url("./assets/images/prypiatPanoramaHiRes.jpg");
+  animation: slide 20s linear infinite;
+}
+
+#catastrophy {
+  background-image: url("./assets/images/catastrophy/bridgeOfDeath.jpg");
+}
+
+#office-background {
+  background: url("./assets/images/officeBackground.jpeg");
+}
+
+/*  */
+#controlRoomSubViewBackground {
+
+
+}
+/********************************/
+#rustyDoor {
+  background: url("./assets/images/rustyDoor.jpg");
 }
 :root {
     --colorShadeA: rgb(20, 40, 35);
@@ -245,30 +271,6 @@ body {
 }
 
 
-#panorama {
-  background-image: url("./assets/images/prypiatPanoramaHiRes.jpg");
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  animation: slide 20s linear infinite;
-}
-
-#catastrophy {
-  background-image: url("./assets/images/catastrophy/bridgeOfDeath.jpg");
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
 
 @keyframes slide {
   0% {
@@ -333,37 +335,7 @@ body {
     height: 100%;
 }
 
-#office-background {
-  z-index:-1;
-  background: url("./assets/images/officeBackground.jpeg");
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-    /*flipped horizontally*/
-    /*-moz-transform: scaleX(-1);*/
-    /*-o-transform: scaleX(-1);*/
-    /*-webkit-transform: scaleX(-1);*/
-    /*transform: scaleX(-1);*/
-    /*display:inline-block*/
-}
 
-#rustyDoor {
-  z-index:-1;
-  background: url("./assets/images/rustyDoor.png");
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
 
 
 

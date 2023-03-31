@@ -1,5 +1,4 @@
 import handleImage from "../assets/images/leatherTexture.png";
-import rustyDoor from "../assets/images/rustyDoor.png";
 import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {useKey} from "../utils/contexts/keyContext";
@@ -12,19 +11,6 @@ import powerDown from '../assets/sounds/powerDown.mp3'
 import {useBlownUp} from "../utils/contexts/blownUpContext";
 
 const powerDownSound = new Audio(powerDown)
-
-const Overlay = styled(Paper)({
-  position: 'fixed',
-  flexGrow: "1",
-  height: '100%',
-  width: '100%',
-  backgroundImage: `url(${rustyDoor})`,
-  zIndex: '10000000000000000',
-  backgroundRepeat: "no-repeat",
-  backgroundPosition: "center",
-  backgroundColor: "rgba(255, 255, 255, 0)",
-  backgroundSize: "contain",
-});
 
 
 export default function ReactorResetHandle() {
@@ -85,8 +71,16 @@ export default function ReactorResetHandle() {
         setSliderMessage(messageToSet)
     }, [sliderValue]);
 
-    return (
-        <Grid sx={{
+    return (<>
+    {handleDisabled && <div id="rustyDoor" className="background"  onClick={() => {
+                                                      alert(`Comrade Soldiers! Unauthorized personnel is meddling with classified device!\n`
+                                                          + "Get him now!\n"
+                                                          + "${[REDACTED]_of_[CLASSIFIED]_experimental_machine}")
+                                                  }}/>}
+        {!handleDisabled &&
+        <Grid
+        id="timeMachineBox"
+        sx={{
             flexFlow: "column",
             display: 'flex',
             flexDirection: 'column',
@@ -94,14 +88,9 @@ export default function ReactorResetHandle() {
             alignItems: "center",
             flexGrow: "1",
         }}>
-            {handleDisabled && <Overlay id="rustyDoor"  onClick={() => {
-                                                  alert(`Comrade Soldiers! Unauthorized personnel is meddling with classified device!\n`
-                                                      + "Get him now!\n"
-                                                      + "${[REDACTED]_of_[CLASSIFIED]_experimental_machine}")
-                                              }}/>}
-            { !handleDisabled &&
-
-            <Grid container
+            <Grid
+                id="timeMachine"
+                container
                 maxWidth
                 maxHeight
                 direction="column"
@@ -155,9 +144,6 @@ export default function ReactorResetHandle() {
                              {sliderMessage}
                   </Grid>
             </Grid>
-            }
         </Grid>
-
-    )
-        ;
+    }</>);
 }

@@ -122,10 +122,12 @@ function App() {
             >
                 <IconButton
                  onClick={() =>{
+                     if(window.location.pathname !== "/home"){
+                         const homeVisitsCount = Number(localStorage.getItem("returnedHome"))
+                         localStorage.setItem("returnedHome",  homeVisitsCount + 1)
+                     }
                     navigate(home.link)
                     setWhereAmI(home.name)
-                    const homeVisitsCount = Number(localStorage.getItem("homeVisits"))
-                    localStorage.setItem("homeVisits",  homeVisitsCount + 1)
                     }
                  }
                  className={"radiation-hazard extra-big-hazard"} size="large"/>

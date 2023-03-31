@@ -34,6 +34,8 @@ export default function ControlRoomSubView() {
         return () => {setSubView(null)}
     },[option])
 
+    const [subViewBackground, setSubViewBackground] = useState("controlRoomSubViewBackground")
+
     const askForData = async () => {
         if (key === "") {
             setText("Have you dropped the key somewhere?!")
@@ -66,13 +68,16 @@ export default function ControlRoomSubView() {
             {value:<Core/>, label:'Corridor to Reactor Hall'},
         ]
 
+    // ----------------------------------------------------------------
+    //TODO think of setting subViewBackground by using default and options in rod/analysi/az5/core
     return (internalVisibility &&
         <>
+        <div id={subViewBackground} className='background'/>
             <Grid container
                  direction="column"
                  justifyContent="center"
                  alignItems="center"
-                id={"control-room-internals"}>
+                 id={"control-room-internals"}>
                 <Grid container justifyContent="center">
                     <Grid sx={{width: "60rem"}}>
                         <AsyncSelect

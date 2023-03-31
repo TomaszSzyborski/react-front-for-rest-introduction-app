@@ -2,14 +2,13 @@ import axios from "axios";
 import {useState, useRef,forwardRef, render, useLayoutEffect} from "react";
 import maleBabble from '../assets/sounds/maleBabble.mp3'
 import femaleBabble from '../assets/sounds/femaleBabble.mp3'
-import phoneRing from '../assets/sounds/phoneRing.mp3'
+import phoneCall from '../assets/sounds/phoneCall.mp3'
 import phonePickUp from '../assets/sounds/phonePickUp.mp3'
-import phoneSignalLost from '../assets/sounds/phoneSignalLost.mp3'
 import phoneHangUp from '../assets/sounds/phoneHangUp.mp3'
 import phoneDestruction from '../assets/sounds/phoneDestruction.mp3'
 import React, {useEffect} from 'react'
 import Typewriter from 'react-ts-typewriter';
-import {frontendFlagsAmount} from "../utils/constants";
+import {frontendFlagsAmount} from "../utils/constants"
 import { Button, Grid, CircularProgress } from '@mui/material'
 import { styled } from '@mui/material/styles';
 import {playAudio, loopAudio, mute} from "../utils/audioHandler"
@@ -39,12 +38,10 @@ function useUnmount(callback) {
   }, [callback]);
 }
 
-const ringing = new Audio(phoneRing)
-const pickingUp = new Audio(phonePickUp)
-const signalLost = new Audio(phoneSignalLost)
+const phoneCallSound= new Audio(phoneCall)
+const phonePickUpSound = new Audio(phonePickUp)
 
 export default function Office() {
-    const [playedSignalLost, setPlayedSignalLost] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [text, setText] = useState("")
     const [slams, setSlams] = useState(0)
@@ -54,7 +51,6 @@ export default function Office() {
     const [slamButtonDisabled, setSlamButtonDisabled] = useState(false)
     const [callButtonDisabled, setCallButtonDisabled] = useState(false)
 
-    //TODO create ScrollingTypewriter component
   const ref = useRef();
   useEffect(() => {
       const interval = setInterval(() => {
@@ -83,8 +79,8 @@ export default function Office() {
         await setSlams(0)
 
         await resetText()
-        await playAudio(ringing)
-        await playAudio(pickingUp)
+        await playAudio(phoneCallSound)
+        await playAudio(phonePickUpSound)
         await setSlamButtonDisabled(false)
 
         const primaryResponse = () =>
@@ -141,7 +137,7 @@ export default function Office() {
         ]
         if (callCounter > phoneResponses.length - 1) {
             setText("You want me to get you through this AGAIN?! Fine...")
-            sessionStorage.setItem("desperate-sigh", "${you're_deaf_or_just_dumb?}")
+            sessionStorage.setItem("desperate-sigh", "${are_you_deaf_or_just_dumb}")
             setCallCounter(0)
         } else {
             setText(phoneResponses[callCounter].message)
@@ -155,7 +151,6 @@ export default function Office() {
         setCallButtonDisabled(false)
         setIsLoading(false)
         mute()
-        mute(signalLost)
         setCallCounter(prevCalls => prevCalls - 1 < 0 ? 0 : prevCalls - 1)
         setText("")
         setSlams(prevSlams => prevSlams + 1)
@@ -174,7 +169,7 @@ export default function Office() {
 
     return (
         <main id={"office"}>
-        <div id="office-background"></div>
+        <div id="office-background" className="background"></div>
             <Grid container spacing={2}
                   flexDirection="row"
                   justifyContent='center'
@@ -222,8 +217,9 @@ export default function Office() {
                                     className="retro-text"
                                     onClick={(e)=> {
                                         setPhoneDestroyed(false)
+                                        setSlamButtonDisabled(false)
+                                        setCallButtonDisabled(false)
                                         localStorage.removeItem("is-phone-destroyed")
-                                        window.location.reload(false)
                                     }}
                                 >
                                     Bring me another phone!
@@ -249,13 +245,13 @@ export default function Office() {
                                     text={text}
                                     loop={false}
                                     cursor={true}
-                                    speed={75}
+                                    speed={25}
                                     onStart={() => {
                                         talking.loop = true;
                                         talking.play();
                                     }}
                                     onFinished={ async() => {
-                                        await mute()
+                                        await mute(talking)
                                         await setIsLoading(false)
                                         await setCallButtonDisabled(false)
                                     }}
