@@ -1,6 +1,5 @@
 import handleImage from "../assets/images/leatherTexture.png";
 import {useContext, useEffect, useState} from "react";
-import axios from "axios";
 import {useKey} from "../utils/contexts/keyContext";
 import {useModal} from "../utils/contexts/modalContext";
 import {useHandle} from "../utils/contexts/reactorReset/resetReactorHandleContext";
@@ -9,6 +8,7 @@ import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import powerDown from '../assets/sounds/powerDown.mp3'
 import {useBlownUp} from "../utils/contexts/blownUpContext";
+import client from "client";
 
 const powerDownSound = new Audio(powerDown)
 
@@ -34,7 +34,7 @@ export default function ReactorResetHandle() {
     }
 
     const triggerReactorReset = async () => {
-        await axios.get(`http://localhost:9011/challenge/reactor/${key}/reset_progress`)
+        await client.apiClient.get(`/challenge/reactor/${key}/reset_progress`)
             .then(response => {
                     playAudioAndWait(powerDownSound)
                     setBlownUp(false)

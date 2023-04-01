@@ -1,9 +1,9 @@
-import axios from "axios";
 import {useState, useEffect} from "react";
 import {useKey} from "../../utils/contexts/keyContext";
 import {useModal} from "../../utils/contexts/modalContext";
 import {Grid, Button, Modal, Box, Typography, Dialog} from '@mui/material';
 import MessageModal from "../../utils/MessageModal";
+import client from "client";
 
 
 export default function Analysis() {
@@ -16,8 +16,7 @@ export default function Analysis() {
 
     const performAnalysis = async () => {
         let msg = ""
-        await axios.get(
-            `http://localhost:9011/challenge/reactor/${key}/control_room/analysis`,
+        await client.apiClient.get(`/challenge/reactor/${key}/control_room/analysis`,
             {
                 headers: {
                     'Access-Control-Allow-Origin': '*',
@@ -43,15 +42,6 @@ export default function Analysis() {
     }
     return (
         <Grid container alignItems="center" direction="column">
-{/*             <Grid item> */}
-{/*                 <Button */}
-{/*                     variant="contained" */}
-{/*                     color="primary" */}
-{/*                     className={"retro-text"} */}
-{/*                     onClick={async ()=> await performAnalysis()}> */}
-{/*                     Perform Analysis */}
-{/*                 </Button> */}
-{/*             </Grid> */}
             <MessageModal/>
         </Grid>
     )

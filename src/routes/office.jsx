@@ -1,4 +1,3 @@
-import axios from "axios";
 import {useState, useRef,forwardRef, render, useLayoutEffect} from "react";
 import maleBabble from '../assets/sounds/maleBabble.mp3'
 import femaleBabble from '../assets/sounds/femaleBabble.mp3'
@@ -12,7 +11,7 @@ import {frontendFlagsAmount} from "../utils/constants"
 import { Button, Grid, CircularProgress } from '@mui/material'
 import { styled } from '@mui/material/styles';
 import {playAudio, loopAudio, mute} from "../utils/audioHandler"
-
+import client from "client"
 const consoleFlagHandler = () => {
     console.table([{flag: "${curious_console_observer}"}])
 };
@@ -74,6 +73,13 @@ export default function Office() {
       useUnmount(() => {
         mute(talking)
       });
+
+    useEffect(() => {
+        document.getElementById("root").classList.add("no-scroll");
+        return () =>{
+            document.getElementById("root").classList.remove("no-scroll");
+        }
+    }, [])
     const talkToGeneralSecretary = async () => {
         await setSlamButtonDisabled(true)
         await setSlams(0)
@@ -84,7 +90,7 @@ export default function Office() {
         await setSlamButtonDisabled(false)
 
         const primaryResponse = () =>
-            axios.get("http://0.0.0.0:9011/challenge/reactor/information", {
+            client.apiClient.get("/challenge/reactor/information", {
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Content-Type': 'application/json',
@@ -245,7 +251,7 @@ export default function Office() {
                                     text={text}
                                     loop={false}
                                     cursor={true}
-                                    speed={25}
+                                    speed={35}
                                     onStart={() => {
                                         talking.loop = true;
                                         talking.play();

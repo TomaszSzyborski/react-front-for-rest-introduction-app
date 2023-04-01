@@ -7,9 +7,9 @@ import Az5 from "./subViews/az5";
 import Core from "./subViews/core";
 import {createOption} from "../utils/constants";
 import {useKey} from "../utils/contexts/keyContext";
-import axios from "axios";
 import {useModal} from "../utils/contexts/modalContext";
 import {Button, Grid, Input, Typography, Select} from '@mui/material'
+import client from "client";
 
 const noseyChapsArentYaFlag = '${nosey_chaps_arent_ya!}'
 
@@ -40,8 +40,7 @@ export default function ControlRoomSubView() {
         if (key === "") {
             setText("Have you dropped the key somewhere?!")
         } else {
-            await axios.get(
-                `http://localhost:9011/challenge/reactor/${key}/control_room`,
+            await client.apiClient.get(`/challenge/reactor/${key}/control_room`,
                 {
                     headers: {
                         'Access-Control-Allow-Origin': '*',

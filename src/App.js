@@ -70,7 +70,7 @@ function App() {
         Number(localStorage.getItem(trayOpeningsLocalStorageItemObject.key)) || 0
     )
     const [trayText, setTrayText] = useState("")
-    const [whereAmI, setWhereAmI] = useState();
+    const [whereAmI, setWhereAmI] = useState(home.name);
     const [isShown, setIsShown] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -84,7 +84,7 @@ function App() {
 
     useMemo(() => {
         setWhereAmI(navigationOptions.find((it) =>
-            it.link === window.location.pathname)?.name)
+            it.link === window.location.pathname)?.name || home.name)
     }, [whereAmI]);
 
     useEffect(() => {

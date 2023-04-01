@@ -1,4 +1,3 @@
-import axios from "axios";
 import {useEffect, useRef, useState} from "react";
 import Select from 'react-select'
 import AsyncSelect from "react-select/async";
@@ -15,6 +14,7 @@ import vacuumTube6 from '../../assets/images/vacuumTubes/vacuumTube6.png';
 import vacuumTube7 from '../../assets/images/vacuumTubes/vacuumTube7.png';
 import vacuumTube8 from '../../assets/images/vacuumTubes/vacuumTube8.png';
 import vacuumTube9 from '../../assets/images/vacuumTubes/vacuumTube9.png';
+import client from "client";
 
 function RodSwitch(props) {
   const [isOn, setIsOn] = useState(props.isOn);
@@ -25,9 +25,9 @@ function RodSwitch(props) {
   const handleToggle = async () => {
     await setIsDisabled(true)
     const methodUsed = isOn ? 'DELETE' : 'PUT';
-    await axios({
+    await client.apiClient({
         method: methodUsed,
-        url: `http://0.0.0.0:9011/challenge/reactor/${key}/control_room/${props.rodType}_rods/${props.index}`
+        url: `/challenge/reactor/${key}/control_room/${props.rodType}_rods/${props.index}`
         }
     )
       .then(response => {
@@ -83,7 +83,7 @@ export default function Rods(props) {
                             vacuumTube6,vacuumTube7,vacuumTube8,
                             vacuumTube9]
     const getRodsData = async () => {
-        await axios.get(`http://localhost:9011/challenge/reactor/${key}/control_room`,
+        await client.apiClient.get(`/challenge/reactor/${key}/control_room`,
                             {
                             headers: {
                                 'Access-Control-Allow-Origin': '*',

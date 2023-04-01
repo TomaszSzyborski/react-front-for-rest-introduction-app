@@ -1,4 +1,3 @@
-import axios from "axios";
 import {useEffect, useMemo, useRef, useState} from "react";
 import React from "react";
 import {faker} from '@faker-js/faker/locale/uk';
@@ -8,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
 import { TextareaAutosize} from '@mui/base';
+import client from "client";
 
 const greeting = "Evening, Comrade!\n" +
     "Let me fetch the keys, while you write your name in the workbook"
@@ -44,8 +44,7 @@ export default function Reception() {
         if (!name) {
             setText("Write your name in the Registrar Book first, Comrade...")
         } else {
-            axios.post(
-                "http://0.0.0.0:9011/challenge/reactor/desk",
+            client.apiClient.post("/challenge/reactor/desk",
                 {"name": name},
                 {
                     headers: {
@@ -63,10 +62,9 @@ export default function Reception() {
         }
     }
     return (
+        <>
         <main id="reception">
-
             <Grid
-                    height="100%"
                     container
                     direction="row"
                     justifyContent="center"
@@ -135,8 +133,9 @@ export default function Reception() {
                         </Grid>
                      : null}
              </Grid>
-        <div id="reception-background" className="background"></div>
         </main>
+        <div id="reception-background" className="background"></div>
+        </>
     )
         ;
 }
