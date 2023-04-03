@@ -1,9 +1,14 @@
-import axios from "axios";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import React from "react";
-import {bulmaQuickview} from 'bulma-extensions';
-import {faker} from '@faker-js/faker';
+import {faker} from '@faker-js/faker/locale/uk';
 import {keyLocalStorageItemName} from "../utils/constants";
+import {Button, Grid} from '@mui/material'
+import Typography from '@mui/material/Typography';
+import ListItem from '@mui/material/ListItem';
+import Box from '@mui/material/Box';
+import { TextareaAutosize} from '@mui/base';
+import {reactorBackend} from "client";
+import axios from "axios";
 
 const greeting = "Evening, Comrade!\n" +
     "Let me fetch the keys, while you write your name in the workbook"
@@ -14,7 +19,6 @@ const alreadyAtWork = "Akimov, Aleksandr Fyodorovich\n" +
     "Toptunov, Leonid Fedorovych\n"
 
 const fakeNames = () => {
-    faker.setLocale('uk');
     let people;
     people = Array(12).fill("")
         .map(() => {
@@ -24,22 +28,24 @@ const fakeNames = () => {
     return people
 }
 
+
 export default function Reception() {
     const [text, setText] = useState(greeting)
     const [name, setName] = useState("");
     const [key, setKey] = useState("");
     const [multitudeOfFakeSovietNames] = useState(fakeNames())
-    useEffect(()=>{
-        key && localStorage.setItem(keyLocalStorageItemName, key)
+
+    useMemo(()=>{
+        localStorage.setItem(keyLocalStorageItemName, key)
     },[key])
+
     const registerAtDesk = (event) => {
         event.preventDefault();
         setKey("")
         if (!name) {
-            setText("Write your name in the Registrar Book down there, Comrade...")
+            setText("Write your name in the Registrar Book first, Comrade...")
         } else {
-            axios.post(
-                "http://0.0.0.0:9011/challenge/reactor/desk",
+            reactorBackend.client.post("/challenge/reactor/desk",
                 {"name": name},
                 {
                     headers: {
@@ -48,87 +54,89 @@ export default function Reception() {
                     },
                 })
                 .then(response => {
-                        setText(`Get your key from the tray, Commander ${name}...`)
+                        setText(`Here's your key, Comrade ${name}...`)
                         setKey(response.data.key)
                     }
                 ).catch(error =>
-                setText(error.response.data.message)
+                    setText(error.response.data.message)
             )
         }
     }
     return (
-        <main style={{padding: "1rem 0"}}>
-            <div className={"columns has-retro-text"}>
-                <div className={"column"}></div>
-                <div className={"column is-two-thirds"}>
-                    <div className={"columns"}>
-                        <div className={"column"}></div>
-                        <div className={"column is-two-thirds"}>
-                            <div id={"message"} className={"has-text-centered is-size-2 container"}>
-                                {text}
-                            </div>
-                            <div>
-                                <div className="columns"
-                                     id={"registrar"}>
-                                    <div className={"column"}></div>
-                                    <div className={"column is-three-fifths"}>
-                                        <div className={"spacer-one-twentieth-height"}></div>
-                                        <div className={"columns registrar-pages"}>
-                                            <div className={"column is-size-6 is-dark"}>
-                                                <div>Day Shift</div>
-                                                <textarea className={"textarea signature-area is-fullwidth readonly"}
-                                                          defaultValue={multitudeOfFakeSovietNames}>
-                                                </textarea>
-                                            </div>
-
-                                            <div className={"column is-size-6"}>
-                                                <div>Night Shift</div>
-                                                <textarea
-                                                    className={"textarea signature-area is-fullwidth"}
-                                                    placeholder={alreadyAtWork}
-                                                    value={name}
-                                                    onChange={e => setName(e.target.value)}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={"column"}></div>
-                                </div>
-                                <div className={"spacer-one-twentieth-height"}></div>
-                                <div className={"columns"}>
-                                    <div className={"column"}></div>
-                                    <button className={"button column is-two-thirds is-primary is-large"}
-                                            onClick={registerAtDesk}
-                                            name="Register">Write in registrar book
-                                    </button>
-                                    <div className={"column"}>
-                                    </div>
-                                </div>
-                                <div id={"tray"} className={"has-text-centered is-size-4"}>
-                                    {key ?
-                                        <div>
-                                            <span>Pick it up</span>
-                                            <br/>
-                                            <span
-                                                className={"has-background-info is-size-2"}>
-                                                {key}
-                                            </span>
-                                            <br/>
-                                            <span>Keep it safe, and always wih you.</span>
-                                        </div>
-                                        : null}
-                                </div>
-                            </div>
-                        </div>
-                        <div className={"column"}>
-                        </div>
-                    </div>
-                </div>
-                <div className={"column"}>
-
-                </div>
-            </div>
+        <>
+        <main id="reception">
+            <Grid
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center">
+                 <Grid item xs={2} id="obsolete-column-left"></Grid>
+                 <Grid item xs={8} sx={{height:"80%"}}>
+                    <Grid container
+                        id="registrar"
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="center"
+                        spacing="24"
+                        >
+                         <Grid item className={"registrar-pages"} sx={{height:"70%"}}>
+                               <div>Day Shift</div>
+                               <TextareaAutosize
+                                    sx={{width:"80%"}}
+                                    className={"signature-area"}
+                                    defaultValue={multitudeOfFakeSovietNames}>
+                               </TextareaAutosize>
+                         </Grid>
+                         <Grid item className={"registrar-pages"} sx={{marginLeft:"2rem", height:"70%"}}>
+                            <Grid container direction="column">
+                                <Grid item>Night Shift</Grid>
+                                <Grid item>
+                                    <TextareaAutosize
+                                        minRows={12}
+                                        className={"signature-area"}
+                                        placeholder={alreadyAtWork}
+                                        value={name}
+                                        onChange={e => setName(e.target.value)}
+                                    />
+                                </Grid>
+                                <Grid item xs={2} alignItems="flex-end">
+                                   <Button
+                                         variant="outlined"
+                                         color="primary"
+                                         name="Register"
+                                         onClick={registerAtDesk}>
+                                             Sign
+                                  </Button>
+                                </Grid>
+                            </Grid>
+                         </Grid>
+                    </Grid>
+                 </Grid>
+                 <Grid item xs={2} id="obsolete-column-right">
+                 </Grid>
+            </Grid>
+            <Grid container
+                direction="column"
+                justifyContent="center"
+                alignItems="center">
+                <Typography id={"message"} className={"retro-text"}>
+                    {text}
+                </Typography>
+                     {key ?
+                       <Grid item id={"tray"} className="retro-text">
+                             <Grid item
+                                sx={{
+                                    fontSize: "4rem",
+                                }}>
+                                 {key}
+                             </Grid>
+                             <Grid item>Keep it safe, and always wih you!</Grid>
+                        </Grid>
+                     : null}
+             </Grid>
         </main>
+        <div id="reception-background" className="background"></div>
+        </>
     )
         ;
 }

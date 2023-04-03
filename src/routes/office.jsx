@@ -1,72 +1,96 @@
-import axios from "axios";
-import {useState} from "react";
+import {useState, useRef,forwardRef, render, useLayoutEffect} from "react";
 import maleBabble from '../assets/sounds/maleBabble.mp3'
 import femaleBabble from '../assets/sounds/femaleBabble.mp3'
-import phoneRing from '../assets/sounds/phoneRing.mp3'
+import phoneCall from '../assets/sounds/phoneCall.mp3'
 import phonePickUp from '../assets/sounds/phonePickUp.mp3'
-import phoneSignalLost from '../assets/sounds/phoneSignalLost.mp3'
 import phoneHangUp from '../assets/sounds/phoneHangUp.mp3'
 import phoneDestruction from '../assets/sounds/phoneDestruction.mp3'
 import React, {useEffect} from 'react'
 import Typewriter from 'react-ts-typewriter';
-import {frontendFlagsAmount} from "../utils/constants";
-
+import {frontendFlagsAmount} from "../utils/constants"
+import { Button, Grid, CircularProgress } from '@mui/material'
+import { styled } from '@mui/material/styles';
+import {playAudio, loopAudio, mute} from "../utils/audioHandler"
+import {reactorBackend} from "client"
 const consoleFlagHandler = () => {
     console.table([{flag: "${curious_console_observer}"}])
 };
 
-const ringing = new Audio(phoneRing)
-const pickingUp = new Audio(phonePickUp)
-const signalLost = new Audio(phoneSignalLost)
+const PhoneButton = styled(Button)({
+    height: "3em!important",
+    width: '100%',
+    fontSize: '2.5rem',
+    '&:hover': {
+        opacity:0.8
+    },
+      '&:disabled': {
+        opacity: 0.8,
+        backgroundColor: "gray"
+      },
+});
+
+function useUnmount(callback) {
+  useEffect(() => {
+    return () => {
+      callback();
+    };
+  }, [callback]);
+}
+
+const phoneCallSound= new Audio(phoneCall)
+const phonePickUpSound = new Audio(phonePickUp)
 
 export default function Office() {
-
-    const defaultPhoneCallButtonClasses = "button is-large is-primary"
-
+    const [isLoading, setIsLoading] = useState(false);
     const [text, setText] = useState("")
     const [slams, setSlams] = useState(0)
     const [callCounter, setCallCounter] = useState(0)
     const [talking, setTalking] = useState(new Audio())
-    const [phoneCallClasses, setPhoneCallClasses] = useState(defaultPhoneCallButtonClasses)
     const [phoneDestroyed, setPhoneDestroyed] = useState(false)
     const [slamButtonDisabled, setSlamButtonDisabled] = useState(false)
     const [callButtonDisabled, setCallButtonDisabled] = useState(false)
 
+  const ref = useRef();
+  useEffect(() => {
+      const interval = setInterval(() => {
+           if (ref.current.childElementCount > 0 && isLoading){
+           console.log("scrolling")
+                    ref.current.scrollBy(0, 100)
+           }
+          }, 500);
+       return () => interval && clearInterval(interval);
+    }, [ref, isLoading])
 
     useEffect(() => {
-        if (phoneDestroyed || localStorage.isPhoneDestroyed) {
+        if (phoneDestroyed || Boolean(localStorage.getItem("is-phone-destroyed"))) {
             setCallButtonDisabled(true)
             setSlamButtonDisabled(true)
-            localStorage.isPhoneDestroyed = true
+            localStorage.setItem("is-phone-destroyed", true.toString())
         }
     }, [phoneDestroyed])
     const resetText = async () => setText("")
 
-    const mute = (audio = talking) => {
-        if (audio) {
-            audio.pause();
-            audio.currentTime = 0;
-        }
-    }
-    const playAudioAndWait = async (audio) => {
-        await new Promise(res => {
-            audio.play()
-            audio.onended = res
-        })
-    }
+      useUnmount(() => {
+        mute(talking)
+      });
 
+    useEffect(() => {
+        document.getElementById("root").classList.add("no-scroll");
+        return () =>{
+            document.getElementById("root").classList.remove("no-scroll");
+        }
+    }, [])
     const talkToGeneralSecretary = async () => {
         await setSlamButtonDisabled(true)
-        await setPhoneCallClasses(prevState => prevState + " is-loading")
         await setSlams(0)
 
         await resetText()
-        await playAudioAndWait(ringing)
-        await playAudioAndWait(pickingUp)
+        await playAudio(phoneCallSound)
+        await playAudio(phonePickUpSound)
         await setSlamButtonDisabled(false)
 
         const primaryResponse = () =>
-            axios.get("http://0.0.0.0:9011/challenge/reactor/information", {
+            reactorBackend.client.get("/challenge/reactor/information", {
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Content-Type': 'application/json',
@@ -78,9 +102,6 @@ export default function Office() {
                         `\n There are ${response.data.flagsToFind + frontendFlagsAmount} flags to find.`
                 })
         ;
-
-        //TODO create pre phone ring and pickup,
-        // and loop lost signal after ming the phone if the call was made
 
         const phoneResponses = [
             {
@@ -99,20 +120,30 @@ export default function Office() {
                 message: "Don't fail me Comrade!!!",
                 audio: new Audio(maleBabble)
             },
-            // "Listen here... It's the end of the month! All factories are pushing their limits, so - no postponing.",
-            // "Oh, and you better complete it before 1st of May, the Labour Day Parade is waiting for you.",
-            // "If you fail me, don't even dream of Order of Lenin - a man, who's name gives nobility of OUR power plant!",
-            // "... I dare you... I double dare you! Call me again and you'll see yourself in Ural mountains personally digging Uranium with your bare hands!",
+            {
+                message: "Listen here... It's the end of the month! All factories are pushing their limits, so - no postponing.",
+                audio: new Audio(maleBabble)
+            },
+            {
+                message: "Oh, and you better complete it before 1st of May, the Labour Day Parade is waiting for you.",
+                audio: new Audio(maleBabble)
+            },
+            {
+                message: "If you fail me, don't even dream of Medal of Lenin - a man, who's name gives nobility of OUR power plant!",
+                audio: new Audio(maleBabble)
+            },
+            {
+                message: "... I dare you... I double dare you! Call me again and you'll see yourself in Ural mountains personally digging Uranium with your bare hands!",
+                audio: new Audio(maleBabble)
+            },
             {
                 message: "General Secretary's Personal Assistant - Masha, speaking... I have something for you Comrade.... ${angry_general_secretary}",
                 audio: new Audio(femaleBabble)
             }
         ]
         if (callCounter > phoneResponses.length - 1) {
-            setText(
-                "You want me to get you through this AGAIN?! Fine..."
-            )
-            localStorage.setItem("desperate-sigh", "${you're_deaf_or_just_dumb?}")
+            setText("You want me to get you through this AGAIN?! Fine...")
+            sessionStorage.setItem("desperate-sigh", "${are_you_deaf_or_just_dumb}")
             setCallCounter(0)
         } else {
             setText(phoneResponses[callCounter].message)
@@ -123,9 +154,9 @@ export default function Office() {
 
 
     const slamThePhone = async () => {
-        setPhoneCallClasses(defaultPhoneCallButtonClasses)
+        setCallButtonDisabled(false)
+        setIsLoading(false)
         mute()
-        mute(signalLost)
         setCallCounter(prevCalls => prevCalls - 1 < 0 ? 0 : prevCalls - 1)
         setText("")
         setSlams(prevSlams => prevSlams + 1)
@@ -134,72 +165,111 @@ export default function Office() {
             alert("You've broken the phone... General Secretary won't be proud.\n" +
                 "You earned something however...\n" +
                 "${emotional_reaction_get_it?_reaction...}")
-            await playAudioAndWait(new Audio(phoneDestruction))
+            await playAudio(new Audio(phoneDestruction))
         } else {
-            await playAudioAndWait(new Audio(phoneHangUp))
+            await playAudio(new Audio(phoneHangUp))
         }
+        mute(phoneHangUp)
     }
 
 
     return (
-        <main className={"office-background"}>
-            <div className={"columns is-multiline is-vcentered has-text-centered"}>
-                <div className={"column is-two-fifths"}>
-                    {/*<div>*/}
-                        {/*<div className={"spacer-one-tenth-height"}></div>*/}
-                        {/*<div id={"information-gathering-instruction"}*/}
-                        {/*     className={"has-retro-text has-text-vertically-centered"}>*/}
-                        {/*    Good day Comrade, call the General Secretary to receive mission debrief.*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
-                    <div className={"spacer-quarter-height"}>
-                    </div>
-                    <div className={"column is-one-fifth phone is-align-items-end"}>
-                        <button
-                            id={"phoneCallButton"}
-                            className={phoneCallClasses}
-                            onClick={talkToGeneralSecretary}
-                            disabled={callButtonDisabled}
-                        >Call
-                        </button>
-                        <button
-                            id={"slamPhoneButton"}
-                            className={"button is-large is-danger"}
-                            onClick={slamThePhone}
-                            disabled={slamButtonDisabled}
-                        >Slam the phone
-                        </button>
-                    </div>
-                </div>
+        <main id={"office"}>
+        <div id="office-background" className="background"></div>
+            <Grid container spacing={2}
+                  flexDirection="row"
+                  justifyContent='center'
+                  alignItems='center'
+                  sx={{height: "100%"}}
+                  >
+                <Grid item xs={4}>
+                    <Grid container flexDirection="column" justifyContent='center'>
+                        <Grid item>
+                            <PhoneButton
+                                variant="contained"
+                                className="retro-text"
+                                color="success"
+                                id={"phoneCallButton"}
+                                onClick={()=>{
+                                    setCallButtonDisabled(true)
+                                    setIsLoading(true)
+                                    talkToGeneralSecretary()
+                                    }}
+                                disabled={callButtonDisabled}
+                            >
+                              {isLoading && (<CircularProgress size={90}/>)}
+                              {!isLoading && "Call"}
 
-                <div className={"column is-two-thirds"}>
-                    <span id={"cathodeDisplay"}>
-                    <div className={"cathodeText"}>
-                        {text ?
-                            <Typewriter
-                                text={text}
-                                loop={false}
-                                cursor={true}
-                                speed={75}
-                                onStart={() => {
-                                    talking.loop = true;
-                                    talking.play();
-                                }}
-                                onFinished={async () => {
-                                    await mute()
-                                    await setPhoneCallClasses(defaultPhoneCallButtonClasses)
-                                    await playAudioAndWait(signalLost)
-                                }
-                                }
-                            /> : null
-                        }
-                    </div>
-
-                    </span>
-                </div>
-            </div>
+                            </PhoneButton>
+                            </Grid>
+                            <Grid item>
+                            <PhoneButton
+                                className="retro-text"
+                                variant="contained"
+                                color="error"
+                                size="large"
+                                id={"slamPhoneButton"}
+                                onClick={slamThePhone}
+                                disabled={slamButtonDisabled}
+                            >Slam the phone
+                            </PhoneButton>
+                            </Grid>
+                            <Grid item>
+                              {phoneDestroyed && (
+                                <PhoneButton
+                                    variant="contained"
+                                    color="error"
+                                    size="large"
+                                    className="retro-text"
+                                    onClick={(e)=> {
+                                        setPhoneDestroyed(false)
+                                        setSlamButtonDisabled(false)
+                                        setCallButtonDisabled(false)
+                                        localStorage.removeItem("is-phone-destroyed")
+                                    }}
+                                >
+                                    Bring me another phone!
+                                </PhoneButton>
+                                )}
+                                </Grid>
+                            </Grid>
+                   </Grid>
+                <Grid item xs={6} sx={{height: "100%"}}>
+                    <Grid container
+                        justifyContent='center'
+                        alignItems='center'
+                        sx={{height: "100%"}}>
+                    <Grid item id={"cathodeDisplay"}>
+                        <Grid container
+                            justifyContent='center'
+                            alignItems='center'
+                            sx={{height: "100%"}}>
+                        <Grid item className={"cathodeText"} ref={ref}>
+                            {text ?
+                                <Typewriter
+                                    id="babble"
+                                    text={text}
+                                    loop={false}
+                                    cursor={true}
+                                    speed={35}
+                                    onStart={() => {
+                                        talking.loop = true;
+                                        talking.play();
+                                    }}
+                                    onFinished={ async() => {
+                                        await mute(talking)
+                                        await setIsLoading(false)
+                                        await setCallButtonDisabled(false)
+                                    }}
+                                /> : null
+                            }
+                        </Grid>
+                        </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+            </Grid>
             <img alt={""} onError={consoleFlagHandler} src={""}></img>
-
         </main>
     );
 }

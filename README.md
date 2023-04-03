@@ -2,6 +2,15 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+Libs used:
+https://mui.com/
+https://axios-http.com/docs/req_config
+
+## important
+
+modify .env file to include current host and port for backend requests
+
 ## Available Scripts
 
 In the project directory, you can run:
