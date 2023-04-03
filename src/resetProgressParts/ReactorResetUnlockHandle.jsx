@@ -3,7 +3,7 @@ import {useModal} from "../utils/contexts/modalContext";
 import {useHandle} from "../utils/contexts/reactorReset/resetReactorHandleContext";
 import {Grid, Input, Button} from '@mui/material';
 import ComradeStorageCleaner from './ComradeStorageCleaner'
-import client from "client";
+import {reactorBackend} from "client";
 
 
 export default function ReactorResetUnlockHandle() {
@@ -15,7 +15,7 @@ export default function ReactorResetUnlockHandle() {
         let handleMessage = "";
 
         if (key) {
-            await client.apiClient.get(`/challenge/reactor/check_key/${key}`)
+            await reactorBackend.client.get(`/challenge/reactor/check_key/${key}`)
                 .then(response => {
                     setHandleDisabled(false)
                     handleMessage = response.data.message

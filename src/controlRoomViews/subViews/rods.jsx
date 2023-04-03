@@ -14,7 +14,7 @@ import vacuumTube6 from '../../assets/images/vacuumTubes/vacuumTube6.png';
 import vacuumTube7 from '../../assets/images/vacuumTubes/vacuumTube7.png';
 import vacuumTube8 from '../../assets/images/vacuumTubes/vacuumTube8.png';
 import vacuumTube9 from '../../assets/images/vacuumTubes/vacuumTube9.png';
-import client from "client";
+import {reactorBackend} from "client";
 
 function RodSwitch(props) {
   const [isOn, setIsOn] = useState(props.isOn);
@@ -25,7 +25,7 @@ function RodSwitch(props) {
   const handleToggle = async () => {
     await setIsDisabled(true)
     const methodUsed = isOn ? 'DELETE' : 'PUT';
-    await client.apiClient({
+    await reactorBackend.client.apiClient({
         method: methodUsed,
         url: `/challenge/reactor/${key}/control_room/${props.rodType}_rods/${props.index}`
         }
@@ -83,7 +83,7 @@ export default function Rods(props) {
                             vacuumTube6,vacuumTube7,vacuumTube8,
                             vacuumTube9]
     const getRodsData = async () => {
-        await client.apiClient.get(`/challenge/reactor/${key}/control_room`,
+        await reactorBackend.client.get(`/challenge/reactor/${key}/control_room`,
                             {
                             headers: {
                                 'Access-Control-Allow-Origin': '*',

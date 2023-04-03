@@ -9,7 +9,7 @@ import {createOption} from "../utils/constants";
 import {useKey} from "../utils/contexts/keyContext";
 import {useModal} from "../utils/contexts/modalContext";
 import {Button, Grid, Input, Typography, Select} from '@mui/material'
-import client from "client";
+import {reactorBackend} from "client";
 
 const noseyChapsArentYaFlag = '${nosey_chaps_arent_ya!}'
 
@@ -40,7 +40,7 @@ export default function ControlRoomSubView() {
         if (key === "") {
             setText("Have you dropped the key somewhere?!")
         } else {
-            await client.apiClient.get(`/challenge/reactor/${key}/control_room`,
+            await reactorBackend.client.get(`/challenge/reactor/${key}/control_room`,
                 {
                     headers: {
                         'Access-Control-Allow-Origin': '*',

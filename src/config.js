@@ -1,17 +1,14 @@
-'use strict';
 
-//function getNetworkIP() {
-//  axios.get('https://api.ipify.org?format=json')
-//}
-console.log(process.env.environment);
-const environment = process.env.environment || 'production';
-const currentIpAddress = "192.168.50.12"
-let basePath = 'http://localhost:9011'
-if(environment === 'production') {
-    basePath = `http://${currentIpAddress}:9011`
+let backendBaseUrl = ""
+
+if (process.env.NODE_ENV === 'development') {
+    backendBaseUrl = `http://${process.env.REACT_APP_REACTOR_BACKEND_HOST}:${process.env.REACT_APP_REACTOR_BACKEND_PORT}`
 }
-const config = {
-    apiBasePath : basePath
+else{
+    backendBaseUrl = `${process.env.REACT_APP_PRODUCTION_REACTOR_BACKEND_HOST}`
 }
 
-export default config;
+
+export const reactorBackendConfig = {
+        baseURL : backendBaseUrl
+}

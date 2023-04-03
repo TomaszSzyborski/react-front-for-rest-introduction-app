@@ -4,15 +4,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 
 Libs used:
+https://mui.com/
+https://axios-http.com/docs/req_config
 
-https://react-bulma.dev/en
+## important
 
-https://react-bulma.dev/en
-https://bulma.io/
-
-https://wikiki.github.io/components/quickview/
-
-
+modify .env file to include current host and port for backend requests
 
 ## Available Scripts
 

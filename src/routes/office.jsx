@@ -11,7 +11,7 @@ import {frontendFlagsAmount} from "../utils/constants"
 import { Button, Grid, CircularProgress } from '@mui/material'
 import { styled } from '@mui/material/styles';
 import {playAudio, loopAudio, mute} from "../utils/audioHandler"
-import client from "client"
+import {reactorBackend} from "client"
 const consoleFlagHandler = () => {
     console.table([{flag: "${curious_console_observer}"}])
 };
@@ -90,7 +90,7 @@ export default function Office() {
         await setSlamButtonDisabled(false)
 
         const primaryResponse = () =>
-            client.apiClient.get("/challenge/reactor/information", {
+            reactorBackend.client.get("/challenge/reactor/information", {
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Content-Type': 'application/json',

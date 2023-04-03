@@ -1,50 +1,21 @@
 import axios from 'axios';
-import config from './config';
+import {reactorBackendConfig} from './config';
 
-class FastAPIClient {
-  constructor(overrides) {
-    this.config = {
-      ...config,
-      ...overrides,
-    };
-    this.apiClient = this.getApiClient(this.config);
-  }
 
-  getApiClient(config) {
-    let initialConfig = {
-      baseURL: config.apiBasePath,
-    };
-    let client = axios.create(initialConfig);
-    return client;
-  }
+
+class ReactorBackend {
+    constructor(reactorBackendConfig) {
+        this.config = reactorBackendConfig;
+        this.client = axios.create(this.config);
+        this.client.interceptors.request.use((config) => {
+          config.headers['X-Forwarded-Host'] = 'reactor-backend';
+          return config;
+        });
+        this.client.interceptors.response.use((response) => {
+          response.headers['Access-Control-Allow-Origin'] = '*';
+          return response;
+        });
+    }
 }
-
-const client = new FastAPIClient(config);
-export default client;
-
-//import config from "./config"
-//const axios = require("axios")
-//
-//
-//class FastAPIClient {
-//	constructor(overrides) {
-//		this.config = {
-//			...config,
-//			...overrides,
-//		}
-//
-//		this.apiClient = this.getApiClient(this.config)
-//	}
-//
-//	getApiClient(config) {
-//		let initialConfig = {
-//			baseURL: config.apiBasePath
-//		}
-//		let client = axios.create(initialConfig)
-////		client.interceptors.request.use(localStorageTokenInterceptor)
-//		return client
-//	}
-//}
-//
-//const client = new FastAPIClient(config)
-//export default client
+const reactorBackend = new ReactorBackend(reactorBackendConfig);
+export { reactorBackend }

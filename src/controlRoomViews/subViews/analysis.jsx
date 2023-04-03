@@ -3,7 +3,7 @@ import {useKey} from "../../utils/contexts/keyContext";
 import {useModal} from "../../utils/contexts/modalContext";
 import {Grid, Button, Modal, Box, Typography, Dialog} from '@mui/material';
 import MessageModal from "../../utils/MessageModal";
-import client from "client";
+import {reactorBackend} from "client";
 
 
 export default function Analysis() {
@@ -16,7 +16,7 @@ export default function Analysis() {
 
     const performAnalysis = async () => {
         let msg = ""
-        await client.apiClient.get(`/challenge/reactor/${key}/control_room/analysis`,
+        await reactorBackend.client.get(`/challenge/reactor/${key}/control_room/analysis`,
             {
                 headers: {
                     'Access-Control-Allow-Origin': '*',

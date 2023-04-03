@@ -8,7 +8,7 @@ import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import powerDown from '../assets/sounds/powerDown.mp3'
 import {useBlownUp} from "../utils/contexts/blownUpContext";
-import client from "client";
+import {reactorBackend} from "client";
 
 const powerDownSound = new Audio(powerDown)
 
@@ -34,7 +34,7 @@ export default function ReactorResetHandle() {
     }
 
     const triggerReactorReset = async () => {
-        await client.apiClient.get(`/challenge/reactor/${key}/reset_progress`)
+        await reactorBackend.client.get(`/challenge/reactor/${key}/reset_progress`)
             .then(response => {
                     playAudioAndWait(powerDownSound)
                     setBlownUp(false)

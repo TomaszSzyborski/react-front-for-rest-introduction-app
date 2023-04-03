@@ -7,7 +7,7 @@ import gatewayToHell from "../../assets/images/catastrophy/gatewayToHell2.gif"
 import fieryDeath from "../../assets/sounds/fieryDeath.mp3"
 import {useBlownUp} from "../../utils/contexts/blownUpContext";
 import {playAudio, loopAudio, mute} from "../../utils/audioHandler"
-import client from "client";
+import {reactorBackend} from "client";
 
 
 const fieryDeathSound = new Audio(fieryDeath)
@@ -30,7 +30,7 @@ export default function Core(props) {
 
     const checkTheCore = async () => {
         let msg = ""
-        await client.apiClient.get(`/challenge/reactor/${key}/reactor_core`,
+        await reactorBackend.client.get(`/challenge/reactor/${key}/reactor_core`,
             {
                 headers: {
                     'Access-Control-Allow-Origin': '*',

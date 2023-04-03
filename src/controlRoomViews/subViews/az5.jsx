@@ -4,7 +4,7 @@ import {useBlownUp} from "../../utils/contexts/blownUpContext";
 import MessageModal from "../../utils/MessageModal";
 import {useRef, useState, useEffect} from "react";
 import {Grid, Button, Modal, Box, Typography, Dialog} from '@mui/material';
-import client from "client";
+import {reactorBackend} from "client";
 
 export default function Az5() {
     const {key} = useKey()
@@ -14,7 +14,7 @@ export default function Az5() {
 
     const pressAZ5 = async () => {
         let msg = ""
-        await client.apiClient.put(`/challenge/reactor/${key}/control_room/az_5`,
+        await reactorBackend.client.put(`/challenge/reactor/${key}/control_room/az_5`,
             {pressed: true},
             {
                 headers: {

@@ -7,7 +7,8 @@ import Typography from '@mui/material/Typography';
 import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
 import { TextareaAutosize} from '@mui/base';
-import client from "client";
+import {reactorBackend} from "client";
+import axios from "axios";
 
 const greeting = "Evening, Comrade!\n" +
     "Let me fetch the keys, while you write your name in the workbook"
@@ -44,7 +45,7 @@ export default function Reception() {
         if (!name) {
             setText("Write your name in the Registrar Book first, Comrade...")
         } else {
-            client.apiClient.post("/challenge/reactor/desk",
+            reactorBackend.client.post("/challenge/reactor/desk",
                 {"name": name},
                 {
                     headers: {
