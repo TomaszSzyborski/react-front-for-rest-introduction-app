@@ -1,8 +1,6 @@
 import axios from 'axios';
 import {reactorBackendConfig} from './config';
 
-
-
 class ReactorBackend {
     constructor(reactorBackendConfig) {
         this.config = reactorBackendConfig;
