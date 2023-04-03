@@ -25,3 +25,7 @@ code {
   right: 0;
   overflow: auto;
 }
+
+.phone {
+    overflow-wrap: break-word;
+}
