@@ -54,7 +54,6 @@ export default function Office() {
   useEffect(() => {
       const interval = setInterval(() => {
            if (ref.current.childElementCount > 0 && isLoading){
-           console.log("scrolling")
                     ref.current.scrollBy(0, 100)
            }
           }, 500);
