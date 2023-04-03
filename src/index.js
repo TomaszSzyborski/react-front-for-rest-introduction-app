@@ -14,6 +14,7 @@ import {BlownUpContextProvider} from "./utils/contexts/blownUpContext";
 const root = ReactDOM.createRoot(
         document.getElementById("root"),
     );
+
 const message = "In 1986 we hadn't had mobile phones, ${flag_back_to_the_future}"
 
 root.render(

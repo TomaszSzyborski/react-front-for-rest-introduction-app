@@ -28,4 +28,6 @@ code {
 
 .phone {
     overflow-wrap: break-word;
+    -webkit-text-fill-color: rgba(250, 250, 250, 1);
+    -webkit-opacity: 1;
 }
