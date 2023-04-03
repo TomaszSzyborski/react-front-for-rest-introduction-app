@@ -25,7 +25,7 @@ function RodSwitch(props) {
   const handleToggle = async () => {
     await setIsDisabled(true)
     const methodUsed = isOn ? 'DELETE' : 'PUT';
-    await reactorBackend.client.apiClient({
+    await reactorBackend.client({
         method: methodUsed,
         url: `/challenge/reactor/${key}/control_room/${props.rodType}_rods/${props.index}`
         }
