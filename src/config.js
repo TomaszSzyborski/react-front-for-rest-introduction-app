@@ -9,6 +9,5 @@ else{
 }
 
 export const reactorBackendConfig = {
-//        baseURL : backendBaseUrl
-    baseURL: "https://rbmk-reactor.onrender.com"
+        baseURL : backendBaseUrl
 }
