@@ -9,6 +9,7 @@ import Reception from "./routes/reception";
 import ControlRoom from "./routes/controlroom";
 import ResetProgress from "./routes/resetprogress";
 import Home from "./routes/home";
+import Preload from "./utils/Preload";
 import {BlownUpContextProvider} from "./utils/contexts/blownUpContext";
 
 const root = ReactDOM.createRoot(
@@ -20,7 +21,9 @@ const message = "In 1986 we hadn't had mobile phones, ${flag_back_to_the_future}
 root.render(
     <>{
     (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) &&
-    <h1 className="phone">{message}</h1>) ||
+    <h1 className="phone">{message}</h1>) || (
+    <>
+    <Preload/>
     <BrowserRouter forceRefresh={true}>
         <App/>
             <BlownUpContextProvider>
@@ -34,6 +37,7 @@ root.render(
                 </Routes>
             </BlownUpContextProvider>
     </BrowserRouter>
+    </>)
     }</>
 );
 reportWebVitals();
