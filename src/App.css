@@ -171,6 +171,14 @@ main {
     unicode-bidi: plaintext;
 }
 
+.loader-text {
+    color: #fee!important;
+    text-align: center !important;
+    font-size: 2rem!important;
+    text-wrap: normal;
+    text-overflow: ellipsis;
+    unicode-bidi: plaintext;
+}
 
 #information-gathering-instruction {
     align-content: center;
