@@ -9,12 +9,12 @@ const HomeFlagContainer = (props) => <Grid container spacing={2}
                                            alignItems="flex-end"
                                            justifyContent="center"
                                            sx={{height: "90%"}}>
-                                  <Grid item xs={12} maxHeight>
-                                    <Typography className="retro-text">
-                                       {props.flag}
-                                    </Typography>
-                                  </Grid>
-                                </Grid>
+                                          <Grid item xs={12} maxHeight>
+                                            <Typography className="retro-text">
+                                               {props.flag}
+                                            </Typography>
+                                          </Grid>
+                                      </Grid>
 
 export default function Home() {
         const {blownUp} = useBlownUp();

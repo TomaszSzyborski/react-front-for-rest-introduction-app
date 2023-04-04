@@ -18,7 +18,7 @@ export default function Preload() {
       r.keys().forEach((item, index) => { images[item.replace('./', '')] = r(item); });
      return Object.values(images);
     }
-    const images = importAll(require.context('../assets/images', false, /\.(png|jpe?g|svg)$/));
+    const images = importAll(require.context('../assets/images', true, /\.(png|jpe?g|svg|gif)$/));
 
     useEffect(() =>{
         preLoad()
