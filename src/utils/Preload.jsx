@@ -39,7 +39,7 @@ export default function Preload() {
                     <Grid item className="centered-on-screen">
                         <CircularProgress size={500}/>
                     </Grid>
-                    <Typography className="retro-text centered-on-screen">
+                    <Typography className="centered-on-screen">
                         Preparing to load 25 April 1986 - Chernobyl...
                     </Typography>
                         <Grid item
