@@ -11,7 +11,7 @@ import {useModal} from "../utils/contexts/modalContext";
 import {Button, Grid, Input, Typography, Select} from '@mui/material'
 import {reactorBackend} from "client";
 
-const noseyChapsArentYaFlag = '${nosey_chaps_arent_ya!}'
+const noseyChapsArentYaFlag = '${flag_nosey_chaps_arent_ya!}'
 
 
 export default function ControlRoomSubView() {

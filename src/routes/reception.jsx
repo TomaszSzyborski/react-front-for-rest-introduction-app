@@ -80,7 +80,7 @@ export default function Reception() {
                         >
                          <Grid item className={"registrar-pages"} sx={{height:"70%"}}>
                                <div>Day Shift</div>
-                               <TextareaAutosize
+                               <TextareaAutosize disabled
                                     sx={{width:"80%"}}
                                     className={"signature-area"}
                                     defaultValue={multitudeOfFakeSovietNames}>

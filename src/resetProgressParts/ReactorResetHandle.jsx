@@ -55,11 +55,11 @@ export default function ReactorResetHandle() {
         let currentSwitchLevel = `\nCurrent level is: ${sliderValue}`
         let messageToSet = ""
         if (sliderValue < 50) {
-            messageToSet = `Pull... Harder... Comrade${currentSwitchLevel}`
+            messageToSet = `Pull... Harder... Comrade ${currentSwitchLevel}`
         } else if (sliderValue === 50) {
-            messageToSet = "${perfectly balanced as everything should be}"
+            messageToSet = "${flag_perfectly_balanced_as_everything_should_be}"
         } else if (sliderValue < 100) {
-            messageToSet = `Just... Bit... MOAR!${currentSwitchLevel}`
+            messageToSet = `Just... Bit... MOAR! ${currentSwitchLevel}`
         } else {
             messageToSet = `Simulation Reboot Initiated`
             setTimeout( async () =>
@@ -75,7 +75,7 @@ export default function ReactorResetHandle() {
     {handleDisabled && <div id="rustyDoor" className="background"  onClick={() => {
                                                       alert(`Comrade Soldiers! Unauthorized personnel is meddling with classified device!\n`
                                                           + "Get him now!\n"
-                                                          + "${[REDACTED]_of_[CLASSIFIED]_experimental_machine}")
+                                                          + "${flag_[REDACTED]_of_[CLASSIFIED]_experimental_machine}")
                                                   }}/>}
         {!handleDisabled &&
         <Grid

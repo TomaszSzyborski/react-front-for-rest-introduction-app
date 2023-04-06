@@ -13,7 +13,7 @@ import { styled } from '@mui/material/styles';
 import {playAudio, loopAudio, mute} from "../utils/audioHandler"
 import {reactorBackend} from "client"
 const consoleFlagHandler = () => {
-    console.table([{flag: "${curious_console_observer}"}])
+    console.table([{flag: "${flag_curious_console_observer}"}])
 };
 
 const PhoneButton = styled(Button)({
@@ -128,21 +128,21 @@ export default function Office() {
                 audio: new Audio(maleBabble)
             },
             {
-                message: "If you fail me, don't even dream of Medal of Lenin - a man, who's name gives nobility of OUR power plant!",
+                message: "If you fail me, don't even dream of Medal of Lenin - a man, whose name gives nobility of OUR power plant!",
                 audio: new Audio(maleBabble)
             },
             {
-                message: "... I dare you... I double dare you! Call me again and you'll see yourself in Ural mountains personally digging Uranium with your bare hands!",
+                message: "..... I dare you... I double dare you! Call me again and you'll see yourself in Ural mountains personally digging Uranium with your bare hands!",
                 audio: new Audio(maleBabble)
             },
             {
-                message: "General Secretary's Personal Assistant - Masha, speaking... I have something for you Comrade.... ${angry_general_secretary}",
+                message: "General Secretary's Personal Assistant - Masha, speaking... I have something for you Comrade.... ${flag_angry_general_secretary}",
                 audio: new Audio(femaleBabble)
             }
         ]
         if (callCounter > phoneResponses.length - 1) {
             setText("You want me to get you through this AGAIN?! Fine...")
-            sessionStorage.setItem("desperate-sigh", "${are_you_deaf_or_just_dumb}")
+            sessionStorage.setItem("desperate-sigh", "${flag_are_you_deaf_or_just_dumb}")
             setCallCounter(0)
         } else {
             setText(phoneResponses[callCounter].message)
@@ -163,7 +163,7 @@ export default function Office() {
             setPhoneDestroyed(true)
             alert("You've broken the phone... General Secretary won't be proud.\n" +
                 "You earned something however...\n" +
-                "${emotional_reaction_get_it?_reaction...}")
+                "${flag_emotional_reaction_get_it?_reaction...}")
             await playAudio(new Audio(phoneDestruction))
         } else {
             await playAudio(new Audio(phoneHangUp))

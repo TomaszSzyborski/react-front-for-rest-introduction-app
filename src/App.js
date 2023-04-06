@@ -93,13 +93,13 @@ function App() {
         }
 
         const data = {
-            1: "You've found my secret stash... ${random_scrap_discovery}\n",
-            17: "You're really pertinacious, you know that? ${stubborn_as_a_donkey}\n"
+            1: "You've found my secret stash... ${flag_random_scrap_discovery}",
+            17: "You're really pertinacious, you know that? ${flag_stubborn_as_a_donkey}"
         }
 
         let keyMessage = ""
         if(localStorage.getItem(keyLocalStorageItemName)){
-            keyMessage = `\nHere's your key:\n\n ${localStorage.getItem(keyLocalStorageItemName)}`
+            keyMessage = `Here's your key: ${localStorage.getItem(keyLocalStorageItemName)}`
         }
         const messageInStash = ((data[numberOfTrayOpenings] || "")
             + (keyMessage || "")) || "I thought I have had something here..."
