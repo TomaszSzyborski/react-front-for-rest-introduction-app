@@ -1,48 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
-import Office from "./routes/office";
-import Reception from "./routes/reception";
-import ControlRoom from "./routes/controlroom";
-import ResetProgress from "./routes/resetprogress";
-import Home from "./routes/home";
-import Preload from "./utils/Preload";
-import {BlownUpContextProvider} from "./utils/contexts/blownUpContext";
+import MainView from "mainView";
 
 const root = ReactDOM.createRoot(
         document.getElementById("root"),
     );
 
-const message = "In 1986 we hadn't had mobile electronic devices like that! ${flag_back_to_the_future}"
-const smallViewportWidthList = [1024, 768, 480, 800, 1280, 390, 360, 428, 214, 375, 600, 411, 414]
 root.render(
-    <>{
-    (
-        (   /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-            || smallViewportWidthList.includes(window.innerWidth)
-            || Math.max(...smallViewportWidthList) > window.innerWidth
-        )
-         &&
-    <h1 className="phone">{message}</h1>) || (
-    <>
-    <Preload/>
-    <BrowserRouter forceRefresh={true}>
-        <App/>
-            <BlownUpContextProvider>
-                <Routes>
-                    <Route path="*" element={<Navigate to="/home" replace/>}/>
-                    <Route exact path="/office" element={<Office/>}/>
-                    <Route exact path="/reception" element={<Reception/>}/>
-                    <Route exact path="/controlroom" element={<ControlRoom/>}/>
-                    <Route exact path="/resetprogress" element={<ResetProgress/>}/>
-                    <Route exact path="/home" element={<Home/>}/>
-                </Routes>
-            </BlownUpContextProvider>
-    </BrowserRouter>
-    </>)
-    }</>
+    <MainView/>
 );
 reportWebVitals();

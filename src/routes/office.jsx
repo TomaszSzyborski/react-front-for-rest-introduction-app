@@ -155,7 +155,6 @@ export default function Office() {
     const slamThePhone = async () => {
         setCallButtonDisabled(false)
         setIsLoading(false)
-        mute()
         setCallCounter(prevCalls => prevCalls - 1 < 0 ? 0 : prevCalls - 1)
         setText("")
         setSlams(prevSlams => prevSlams + 1)
@@ -168,7 +167,6 @@ export default function Office() {
         } else {
             await playAudio(new Audio(phoneHangUp))
         }
-        mute(phoneHangUp)
     }
 
 
