@@ -3,7 +3,7 @@ import {useKey} from "../../utils/contexts/keyContext";
 import {useModal} from "../../utils/contexts/modalContext";
 import {Grid, Button, Modal, Box, Typography, Dialog} from '@mui/material';
 import MessageModal from "../../utils/MessageModal";
-import gatewayToHell from "../../assets/images/catastrophy/gatewayToHell2.gif"
+import gatewayToHell from "../../assets/images/catastrophy/gatewayToHell.gif"
 import fieryDeath from "../../assets/sounds/fieryDeath.mp3"
 import {useBlownUp} from "../../utils/contexts/blownUpContext";
 import {playAudio, loopAudio, mute} from "../../utils/audioHandler"
