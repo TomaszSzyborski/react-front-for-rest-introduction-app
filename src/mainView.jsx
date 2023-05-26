@@ -11,8 +11,8 @@ import Preload from "./utils/Preload";
 import {BlownUpContextProvider} from "./utils/contexts/blownUpContext";
 
 function isInMobileView(windowWidth, windowHeight){
-        const smallViewportWidthList = [1024, 768, 480, 800, 1280, 390, 360, 428, 214, 375, 600, 411, 414]
-        const smallViewportHeightList = [736, 1024, 640, 740, 960, 844, 780, 812, 823, 850, 853, 731, 379, 667, 926]
+        const smallViewportWidthList = [480, 800, 1280, 390, 360, 428, 214, 375, 600, 411, 414]
+        const smallViewportHeightList = [736, 640, 740, 960, 844, 780, 812, 823, 850, 853, 731, 379, 667, 926]
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
         const isInMobileView = smallViewportWidthList.includes(windowWidth)
                             || smallViewportHeightList.includes(windowHeight)
@@ -24,7 +24,7 @@ export default function MainView() {
     const [windowWidth, setWindowWidth] = useState(window.outerWidth);
     const [windowHeight, setWindowHeight] = useState(window.outerHeight);
 
-    const smallViewportWidthList = [1024, 768, 480, 800, 1280, 390, 360, 428, 214, 375, 600, 411, 414]
+//     const smallViewportWidthList = [1024, 768, 480, 800, 1280, 390, 360, 428, 214, 375, 600, 411, 414]
     const message = "In 1986 we hadn't had mobile electronic devices like that! ${flag_back_to_the_future}"
 
     useEffect(() => {
