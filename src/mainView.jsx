@@ -16,7 +16,7 @@ function isInMobileView(windowWidth, windowHeight){
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
         const isInMobileView = smallViewportWidthList.includes(windowWidth)
                             || smallViewportHeightList.includes(windowHeight)
-        const isDownscaled = windowWidth < 1300 || windowHeight < 750
+        const isDownscaled = windowWidth < 1000 || windowHeight < 550
         return ([isMobile, isDownscaled].some(it => it))
 }
 export default function MainView() {
@@ -24,7 +24,6 @@ export default function MainView() {
     const [windowWidth, setWindowWidth] = useState(window.outerWidth);
     const [windowHeight, setWindowHeight] = useState(window.outerHeight);
 
-//     const smallViewportWidthList = [1024, 768, 480, 800, 1280, 390, 360, 428, 214, 375, 600, 411, 414]
     const message = "In 1986 we hadn't had mobile electronic devices like that! ${flag_back_to_the_future}"
 
     useEffect(() => {
@@ -32,6 +31,7 @@ export default function MainView() {
           setWindowWidth(window.outerWidth);
           setWindowHeight(window.outerHeight);
         }
+
         window.addEventListener('resize', handleResize);
         return () => {
           window.removeEventListener('resize', handleResize);
